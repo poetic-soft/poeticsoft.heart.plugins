@@ -1,0 +1,25 @@
+{
+    "name": "poeticsoft/heart-ai",
+    "description": "Poeticsoft Heart AI Ecosystem Main Plugin",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Poeticsoft\\Heart\\": "classes/"
+        }
+    },
+    "require": {
+        "league/commonmark": "^2.5",
+        "google-gemini-php/client": "^2.7",
+        "guzzlehttp/guzzle": "^7.10",
+        "guzzlehttp/psr7": "^2.9",
+        "smalot/pdfparser": "^2.12",
+        "phpoffice/phpword": "^1.4"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "php-http/discovery": true
+        }
+    }
+}

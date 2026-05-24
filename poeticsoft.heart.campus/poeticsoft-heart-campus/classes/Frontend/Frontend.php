@@ -1,0 +1,37 @@
+<?php
+
+namespace Poeticsoft\Heart\Frontend;
+
+use Poeticsoft\Heart\Campus;
+
+/**
+ * Frontend Controller.
+ * Handles public-facing logic.
+ */
+class Frontend
+{
+
+    /**
+     * Initialize frontend hooks.
+     */
+    public function init()
+    {
+        // Initialize Frontend Assets.
+        Campus::get(FrontendAssets::class)->init();
+
+        // Add shortcodes, filters for content, etc.
+        add_shortcode(Campus::PLUGIN_SLUG . '_info', [$this, 'render_shortcode']);
+    }
+
+    /**
+     * Example shortcode.
+     */
+    public function render_shortcode()
+    {
+        return sprintf(
+            '<div class="%sfrontend">%s is active.</div>',
+            esc_attr(Campus::PREFIX),
+            esc_html(Campus::PLUGIN_NAME)
+        );
+    }
+}

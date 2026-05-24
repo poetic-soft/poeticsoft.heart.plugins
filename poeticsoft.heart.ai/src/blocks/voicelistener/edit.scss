@@ -1,0 +1,68 @@
+.psh-voice-preview {
+    border: 2px dashed #ccc;
+    padding: 15px;
+    background: #fff;
+    border-radius: 4px;
+
+    .psh-voice-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .psh-voice-mockup {
+        button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .psh-voice-output-mock {
+            border: 1px solid #ddd;
+            padding: 10px;
+            min-height: 60px;
+            background: #fcfcfc;
+            color: #888;
+            font-style: italic;
+        }
+    }
+
+    .psh-block-id-badge {
+        font-size: 10px;
+        color: #aaa;
+        margin-top: 10px;
+        text-align: right;
+        .psh-voice-btn-preview {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &.is-listening {
+                background: #f44336;
+                animation: psh-pulse 1.5s infinite;
+            }
+        }
+
+        .psh-voice-status-preview {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+        }
+    }
+}
+
+@keyframes psh-pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "poeticsoft-heart",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "newblock": "node ./scripts/newblock blockbase plugins blocksbase",
+    "blockbase": "webpack --env block-blockbase",
+    "voiceinterface": "webpack --env block-voiceinterface",
+    "voicespeaker": "webpack --env block-voicespeaker"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "@babel/preset-react": "^7.24.0",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^7.1.2",
+    "mini-css-extract-plugin": "^2.9.0",
+    "sass": "^1.77.0",
+    "sass-loader": "^14.2.1",
+    "style-loader": "^3.3.4",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "dotenv-expand": "^13.0.0",
+    "uuid": "^14.0.0"
+  }
+}

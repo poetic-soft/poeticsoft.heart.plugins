@@ -1,0 +1,22 @@
+{
+    "name": "poeticsoft-heart/base",
+    "version": "1.0.0",
+    "description": "WordPress Base Plugin with optimized conditional loading and modern architecture.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Alberto en Poeticsoft",
+            "email": "alberto@poeticsoft.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Poeticsoft\\Heart\\": "classes/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

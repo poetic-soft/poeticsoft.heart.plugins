@@ -1,0 +1,21 @@
+.wp-block-poeticsoft-heart-blockbase {
+    background: #f0f0f0;
+    padding: 2rem;
+    border: 2px dashed #333;
+    color: #333;
+
+    .psh-block-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .psh-icon {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin: 0;
+            flex-grow: 1;
+        }
+    }
+}
