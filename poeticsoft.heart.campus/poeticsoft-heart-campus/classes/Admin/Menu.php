@@ -65,9 +65,8 @@ class Menu
 
         // 2. Register all sub-pages.
         foreach ($this->pages as $page_class) {
+            
             $page = Campus::get($page_class);
-
-            Campus::log($page->get_page_title());
 
             // Dashboard is the parent, so we skip adding it as sub-menu to avoid duplication 
             // (WP adds the first sub-menu with the same slug as the parent automatically).

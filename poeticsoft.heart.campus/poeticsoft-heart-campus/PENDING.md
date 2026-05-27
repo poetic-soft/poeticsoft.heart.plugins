@@ -19,3 +19,6 @@
 - **Registro Inteligente de Assets (Asset Map):**
   - Centralizar el mapa de dependencias y versiones de assets en un archivo de configuración o clase dedicada.
   - Facilitar la actualización de versiones y nombres de archivos sin tocar los controladores.
+
+## 2. Unificar acceso a campus root id
+## 3. QUick edits view

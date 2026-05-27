@@ -3,6 +3,7 @@
 namespace Poeticsoft\Heart\Frontend;
 
 use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Frontend\Assets;
 
 /**
  * Frontend Controller.
@@ -17,7 +18,7 @@ class Frontend
     public function init()
     {
         // Initialize Frontend Assets.
-        Campus::get(FrontendAssets::class)->init();
+        Campus::get(Assets::class)->init();
 
         // Add shortcodes, filters for content, etc.
         add_shortcode(Campus::PLUGIN_SLUG . '_info', [$this, 'render_shortcode']);

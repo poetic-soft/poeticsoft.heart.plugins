@@ -1,0 +1,32 @@
+@use 'styles/mixin' as *;
+
+#the-list tr td.PHCPrice,
+.wrap.nestedpages
+.nestedpages
+ol
+li 
+.row
+.PHCPrice {
+  
+  width: 120px;
+}
+
+.wrap.nestedpages
+.nestedpages
+ol
+li 
+.row
+.PHCPrice {
+
+  display: table-cell;
+  padding: 0 var(--s) 0 0;
+}
+
+#pcp_page_assign_price
+.inside
+.pricewrapper
+.PHCPrice
+.PriceForm {
+
+  width: 100%;
+}

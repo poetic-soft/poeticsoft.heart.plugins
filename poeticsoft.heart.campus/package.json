@@ -6,7 +6,8 @@
 
     "adminpageprice": "webpack --env=ui-admin/pageprice",
     "adminpageslist": "webpack --env=ui-admin/pageslist",
-    "alladmin": "npm run adminpageprice && npm run adminpageslist",
+    "adminaccess": "webpack --env=ui-admin/access",
+    "alladmin": "npm run adminpageprice && npm run adminpageslist && npm run adminaccess",
 
     "editcoreconfigs": "webpack --env=ui-edit/coreconfigs",
     "uipostcontent": "webpack --env=ui-frontend/postcontent",

@@ -5,19 +5,17 @@ namespace Poeticsoft\Heart\Admin;
 use Poeticsoft\Heart\Campus;
 
 /**
- * Post Editor Controller.
+ * Page Editor Controller.
  * Handles logic specifically for the post/page editor screen.
  */
-class PostEditor
+class PageEditor
 {
 
     /**
      * Initialize editor hooks.
      */
     public function init()
-    {
-        Campus::log('PostEditorController initialized', 'debug');
-
+    { 
         // Register metaboxes, blocks, or editor-specific scripts.
         add_action('add_meta_boxes', [$this, 'add_metaboxes']);
         add_action('save_post', [$this, 'save_post_data']);

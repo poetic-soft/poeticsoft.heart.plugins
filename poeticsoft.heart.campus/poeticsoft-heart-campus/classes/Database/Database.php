@@ -69,6 +69,23 @@ class Database
     }
 
     /**
+     * Clean up everything (Uninstall).
+     */
+    public function uninstall()
+    {
+        global $wpdb;
+
+        // 1. Delete Tables.
+        $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
+        $wpdb->query("DROP TABLE IF EXISTS $table_name");
+
+        // 2. Delete Options.
+        delete_option($this->get_db_version_option());
+
+        // Add more cleanup here if needed (other options, transients, etc.)
+    }
+
+    /**
      * Define the database schema.
      * 
      * @param string $charset_collate
@@ -80,8 +97,17 @@ class Database
 
         $tables = [];
 
-        // Example Table: Logs (prefix with corporate identity).
         $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
+        $tables[] = "CREATE TABLE $table_name (
+			id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            user_mail VARCHAR(255) NOT NULL,
+            post_id BIGINT(20) UNSIGNED NOT NULL,
+            PRIMARY KEY (id),
+            KEY post_id (post_id),
+            KEY user_mail (user_mail)
+		) $charset_collate;";        
+
+        $table_name = $wpdb->prefix . Campus::PREFIX . 'last_access';
         $tables[] = "CREATE TABLE $table_name (
 			id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             user_mail VARCHAR(255) NOT NULL,
@@ -91,8 +117,6 @@ class Database
             KEY post_id (post_id),
             KEY user_mail (user_mail)
 		) $charset_collate;";
-
-        // Add more tables here as the plugin grows.
 
         return $tables;
     }

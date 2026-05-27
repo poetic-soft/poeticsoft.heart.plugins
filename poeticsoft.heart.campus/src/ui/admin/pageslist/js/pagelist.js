@@ -1,5 +1,3 @@
-import { act } from "react";
-
 export default $ => {
   
   const urlParams = new URLSearchParams(window.location.search);
@@ -30,9 +28,9 @@ export default $ => {
 
     const $tr = $(this)
     const id = $tr.attr('id')
-    const childids = poeticsoft_content_payment_admin_pageslist[id]
+    const childids = poeticsoft_heart_campus_admin_pageslist[id]
     $trsbyparentid[id] = childids.map(cid => $thelist.find('tr#' + cid))
-    if(poeticsoft_content_payment_admin_campus_ids.includes(id)) {
+    if(poeticsoft_heart_campus_admin_campus_ids.includes(id)) {
 
       $tr.addClass('InCampus')
     }
@@ -49,7 +47,7 @@ export default $ => {
       $c.removeClass('Visible Opened')
     })
 
-    const childIds = poeticsoft_content_payment_admin_pageslist[id]
+    const childIds = poeticsoft_heart_campus_admin_pageslist[id]
     childIds.length && childIds.forEach(cid => closebranch(cid))
   }  
 
@@ -95,7 +93,7 @@ export default $ => {
     const id = $tr.attr('id')
     const $title = $tr.find('td.column-title a.row-title')    
     const $titlecontainer = $title.parent('strong')
-    const childids = poeticsoft_content_payment_admin_pageslist[id]
+    const childids = poeticsoft_heart_campus_admin_pageslist[id]
 
     $title.html($title.html().split('— ').join(''))
     $titlecontainer.addClass('TitleContainer')

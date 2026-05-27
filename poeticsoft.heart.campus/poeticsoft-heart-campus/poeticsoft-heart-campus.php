@@ -17,7 +17,6 @@ if (! defined('ABSPATH')) {
 }
 
 // Load Composer Autoloader.
-// composer dump-autoload -o
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
@@ -34,4 +33,11 @@ add_action('plugins_loaded', function () {
  */
 register_activation_hook(__FILE__, function () {
     \Poeticsoft\Heart\Campus::get(\Poeticsoft\Heart\Database\Database::class)->install();
+});
+
+/**
+ * Deactivation Hook.
+ */
+register_deactivation_hook(__FILE__, function () {
+    // Logic to run on deactivation (e.g., flush rewrite rules).
 });

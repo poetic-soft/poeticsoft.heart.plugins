@@ -1,0 +1,121 @@
+body.poeticsoft-heart-campus_page_poeticsoft_heart_campus_access
+#wpbody-content 
+.wrap {
+
+  h1 {
+
+
+  }
+
+  hr {
+
+
+  }
+
+  .poeticsoft-heart-campus-page-content {
+
+    .tools {
+
+      form {
+
+        margin: 12px 0  16px 0;
+
+        p.submit {
+
+          margin: 0;
+          padding: 0;
+          text-align: right;
+          
+          input {
+
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    .stats {
+
+      border: solid #ccc;
+      border-width: 1px 0;
+      margin: 0 0 16px 0;
+      padding: 8px;
+
+      display: flex;
+      
+      .stat {
+
+        display: flex;
+        gap: 8px;
+
+        .text {
+
+
+        }
+
+        .value {
+
+          font-weight: bold;
+        }
+      };
+    }
+
+    .access {
+
+      background-color: #fff;
+      padding: 24px;
+
+      .user {
+
+        border: solid #ccc;
+        border-width: 2px 0 0 0;
+        margin: 0 0 24px 0;
+
+        .index-mail {
+
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 0;
+          border: solid #ccc;
+          border-width: 0 0 1px 0;
+          margin: 0 0 8px 0;
+
+          .index {
+
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+
+          }
+
+          .mail {
+
+            font-weight: bold;
+          }
+        }
+
+        .posts {
+
+          flex: 1;
+          padding: 0 0 0 24px;
+
+          .post {
+
+            padding: 0 0 8px 0;
+          }
+
+          .post + .post {
+
+            border: dotted #ccc;
+            border-width: 1px 0 0 0 ;
+          }
+        }
+      }
+    }
+  }
+}

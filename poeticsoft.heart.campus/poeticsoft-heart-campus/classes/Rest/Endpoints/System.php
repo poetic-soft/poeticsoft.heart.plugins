@@ -3,13 +3,13 @@
 namespace Poeticsoft\Heart\Rest\Endpoints;
 
 use Poeticsoft\Heart\Campus;
-use Poeticsoft\Heart\Rest\AbstractEndpoint;
+use Poeticsoft\Heart\Rest\Endpoint;
 
 /**
  * System Endpoint Section.
  * Example of modular API implementation with security levels.
  */
-class SystemEndpoint extends AbstractEndpoint
+class System extends Endpoint
 {
 
     /**

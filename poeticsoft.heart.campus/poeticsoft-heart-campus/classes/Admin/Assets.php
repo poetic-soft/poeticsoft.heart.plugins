@@ -16,7 +16,10 @@ class Assets
      */
     public function init()
     {
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action(
+            'admin_enqueue_scripts', 
+            [$this, 'enqueue_scripts']
+        );
     }
 
     /**
@@ -26,29 +29,169 @@ class Assets
      */
     public function enqueue_scripts($hook_suffix)
     {
-        $screen = get_current_screen();
-
-        // Only load on our specific plugin page.
-        if ('toplevel_page_' . Campus::PLUGIN_SLUG === $hook_suffix) {
-            wp_enqueue_style(
-                Campus::PREFIX . 'admin-css',
-                Campus::url('assets/admin/admin-style.css'),
-                [],
-                Campus::VERSION
-            );
-
-            wp_enqueue_script(
-                Campus::PREFIX . 'admin-js',
-                Campus::url('assets/admin/admin-script.js'),
-                ['jquery'],
-                Campus::VERSION,
-                true
-            );
+        
+        $screen = get_current_screen(); 
+        
+        $screen_id = sprintf('%1$s_%2$s', $screen->base, $screen->id);
+        $page_access = sprintf('%s_page_%saccess', Campus::PLUGIN_SLUG, Campus::PREFIX);
+        
+        $enqueue_handle = Campus::PREFIX . 'admin_';
+        $enqueue_url = 'ui/admin/';
+        $enqueue = false;
+        
+        // hook_suffix based admin page location
+        switch($hook_suffix) {
+            
+            case $page_access:
+                
+                $enqueue_data = [
+                    'handle' => $enqueue_handle . 'access',
+                    'url' => $enqueue_url . 'access/main.',
+                    'enqueue' => $page_access
+                ];
+                
+                $this->enqueue($enqueue_data);
+                
+                break;
         }
+        
+        // screen based admin page location
+        switch($screen_id) {
+            
+            case 'edit_edit-page':
+                
+                $pageutils_enabled_option_name = sprintf('%spage_utils', Campus::PREFIX);
+                $pageutils_enabled = get_option($pageutils_enabled_option_name);                
+                if($pageutils_enabled) {
+                
+                    $enqueue_data = [
+                        'handle' => $enqueue_handle . 'pageslist',
+                        'url' => $enqueue_url . 'pageslist/main.',
+                        'enqueue' => $screen_id
+                    ];
+                    
+                    $this->enqueue($enqueue_data);
+                }
+                
+                $enqueue_data = [
+                    'handle' => $enqueue_handle . 'pageprice',
+                    'url' => $enqueue_url . 'pageprice/main.',
+                    'enqueue' => $screen_id,
+                    'jsdeps' => ['wp-api-fetch']
+                ];
+                    
+                $this->enqueue($enqueue_data);
+        
+                $this->add_inline_script($enqueue_data);
+                
+                break;
+        }
+    }
+    
+    private function enqueue($enqueue_data) {
+            
+        wp_enqueue_style(
+            $enqueue_data['handle'],
+            Campus::url($enqueue_data['url'] . 'css'),
+            array_merge([], $enqueue_data['css_deps'] ?? []),
+            Campus::VERSION
+        );
 
-        // Example: Only load on 'post' or 'page' editor.
-        if ($screen && 'post' === $screen->base) {
-            // Enqueue editor-specific assets here.
+        wp_enqueue_script(
+            $enqueue_data['handle'],
+            Campus::url($enqueue_data['url'] . 'js'),
+            array_merge(['jquery'], $enqueue_data['js_deps'] ?? []),
+            Campus::VERSION,
+            true
+        );       
+    }  
+            
+    // Extra data for scripts
+    private function add_inline_script($enqueue_data) {        
+        
+        switch($enqueue_data['enqueue']) {
+            
+            case 'edit_edit-page': 
+                
+                // Site pages list with childs
+
+                $pages = get_posts([
+                    'post_type'      => 'page',
+                    'post_status'    => 'any',
+                    'fields'         => 'ids',
+                    'posts_per_page' => -1,
+                ]);  
+
+                $pageids = [];
+                foreach ($pages as $pageid) {
+
+                    $pageids['post-' . $pageid] = array_map(
+                        function($child) {
+
+                            return 'post-' . $child;
+                        },
+                        get_children([
+                            'post_parent' => $pageid,
+                            'post_type'   => 'page',
+                            'fields'      => 'ids',
+                        ])
+                    );
+                }
+
+                $data_json = json_encode($pageids);
+                $prefix = Campus::PREFIX;
+                $inline_js = "var {$prefix}admin_pageslist = {$data_json};";
+                wp_add_inline_script(
+                    $enqueue_data['handle'], 
+                    $inline_js, 
+                    'after'
+                ); 
+                
+                // Campus pages list
+                
+                $campus_root_id_option_name = sprintf('%sroot_post_id', Campus::PREFIX);
+                $campus_root_id = intval(get_option($campus_root_id_option_name));
+                if(
+                    !$campus_root_id
+                    ||
+                    $campus_root_id == ''
+                ) {
+
+                    return;        
+                }  
+                
+                $descendants = get_pages([
+                'child_of' => $campus_root_id,
+                'post_type' => 'page',
+                'post_status' => [
+                    'publish', 
+                    'private', 
+                    'pending', 
+                    'draft', 
+                    'future'
+                ]
+                ]);
+                $descendant_ids = wp_list_pluck($descendants, 'ID');
+                $descendant_ids[] = $campus_root_id;
+                $campus_ids = array_map(
+                    function($id) {
+
+                        return 'post-' . $id;
+                    },
+                    $descendant_ids
+                );
+
+                $data_json = json_encode($campus_ids);
+                $prefix = Campus::PREFIX;
+                $inline_js = "var {$prefix}admin_campus_ids = {$data_json};";
+                wp_add_inline_script(
+                    $enqueue_data['handle'], 
+                    $inline_js, 
+                    'after'
+                );
+                
+                break;           
+                 
         }
     }
 }

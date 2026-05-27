@@ -12,7 +12,7 @@ class Updater
     /**
      * Remote API URL.
      */
-    private $remote_url = 'https://api.poeticsoft.com/update.json';
+    private $remote_url = 'https://poeticsoft.com/plugins/poeticsoft-heart-campus/poeticsoft-heart-campus.json';
 
     /**
      * Initialize the updater hooks.
@@ -100,6 +100,11 @@ class Updater
             }
 
             $remote = json_decode(wp_remote_retrieve_body($response));
+            
+            if (null === $remote) {
+                return false;
+            }
+
             set_transient(Campus::PREFIX . 'update', $remote, HOUR_IN_SECONDS);
         }
 

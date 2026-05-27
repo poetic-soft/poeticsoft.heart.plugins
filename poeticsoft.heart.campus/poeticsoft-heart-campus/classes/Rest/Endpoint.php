@@ -6,7 +6,7 @@ namespace Poeticsoft\Heart\Rest;
  * Abstract Endpoint Base Class.
  * Provides consistent response methods and security constants.
  */
-abstract class AbstractEndpoint {
+abstract class Endpoint {
 
 	/**
 	 * Security Levels.

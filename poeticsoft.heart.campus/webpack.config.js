@@ -15,7 +15,7 @@ module.exports = env => {
   const name = params[1] || 'base' // base | etc.
 
   let mode = params[2] || 'dev' // dev | prod
-  let watch = params[3] || 'no' // si | no
+  let watch = params[3] || 'si' // si | no
 
   const paths = {
     output: destdir  + '/' + type + '/' + name,
@@ -58,7 +58,7 @@ module.exports = env => {
         main: './src/ui/' + name + '/main.js'
       }
 
-      if(name == 'admin/calendar') {
+      if(name == 'admin/pageprice') {
 
         externals = wpcompexternals
       }
@@ -111,7 +111,12 @@ module.exports = env => {
               loader: 'css-loader'
             },
             {
-              loader: 'sass-loader'
+              loader: 'sass-loader',
+              options: {
+                api: "modern",sassOptions: {
+                  loadPaths: [path.join(__dirname, 'src')],
+                }
+              }
             }
           ]
         },
@@ -149,11 +154,12 @@ module.exports = env => {
         blocks: path.join(__dirname, pluginname, 'block'),       
         blockscommon: path.join(__dirname, 'src', 'block', 'common'),    
         styles: path.join(__dirname, 'src', 'styles'),
-        uiutils: path.join(__dirname, 'src', 'ui', 'utils'),
       }
     },
     externals: externals
   }
+
+  console.log(path.join(__dirname, 'src', 'styles'));
 
   return config
 }

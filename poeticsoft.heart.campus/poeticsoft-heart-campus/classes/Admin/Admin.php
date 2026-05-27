@@ -3,9 +3,11 @@
 namespace Poeticsoft\Heart\Admin;
 
 use Poeticsoft\Heart\Campus;
-use Poeticsoft\Heart\Admin\AdminAssets;
-use Poeticsoft\Heart\Admin\MenuController;
-use Poeticsoft\Heart\Admin\PostEditorController;
+use Poeticsoft\Heart\Admin\Meta;
+use Poeticsoft\Heart\Admin\Menu;
+use Poeticsoft\Heart\Admin\Assets;
+use Poeticsoft\Heart\Admin\PageEditor;
+use Poeticsoft\Heart\Admin\PagesList;
 
 /**
  * Admin Controller.
@@ -15,35 +17,45 @@ class Admin
 {
 
     /**
-     * Initialize admin hooks.
+     * Initialize init hooks.
      */
     public function init()
-    {
-        // 1. Initialize Admin Assets (always loaded in admin).
+    {       
+        
         Campus::get(Assets::class)->init();
-
-        // 2. Register Modular Menus.
         Campus::get(Menu::class)->init();
-
-        // 3. Conditional Sub-Routing for other logic (metaboxes, etc).
+        Campus::get(Meta::class)->init();     
+        
         add_action('current_screen', [$this, 'route_sub_controllers']);
     }
 
     /**
      * Sub-Router: Only instantiates logic for screens that are NOT main settings pages
-     * (since settings pages are now managed by MenuController).
      */
     public function route_sub_controllers()
     {
+        
         $screen = get_current_screen();
 
         if (! $screen) {
             return;
         }
-
-        // A. Check if we are in the Editor (Post/Page/CPT).
-        if ('post' === $screen->base) {
-            Campus::get(PostEditor::class)->init();
+        
+        $screen_id = $screen->base . '_' . $screen->id;
+        
+        switch($screen_id) {
+            
+            case 'post_page':
+                
+                Campus::get(PageEditor::class)->init();
+                
+                break;
+                
+            case 'edit_edit-page':
+                
+                Campus::get(PagesList::class)->init();
+                
+                break;
         }
     }
 }

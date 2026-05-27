@@ -8,7 +8,7 @@ use Poeticsoft\Heart\Campus;
  * Frontend Assets Handler.
  * Conditional loading for public assets.
  */
-class FrontendAssets
+class Assets
 {
 
     /**

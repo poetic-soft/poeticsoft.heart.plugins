@@ -2,6 +2,7 @@
 
 namespace Poeticsoft\Heart;
 
+use Poeticsoft\Heart\Updater;
 use Poeticsoft\Heart\Admin\Admin;
 use Poeticsoft\Heart\Frontend\Frontend;
 use Poeticsoft\Heart\Rest\Rest;
@@ -25,7 +26,7 @@ final class Campus
     /**
      * Plugin version.
      */
-    const VERSION = '0.0.0';
+    const VERSION = '1.0.0';
 
     /**
      * Plugin Identity Constants.
@@ -125,48 +126,60 @@ final class Campus
      */
     private function init()
     {
-        // 1. Admin Context
+        // 1. Global Hooks (Always loaded)
+        $this->init_global();
+
+        // 2. Admin Context
         if (is_admin()) {
             $this->init_admin();
         }
 
-        // 2. REST API Context
-        if (defined('REST_REQUEST') && REST_REQUEST) {
-            $this->init_rest();
-        }
+        // 3. REST API Context
+        // This only adds a hook to 'rest_api_init', so it's safe to call always.
+        $this->init_rest();
 
-        // 3. Frontend Context (Always loaded if not admin/rest, but also handles common hooks)
-        if (! is_admin() && ! (defined('REST_REQUEST') && REST_REQUEST)) {
+        // 4. Frontend Context
+        // We initialize frontend ONLY if it's not admin and not a REST request.
+        if (! is_admin() && ! $this->is_rest()) {
             $this->init_frontend();
         }
+    }
 
-        // 4. Global Hooks (Always loaded)
-        $this->init_global();
+    /**
+     * Check if the current request is a REST API request.
+     * Useful for early detection before WordPress defines REST_REQUEST.
+     *
+     * @return bool
+     */
+    private function is_rest()
+    {
+        if (defined('REST_REQUEST') && REST_REQUEST) {
+            return true;
+        }
+
+        if (! isset($_SERVER['REQUEST_URI'])) {
+            return false;
+        }
+
+        // Standard WordPress REST prefix is 'wp-json'
+        return strpos($_SERVER['REQUEST_URI'], '/wp-json/') !== false;
     }
 
     /**
      * Load Admin components.
      */
     private function init_admin()
-    {
-        add_action('init', function () {
-            self::get(Admin::class)->init();
-        });
-
-        // Lazy-loaded Updater: only in admin and on admin_init.
-        add_action('admin_init', function () {
-            self::get(Updater::class)->init();
-        });
+    {                  
+        self::get(Updater::class)->init();
+        self::get(Admin::class)->init();
     }
 
     /**
      * Load Frontend components.
      */
     private function init_frontend()
-    {
-        add_action('init', function () {
-            self::get(Frontend::class)->init();
-        });
+    {        
+        self::get(Frontend::class)->init();
     }
 
     /**

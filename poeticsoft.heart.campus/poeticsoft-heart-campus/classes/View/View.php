@@ -2,6 +2,8 @@
 
 namespace Poeticsoft\Heart\View;
 
+use Poeticsoft\Heart\Campus;
+
 /**
  * View Orchestrator.
  * Simple template engine to separate logic from presentation.

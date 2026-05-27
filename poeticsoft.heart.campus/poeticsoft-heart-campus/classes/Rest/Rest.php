@@ -3,8 +3,9 @@
 namespace Poeticsoft\Heart\Rest;
 
 use Poeticsoft\Heart\Campus;
-use Poeticsoft\Heart\Rest\Endpoints\SystemEndpoint;
-use Poeticsoft\Heart\Rest\AbstractEndpoint;
+use Poeticsoft\Heart\Rest\Endpoint;
+use Poeticsoft\Heart\Rest\Endpoints\System;
+use Poeticsoft\Heart\Rest\Endpoints\Page;
 
 /**
  * REST API Controller (Orchestrator).
@@ -24,7 +25,8 @@ class Rest
      * @var array
      */
     private $sections = [
-        SystemEndpoint::class,
+        System::class,
+        Page::class,
         // Add more endpoint classes here.
     ];
 
@@ -54,14 +56,14 @@ class Rest
     private function register_section($section_class)
     {
         $instance = Campus::get($section_class);
-        $routes   = $instance->get_routes();
+        $routes   = $instance->get_routes();   
 
         foreach ($routes as $route => $config) {
             register_rest_route($this->namespace, $route, [
                 'methods'             => $config['methods'],
                 'callback'            => [$instance, $config['callback']],
                 'permission_callback' => function ($request) use ($config) {
-                    return $this->check_auth($config['auth'] ?? AbstractEndpoint::AUTH_ADMIN);
+                    return $this->check_auth($config['auth'] ?? Endpoint::AUTH_ADMIN);
                 },
             ]);
         }
@@ -76,13 +78,13 @@ class Rest
     private function check_auth($level)
     {
         switch ($level) {
-            case AbstractEndpoint::AUTH_PUBLIC:
+            case Endpoint::AUTH_PUBLIC:
                 return true;
 
-            case AbstractEndpoint::AUTH_USER:
+            case Endpoint::AUTH_USER:
                 return is_user_logged_in();
 
-            case AbstractEndpoint::AUTH_ADMIN:
+            case Endpoint::AUTH_ADMIN:
                 return current_user_can('manage_options');
 
             default:

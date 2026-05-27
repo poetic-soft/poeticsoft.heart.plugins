@@ -122,6 +122,7 @@ abstract class Page
             'type'        => $args['type'] ?? 'text',
             'description' => $args['description'] ?? '',
             'options'     => $args['options'] ?? [],
+            'width'       => $args['width'] ?? null,
         ];
 
         $this->render_view('admin/form-field', $field_data);
