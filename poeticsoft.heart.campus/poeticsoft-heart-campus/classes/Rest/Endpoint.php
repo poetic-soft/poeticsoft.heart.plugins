@@ -2,6 +2,8 @@
 
 namespace Poeticsoft\Heart\Rest;
 
+use Poeticsoft\Heart\Utils\Utils;
+
 /**
  * Abstract Endpoint Base Class.
  * Provides consistent response methods and security constants.
@@ -39,10 +41,7 @@ abstract class Endpoint {
 	 * @return \WP_REST_Response
 	 */
 	public function send_success( $data, $status = 200 ) {
-		return new \WP_REST_Response( [
-			'success' => true,
-			'data'    => $data,
-		], $status );
+		return Utils::send_success( $data, $status );
 	}
 
 	/**
@@ -54,12 +53,6 @@ abstract class Endpoint {
 	 * @return \WP_REST_Response
 	 */
 	public function send_error( $code, $message, $status = 400 ) {
-		return new \WP_REST_Response( [
-			'success' => false,
-			'error'   => [
-				'code'    => $code,
-				'message' => $message,
-			],
-		], $status );
+		return Utils::send_error( $code, $message, $status );
 	}
 }

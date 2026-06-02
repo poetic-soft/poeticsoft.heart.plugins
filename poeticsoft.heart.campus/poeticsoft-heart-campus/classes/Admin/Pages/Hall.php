@@ -4,6 +4,7 @@ namespace Poeticsoft\Heart\Admin\Pages;
 
 use Poeticsoft\Heart\Admin\Page;
 use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * SMTP Settings Page.
@@ -19,6 +20,19 @@ class Hall extends Page
 
         $this->settings = [
             
+            // --- Performance ---
+
+            [
+                'key'         => 'block_cache_enabled',
+                'title'       => __('Enable Block Caching', Campus::TEXT_DOMAIN),
+                'field_type'  => 'boolean',
+                'section'     => 'performance',
+                'section_title' => __('Performance Settings', Campus::TEXT_DOMAIN),
+                'value'       => true,
+                'type'        => 'checkbox',
+                'description' => __('When enabled, complex blocks like Related Content will cache their results indefinitely to improve loading speed.', Campus::TEXT_DOMAIN),
+            ],
+
             // --- Campus ---
             
             [
@@ -65,7 +79,7 @@ class Hall extends Page
             // --- Directus ---            
             
             [
-                'key' => 'access_url',
+                'key' => 'directus_access_url',
                 'field_type' => 'string',
                 'title' => 'Sincronizacion de Humanos/Páginas',
                 'description' => 'Sincronizacion de Humanos/Páginas',
@@ -74,7 +88,7 @@ class Hall extends Page
             ],
 
             [
-                'key' => 'access_token',
+                'key' => 'directus_access_token',
                 'field_type' => 'string',
                 'title' => 'Token para Sincronizacion de Humanos/Páginas',
                 'description' => 'Token para Sincronizacion de Humanos/Páginas',
@@ -83,7 +97,7 @@ class Hall extends Page
             ],
             
             [
-                'key' => 'log_access_url',
+                'key' => 'directus_log_access_url',
                 'field_type' => 'string',
                 'title' => 'Url registro en log de accesos',
                 'description' => 'Url registro en log de accesos',
@@ -92,7 +106,7 @@ class Hall extends Page
             ],
 
             [
-                'key' => 'log_access_token',
+                'key' => 'directus_log_access_token',
                 'field_type' => 'string',
                 'title' => 'Token registro en log de accesos',
                 'description' => 'Token registro en log de accesos',
@@ -120,5 +134,61 @@ class Hall extends Page
                 'section' => 'mailrelay'
             ],
         ];
+    }
+
+    /**
+     * Handle custom actions securely.
+     */
+    protected function handle_action($action)
+    {
+        if ('clear_block_cache' === $action) {
+            
+            global $wpdb;
+            $prefix = 'poeticsoft_heart_campus_';
+            $wpdb->query( $wpdb->prepare(
+                "DELETE FROM $wpdb->options WHERE option_name LIKE %s OR option_name LIKE %s",
+                '_transient_' . $prefix . '%',
+                '_transient_timeout_' . $prefix . '%'
+            ) );
+
+            // Utils::log('Block cache manually cleared by user.', 'info');
+
+            add_action('admin_notices', function () {
+                $this->render_view('admin/notice', [
+                    'type'    => 'success',
+                    'message' => __('All block caches have been cleared successfully.', Campus::TEXT_DOMAIN),
+                ]);
+            });
+        }
+    }
+
+    /**
+     * Render page content.
+     */
+    protected function render_content()
+    {
+        $data = [
+            'clear_cache_url' => wp_nonce_url(
+                add_query_arg(['action' => 'clear_block_cache'], menu_page_url($this->slug, false)),
+                $this->get_nonce_action(),
+                $this->get_nonce_name()
+            ),
+        ];
+
+        // 1. Render settings form (default)
+        $this->render_view('admin/generic-settings');
+
+        // 2. Add the clear cache button
+        ?>
+        <div class="card">
+            <h2><?php _e('Cache Management', Campus::TEXT_DOMAIN); ?></h2>
+            <p><?php _e('Use this button to manually clear all cached block content.', Campus::TEXT_DOMAIN); ?></p>
+            <p>
+                <a href="<?php echo esc_url($data['clear_cache_url']); ?>" class="button button-secondary">
+                    <?php _e('Clear All Block Caches', Campus::TEXT_DOMAIN); ?>
+                </a>
+            </p>
+        </div>
+        <?php
     }
 }

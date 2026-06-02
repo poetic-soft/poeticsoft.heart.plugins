@@ -91,20 +91,20 @@ var withInspectorControls = createHigherOrderComponent(function (BlockEdit) {
     if (props.name === 'core/post-content') {
       var attributes = props.attributes,
         setAttributes = props.setAttributes;
-      var showrestrictedtext = attributes.showrestrictedtext,
-        restrictedvisibletext = attributes.restrictedvisibletext,
-        payvisibletext = attributes.payvisibletext;
+      var showRestrictedText = attributes.showRestrictedText,
+        restrictedVisibleText = attributes.restrictedVisibleText,
+        payVisibleText = attributes.payVisibleText;
       return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(BlockEdit, props), /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
         title: "Advertencia contenido restringido",
         initialOpen: true,
         className: "PostContentConfig"
       }, /*#__PURE__*/React.createElement(SelectControl, {
         label: "Donde ver advertencia",
-        value: showrestrictedtext,
+        value: showRestrictedText,
         options: postContentVisibleOptions,
         onChange: function onChange(value) {
           return setAttributes({
-            showrestrictedtext: value
+            showRestrictedText: value
           });
         }
       }), /*#__PURE__*/React.createElement("div", {
@@ -116,11 +116,11 @@ var withInspectorControls = createHigherOrderComponent(function (BlockEdit) {
       }, /*#__PURE__*/React.createElement(RichText, {
         __unstableOnFocus: true,
         tagName: "div",
-        value: restrictedvisibletext,
+        value: restrictedVisibleText,
         allowedFormats: ['core/bold', 'core/italic'],
         onChange: function onChange(value) {
           return setAttributes({
-            restrictedvisibletext: value
+            restrictedVisibleText: value
           });
         },
         placeholder: "Texto contenido restringido"
@@ -133,11 +133,11 @@ var withInspectorControls = createHigherOrderComponent(function (BlockEdit) {
       }, /*#__PURE__*/React.createElement(RichText, {
         __unstableOnFocus: true,
         tagName: "div",
-        value: payvisibletext,
+        value: payVisibleText,
         allowedFormats: ['core/bold', 'core/italic'],
         onChange: function onChange(value) {
           return setAttributes({
-            payvisibletext: value
+            payVisibleText: value
           });
         },
         placeholder: "Texto contenido restringido"

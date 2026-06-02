@@ -3,6 +3,7 @@
 namespace Poeticsoft\Heart\Languages;
 
 use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * Languages Orchestrator.
@@ -27,7 +28,7 @@ class Languages
         load_plugin_textdomain(
             $this->get_domain(),
             false,
-            Campus::path('languages')
+            Utils::path('languages')
         );
     }
 

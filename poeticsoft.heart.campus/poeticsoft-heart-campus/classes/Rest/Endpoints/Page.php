@@ -68,7 +68,7 @@ class Page extends Endpoint
         $ids[] = (int)$campus_root_id;
         
         
-        $postsstatus = [];      
+        $posts_status = [];      
         foreach($ids as $id) {
             
             $post_status = get_post_meta(
@@ -77,11 +77,11 @@ class Page extends Endpoint
                 true
             );
             
-            $postsstatus[$id] = $post_status;
+            $posts_status[$id] = $post_status;
         }
             
         return $this->send_success([
-            'pages' => $postsstatus,
+            'pages' => $posts_status,
             'time'   => current_time('mysql'),
         ]);
     }
@@ -91,28 +91,28 @@ class Page extends Endpoint
      */
     public function free_update($request)
     {
-        $postid = $request->get_param('postid');
+        $post_id = $request->get_param('postid');
         $type = $request->get_param('isfree') ? 'free' : 'paid';
       
-        if(!$postid) { 
+        if(!$post_id) { 
 
             throw new Exception('Post id not provided', 404); 
         }
         
-        $post = get_post($postid);
+        $post = get_post($post_id);
         if(!$post) { 
 
             throw new Exception('Post not found', 404); 
         }
 
         $update = update_post_meta(
-            $postid,
+            $post_id,
             Campus::PREFIX . 'status',
             $type
         );
         
         return $this->send_success([
-            'postid' => $postid,
+            'postid' => $post_id,
             'updated' => $update ? 'ok' : 'ko',
             'type' => $type
         ]);

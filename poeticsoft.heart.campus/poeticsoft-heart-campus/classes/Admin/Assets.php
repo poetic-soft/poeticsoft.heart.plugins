@@ -3,6 +3,7 @@
 namespace Poeticsoft\Heart\Admin;
 
 use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * Admin Assets Handler.
@@ -35,7 +36,7 @@ class Assets
         $screen_id = sprintf('%1$s_%2$s', $screen->base, $screen->id);
         $page_access = sprintf('%s_page_%saccess', Campus::PLUGIN_SLUG, Campus::PREFIX);
         
-        $enqueue_handle = Campus::PREFIX . 'admin_';
+        $enqueue_handle = Campus::PLUGIN_SLUG . 'admin-';
         $enqueue_url = 'ui/admin/';
         $enqueue = false;
         
@@ -60,9 +61,9 @@ class Assets
             
             case 'edit_edit-page':
                 
-                $pageutils_enabled_option_name = sprintf('%spage_utils', Campus::PREFIX);
-                $pageutils_enabled = get_option($pageutils_enabled_option_name);                
-                if($pageutils_enabled) {
+                $page_utils_enabled_option_name = sprintf('%spage_utils', Campus::PREFIX);
+                $page_utils_enabled = get_option($page_utils_enabled_option_name);                
+                if($page_utils_enabled) {
                 
                     $enqueue_data = [
                         'handle' => $enqueue_handle . 'pageslist',
@@ -74,10 +75,10 @@ class Assets
                 }
                 
                 $enqueue_data = [
-                    'handle' => $enqueue_handle . 'pageprice',
-                    'url' => $enqueue_url . 'pageprice/main.',
+                    'handle' => $enqueue_handle . 'pagestatus',
+                    'url' => $enqueue_url . 'pagestatus/main.',
                     'enqueue' => $screen_id,
-                    'jsdeps' => ['wp-api-fetch']
+                    'js_deps' => ['wp-api-fetch']
                 ];
                     
                 $this->enqueue($enqueue_data);
@@ -92,14 +93,14 @@ class Assets
             
         wp_enqueue_style(
             $enqueue_data['handle'],
-            Campus::url($enqueue_data['url'] . 'css'),
+            Utils::url($enqueue_data['url'] . 'css'),
             array_merge([], $enqueue_data['css_deps'] ?? []),
             Campus::VERSION
         );
 
         wp_enqueue_script(
             $enqueue_data['handle'],
-            Campus::url($enqueue_data['url'] . 'js'),
+            Utils::url($enqueue_data['url'] . 'js'),
             array_merge(['jquery'], $enqueue_data['js_deps'] ?? []),
             Campus::VERSION,
             true
@@ -122,23 +123,23 @@ class Assets
                     'posts_per_page' => -1,
                 ]);  
 
-                $pageids = [];
-                foreach ($pages as $pageid) {
+                $page_ids = [];
+                foreach ($pages as $page_id) {
 
-                    $pageids['post-' . $pageid] = array_map(
+                    $page_ids['post-' . $page_id] = array_map(
                         function($child) {
 
                             return 'post-' . $child;
                         },
                         get_children([
-                            'post_parent' => $pageid,
+                            'post_parent' => $page_id,
                             'post_type'   => 'page',
                             'fields'      => 'ids',
                         ])
                     );
                 }
 
-                $data_json = json_encode($pageids);
+                $data_json = json_encode($page_ids);
                 $prefix = Campus::PREFIX;
                 $inline_js = "var {$prefix}admin_pageslist = {$data_json};";
                 wp_add_inline_script(

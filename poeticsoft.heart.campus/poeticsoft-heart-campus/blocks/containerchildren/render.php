@@ -8,163 +8,149 @@
 
 defined('ABSPATH') || exit;
 
-require_once dirname(__DIR__) . '/../class/Autoload.php';
+use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Validation\Access;
+use Poeticsoft\Heart\Validation\Validation;
 
 global $post;
 
 if (!$post) {
-  return;
+    return;
 }
 
-$mode = isset($attributes['mode']) ? $attributes['mode'] : 'compact'; // complete | compact
-$contents = isset($attributes['contents']) ? $attributes['contents'] : 'all'; // all | allidentified | subscriptionsandfree
-$sectionheadingtype = tag_escape(isset($attributes['sectionHeadingType']) ? $attributes['sectionHeadingType'] : 'h2');
-$areaheadingtype = tag_escape(isset($attributes['areaHeadingType']) ? $attributes['areaHeadingType'] : 'h3');
-$title = isset($attributes['title']) ? $attributes['title'] : '';
+// 1. Validar y Sanitizar Atributos
+$validator = Campus::get(Validation::class);
+$schema = [
+    'blockId'            => ['type' => 'text', 'required' => false],
+    'refClientId'        => ['type' => 'text', 'required' => false],
+    'title'              => ['type' => 'text', 'required' => false],
+    'sectionHeadingType' => ['type' => 'key',  'required' => false],
+    'areaHeadingType'    => ['type' => 'key',  'required' => false],
+    'contents'           => ['type' => 'key',  'required' => false],
+    'mode'               => ['type' => 'key',  'required' => false],
+];
 
-$childids = get_posts([
-  'post_type' => 'page',
-  'posts_per_page' => -1,
-  'post_parent' => $post->ID,
-  'fields' => 'ids'
-]);
+$attrs = $validator->validate_schema($attributes, $schema);
 
-$titledom = '';
-$childrendom = '';
+if (is_wp_error($attrs)) {
+    $attrs = $attributes;
+}
+
+$valid_user_email = Campus::get(Access::class)->validate_email();
+
+$block_id = $attrs['blockId'] ?? '';
+$cache_enabled = (bool) get_option(Campus::PREFIX . 'block_cache_enabled', true);
+$cache_key = ($block_id && $cache_enabled) ? 'poeticsoft_heart_campus_' . md5($block_id . '_' . $post->ID . '_' . $valid_user_email) : '';
 $dom = '';
 
-if(count($childids)) {
+if ($cache_key) {
+    $dom = get_transient($cache_key);
+}
 
-  $PCP = \Poeticsoft\Heart\Campus::instance(dirname(__DIR__) . '/plugin.php');
-  $PCP->boot();
+if (false === $dom || empty($cache_key)) {
 
-  switch($contents) {
+    $mode = $attrs['mode'] ?? 'compact';
+    $contents = $attrs['contents'] ?? 'subscriptionsandfree';
+    $section_heading_tag = tag_escape($attrs['sectionHeadingType'] ?? 'h3');
+    $area_heading_tag = tag_escape($attrs['areaHeadingType'] ?? 'h4');
+    $title = $attrs['title'] ?? '';
 
-    case 'all':
+    $child_ids = get_posts([
+        'post_type'      => 'page',
+        'posts_per_page' => -1,
+        'post_parent'    => $post->ID,
+        'fields'         => 'ids'
+    ]);
 
-      // Return all ids
+    $dom = '';
 
-      break;
+    if (count($child_ids)) {
 
-    case 'allidentified':
+        switch ($contents) {
+            case 'allidentified':
+                if (!$valid_user_email) {
+                    $child_ids = [];
+                }
+                break;
 
-      if(!$PCP->validate_email()) { 
-
-        $childids = [];
-      }
-
-      break;
-
-    case 'subscriptionsandfree':
-
-      $childids = array_values(
-        array_filter(
-          $childids,
-          function($id) use ($PCP) {
-            
-            // $PCP->log('--------------------------------');
-            // $PCP->log($id);
-            // $PCP->log('canaccess');
-            // $PCP->log($PCP->canaccess($id));
-            // $PCP->log('canaccess_causechildaccesible');
-            // $PCP->log($PCP->canaccess_causechildaccesible($id));
-
-            return $PCP->canaccess($id)
-            ||
-            $PCP->canaccess_causechildaccesible($id);
-          }
-        )
-      );
-
-      break;
-  }
-
-  if(count($childids)) {
-
-    $children = array_map(
-      function($post) use ($mode) {
-
-        $child = [
-          'ID' => $post->ID,
-          'title'   => get_the_title($post->ID)
-        ];
-
-        if($mode == 'complete') {
-
-          $child['excerpt'] = get_the_excerpt($post->ID);
-          $child['thumb'] = get_the_post_thumbnail_url($post->ID, 'full');
+            case 'subscriptionsandfree':
+                $child_ids = array_values(
+                    array_filter(
+                        $child_ids,
+                        function ($id) {
+                            return Campus::get(Access::class)->can_access($id)
+                                || Campus::get(Access::class)->can_access_cause_child_accessible($id);
+                        }
+                    )
+                );
+                break;
         }
 
-        return $child;
-      },
-      get_posts([
-        'post__in' => $childids,
-        'post_type' => 'page',
-        'posts_per_page' => -1,
-        'orderby' => 'menu_order', 
-        'order' => 'ASC'
-      ])
-    );
+        if (count($child_ids)) {
 
-    if($title) {
+            $posts_data = get_posts([
+                'post__in'       => $child_ids,
+                'post_type'      => 'page',
+                'posts_per_page' => -1,
+                'orderby'        => 'menu_order',
+                'order'          => 'ASC'
+            ]);
 
-      $titledom .= '<' . $sectionheadingtype . ' class="Title">' . 
-        esc_html($title) .
-      '</' . $sectionheadingtype . '>';
+            $title_dom = '';
+            if ($title) {
+                $title_dom = sprintf(
+                    '<%1$s class="Title">%2$s</%1$s>',
+                    $section_heading_tag,
+                    esc_html($title)
+                );
+            }
+
+            $area_pages_dom = '';
+            foreach ($posts_data as $child_post) {
+                $permalink = get_permalink($child_post->ID);
+                if (!$permalink) {
+                    continue;
+                }
+
+                $page_dom = sprintf(
+                    '<div class="Area"><%1$s class="Title"><a href="%2$s">%3$s</a></%1$s>',
+                    $area_heading_tag,
+                    esc_url($permalink),
+                    esc_html(get_the_title($child_post->ID))
+                );
+
+                if ($mode === 'complete') {
+                    $thumb_url = get_the_post_thumbnail_url($child_post->ID, 'full');
+                    $thumb_dom = $thumb_url ? sprintf('<img src="%s" alt="%s">', esc_url($thumb_url), esc_attr(get_the_title($child_post->ID))) : '';
+
+                    $page_dom .= sprintf(
+                        '<div class="Image"><a href="%1$s">%2$s</a></div><div class="Excerpt">%3$s</div>',
+                        esc_url($permalink),
+                        $thumb_dom,
+                        esc_html(get_the_excerpt($child_post->ID))
+                    );
+                }
+
+                $page_dom .= '</div>';
+                $area_pages_dom .= $page_dom;
+            }
+
+            $wrapper_attributes = get_block_wrapper_attributes([
+                'id' => $block_id,
+            ]);
+
+            $dom = sprintf(
+                '<div %s>%s<div class="Areas">%s</div></div>',
+                $wrapper_attributes,
+                $title_dom,
+                $area_pages_dom
+            );
+        }
     }
 
-    $areapages = array_map(
-      function($page) use ($mode, $areaheadingtype) {
-        $permalink = get_permalink($page['ID']);
-        if (!$permalink) {
-          return '';
-        }
-
-        $pagedom = '<div class="Area">
-        <' . $areaheadingtype . ' class="Title">
-          <a href="' . esc_url($permalink) . '">' . 
-            esc_html($page['title']) . 
-          '</a>
-        </' . $areaheadingtype . '>';
-      
-        if($mode == 'complete') {
-
-          $thumb = isset($page['thumb']) ? $page['thumb'] : '';
-          $thumbdom = $thumb ? '<img src="' . esc_url($thumb) . '" alt="' . esc_attr($page['title']) . '">' : '';
-
-          $pagedom .= '<div class="Image">
-            <a href="' . esc_url($permalink) . '">
-              ' . $thumbdom . '
-            </a>
-          </div>
-          <div class="Excerpt">' .
-            esc_html($page['excerpt']) . 
-          '</div>';
-        }
-
-        $pagedom .= '</div>';
-
-        return $pagedom;
-
-      },
-      $children
-    );
-
-    $childrendom = $titledom . 
-    '<div class="Areas">' . 
-      implode(
-        '',
-        $areapages
-      ) .  
-    '</div>';
-
-    $dom = '<div 
-      id="' . esc_attr(isset($attributes['blockId']) ? $attributes['blockId'] : '') . '" 
-      class="wp-block-poeticsoft-containerchildren" 
-    >' . 
-      $childrendom .
-    '</div>';
-  } 
+    if ($cache_key) {
+        set_transient($cache_key, $dom, 0);
+    }
 }
 
 echo $dom;

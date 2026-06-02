@@ -61,6 +61,61 @@ var HeadingSelector = function HeadingSelector(props) {
 
 /***/ },
 
+/***/ "./src/block/common/uniqueid.js"
+/*!**************************************!*\
+  !*** ./src/block/common/uniqueid.js ***!
+  \**************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useUniqueId: () => (/* binding */ useUniqueId)
+/* harmony export */ });
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/v4.js");
+
+var useEffect = wp.element.useEffect;
+var seenBlockIds = new Map();
+
+/**
+ * Hook para gestionar un blockId único y persistente.
+ * 
+ * @param {string} clientId El clientId del bloque proporcionado por Gutenberg.
+ * @param {Object} attributes Los atributos del bloque.
+ * @param {Function} setAttributes Función para actualizar los atributos.
+ */
+var useUniqueId = function useUniqueId(clientId, attributes, setAttributes) {
+  var blockId = attributes.blockId,
+    refClientId = attributes.refClientId;
+  useEffect(function () {
+    if (!blockId) {
+      var newId = (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])();
+      setAttributes({
+        blockId: newId,
+        refClientId: clientId
+      });
+      seenBlockIds.set(newId, clientId);
+    } else {
+      if (seenBlockIds.has(blockId) && seenBlockIds.get(blockId) !== clientId) {
+        var _newId = (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])();
+        setAttributes({
+          blockId: _newId,
+          refClientId: clientId
+        });
+        seenBlockIds.set(_newId, clientId);
+      } else {
+        seenBlockIds.set(blockId, clientId);
+        if (refClientId !== clientId) {
+          setAttributes({
+            refClientId: clientId
+          });
+        }
+      }
+    }
+  }, []);
+};
+
+/***/ },
+
 /***/ "./src/block/containerchildren/editor.scss"
 /*!*************************************************!*\
   !*** ./src/block/containerchildren/editor.scss ***!
@@ -247,10 +302,10 @@ function validate(uuid) {
 
 /***/ },
 
-/***/ "./poeticsoft-heart-campus/block/containerchildren/block.json"
-/*!********************************************************************!*\
-  !*** ./poeticsoft-heart-campus/block/containerchildren/block.json ***!
-  \********************************************************************/
+/***/ "./poeticsoft-heart-campus/blocks/containerchildren/block.json"
+/*!*********************************************************************!*\
+  !*** ./poeticsoft-heart-campus/blocks/containerchildren/block.json ***!
+  \*********************************************************************/
 (module) {
 
 module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"poeticsoft-heart-campus/containerchildren","title":"Container Children","description":"Accesos del contenedor, sugerencias y relacionados.","category":"poeticsoft-heart-campus","icon":"media-archive","keywords":[],"textdomain":"poeticsoft-heart-campus","version":"1.0.0","supports":{"align":["left","center","right"],"anchor":false,"customClassName":true,"className":true,"html":false,"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true},"border":{"color":true,"radius":true,"style":true,"width":true},"spacing":{"margin":true,"padding":true},"dimensions":{"minHeight":true,"width":true}},"attributes":{"blockId":{"type":"string","default":""},"refClientId":{"type":"string","default":""},"title":{"type":"string","default":"Título"},"sectionHeadingType":{"type":"string","default":"h3"},"areaHeadingType":{"type":"string","default":"h4"},"contents":{"type":"string","default":"subscriptionsandfree"},"mode":{"type":"string","default":"complete"}},"editorScript":"file:./build/editor.js","editorStyle":"file:./build/editor.css","viewScript":"file:./build/view.js","viewStyle":"file:./build/view.css","render":"file:./render.php"}');
@@ -326,11 +381,10 @@ var __webpack_exports__ = {};
   !*** ./src/block/containerchildren/editor.js ***!
   \***********************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/v4.js");
-/* harmony import */ var blockscommon_elementselector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! blockscommon/elementselector */ "./src/block/common/elementselector.js");
-/* harmony import */ var blocks_containerchildren_block_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! blocks/containerchildren/block.json */ "./poeticsoft-heart-campus/block/containerchildren/block.json");
+/* harmony import */ var blockscommon_elementselector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! blockscommon/elementselector */ "./src/block/common/elementselector.js");
+/* harmony import */ var blockscommon_uniqueid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! blockscommon/uniqueid */ "./src/block/common/uniqueid.js");
+/* harmony import */ var blocks_containerchildren_block_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! blocks/containerchildren/block.json */ "./poeticsoft-heart-campus/blocks/containerchildren/block.json");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./editor.scss */ "./src/block/containerchildren/editor.scss");
-
 var registerBlockType = wp.blocks.registerBlockType;
 var _wp$blockEditor = wp.blockEditor,
   useBlockProps = _wp$blockEditor.useBlockProps,
@@ -339,7 +393,7 @@ var _wp$blockEditor = wp.blockEditor,
 var _wp$components = wp.components,
   PanelBody = _wp$components.PanelBody,
   SelectControl = _wp$components.SelectControl;
-var useEffect = wp.element.useEffect;
+
 
 
 
@@ -404,21 +458,7 @@ var Edit = function Edit(props) {
     contents = attributes.contents,
     mode = attributes.mode;
   var blockProps = useBlockProps();
-  useEffect(function () {
-    if (!blockId) {
-      setAttributes({
-        blockId: (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])(),
-        refClientId: clientId
-      });
-    } else {
-      if (refClientId !== clientId) {
-        setAttributes({
-          blockId: (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])(),
-          refClientId: clientId
-        });
-      }
-    }
-  }, []);
+  (0,blockscommon_uniqueid__WEBPACK_IMPORTED_MODULE_1__.useUniqueId)(clientId, attributes, setAttributes);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
     title: "Opciones del Bloque",
     initialOpen: true
@@ -438,7 +478,7 @@ var Edit = function Edit(props) {
       });
     },
     placeholder: "T\xEDtulo"
-  }))), /*#__PURE__*/React.createElement(blockscommon_elementselector__WEBPACK_IMPORTED_MODULE_1__.HeadingSelector, {
+  }))), /*#__PURE__*/React.createElement(blockscommon_elementselector__WEBPACK_IMPORTED_MODULE_0__.HeadingSelector, {
     title: "Elemento de t\xEDtulo de secci\xF3n",
     value: sectionHeadingType,
     onChange: function onChange(value) {
@@ -446,7 +486,7 @@ var Edit = function Edit(props) {
         sectionHeadingType: value
       });
     }
-  }), /*#__PURE__*/React.createElement(blockscommon_elementselector__WEBPACK_IMPORTED_MODULE_1__.HeadingSelector, {
+  }), /*#__PURE__*/React.createElement(blockscommon_elementselector__WEBPACK_IMPORTED_MODULE_0__.HeadingSelector, {
     title: "Elemento de t\xEDtulo de \xE1rea",
     value: areaHeadingType,
     onChange: function onChange(value) {

@@ -16,6 +16,7 @@ module.exports = env => {
 
   let mode = params[2] || 'dev' // dev | prod
   let watch = params[3] || 'si' // si | no
+  
 
   const paths = {
     output: destdir  + '/' + type + '/' + name,
@@ -39,7 +40,7 @@ module.exports = env => {
 
     case 'block':
       
-      paths.output = destdir  + '/block/' + name + '/build'
+      paths.output = destdir  + '/blocks/' + name + '/build'
 
       entry = {
         editor: './src/block/' + name + '/editor.js',
@@ -151,15 +152,13 @@ module.exports = env => {
       extensions: ['.js'],
       alias: {
         assets: path.resolve(destdir + '/assets'),       
-        blocks: path.join(__dirname, pluginname, 'block'),       
+        blocks: path.join(__dirname, pluginname, 'blocks'),       
         blockscommon: path.join(__dirname, 'src', 'block', 'common'),    
         styles: path.join(__dirname, 'src', 'styles'),
       }
     },
     externals: externals
   }
-
-  console.log(path.join(__dirname, 'src', 'styles'));
 
   return config
 }

@@ -40,9 +40,9 @@ const withInspectorControls = createHigherOrderComponent(
           setAttributes 
         } = props;
         const {
-          showrestrictedtext,
-          restrictedvisibletext,
-          payvisibletext
+          showRestrictedText,
+          restrictedVisibleText,
+          payVisibleText
         } = attributes
 
         return <>
@@ -55,11 +55,11 @@ const withInspectorControls = createHigherOrderComponent(
             >        
               <SelectControl
                 label="Donde ver advertencia"
-                value={ showrestrictedtext }
+                value={ showRestrictedText }
                 options={ postContentVisibleOptions }
                 onChange={ 
                   value => setAttributes({ 
-                    showrestrictedtext: value 
+                    showRestrictedText: value 
                   }) 
                 }
               />
@@ -71,14 +71,14 @@ const withInspectorControls = createHigherOrderComponent(
                   <RichText
                     __unstableOnFocus
                     tagName="div"
-                    value={ restrictedvisibletext }
+                    value={ restrictedVisibleText }
                     allowedFormats={[ 
                       'core/bold', 
                       'core/italic' 
                     ]} 
                     onChange={
                       value => setAttributes({
-                        restrictedvisibletext: value
+                        restrictedVisibleText: value
                       })
                     }
                     placeholder="Texto contenido restringido"
@@ -93,14 +93,14 @@ const withInspectorControls = createHigherOrderComponent(
                   <RichText
                     __unstableOnFocus
                     tagName="div"
-                    value={ payvisibletext }
+                    value={ payVisibleText }
                     allowedFormats={[ 
                       'core/bold', 
                       'core/italic' 
                     ]} 
                     onChange={
                       value => setAttributes({
-                        payvisibletext: value
+                        payVisibleText: value
                       })
                     }
                     placeholder="Texto contenido restringido"

@@ -1,11 +1,11 @@
 export default data => {
 
-  const needregister = [
+  const needRegister = [
     'mailrelay'
   ]
 
-  const accesstype = poeticsoft_content_payment_core_block_postcontent_accesstype_origin
-  const wantregister = needregister.includes(accesstype) ?
+  const accessType = poeticsoft_content_payment_core_block_postcontent_accesstype_origin
+  const wantRegister = needRegister.includes(accessType) ?
   `
   <a 
     class="Extra NotRegistered"
@@ -45,7 +45,7 @@ export default data => {
           </div>
         </div>
       </div>
-      ${ wantregister }
+      ${ wantRegister }
       <div class="Message"></div>          
     </div>
   `

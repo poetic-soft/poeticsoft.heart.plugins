@@ -4,6 +4,8 @@ namespace Poeticsoft\Heart\Frontend;
 
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\Frontend\Assets;
+use Poeticsoft\Heart\Validation\Access;
+use Poeticsoft\Heart\Blocks\PostContent;
 
 /**
  * Frontend Controller.
@@ -11,28 +13,22 @@ use Poeticsoft\Heart\Frontend\Assets;
  */
 class Frontend
 {
-
     /**
      * Initialize frontend hooks.
      */
     public function init()
     {
+        
+        // Ensure Access validation hooks are active.
+        Campus::get(Access::class);
+        
         // Initialize Frontend Assets.
         Campus::get(Assets::class)->init();
-
-        // Add shortcodes, filters for content, etc.
-        add_shortcode(Campus::PLUGIN_SLUG . '_info', [$this, 'render_shortcode']);
-    }
-
-    /**
-     * Example shortcode.
-     */
-    public function render_shortcode()
-    {
-        return sprintf(
-            '<div class="%sfrontend">%s is active.</div>',
-            esc_attr(Campus::PREFIX),
-            esc_html(Campus::PLUGIN_NAME)
-        );
+        
+        // Campus Post Content Manager.
+        Campus::get(PostContent::class);
+        
+        // On debug disable Speculation Rules
+        remove_action('wp_head', 'wp_enqueue_speculation_rules', 20);
     }
 }

@@ -1,36 +1,37 @@
 import message from '../common/message'
 import form from './forms'
 import {
-  apifetch
+  apiFetch
 } from '../common/utils'
-import confirmpaystripeend from './do-confirmpay-stripe-end'
+import confirmPayStripeEnd from './do-confirmpay-stripe-end'
+import payChannel from './do-paychannel'
 
 export default ($, $wrapper, paytype) => {
   
-  const postcontentdata = $wrapper.data()
-  const $forms = $postcontent.find('.Forms.ShouldPay')  
+  const postContentData = $wrapper.data()
+  const $forms = $wrapper.find('.Forms.ShouldPay')  
 
-  $forms.html(form({ form: 'confirmpaystripe' }))
+  $forms.html(form({ form: 'confirmPayStripe' }))
 
-  const $confirmpay = $forms.find('.Form.ConfirmPay')
-  const $confirmpaypay = $confirmpay.find('button.Pay')
-  const $confirmpayother = $confirmpay.find('a.OtherChannel')
+  const $confirmPay = $forms.find('.Form.ConfirmPay')
+  const $confirmPayPay = $confirmPay.find('button.Pay')
+  const $confirmPayOther = $confirmPay.find('a.OtherChannel')
 
   let allowBack = true
-  $confirmpayother.on(
+  $confirmPayOther.on(
     'click',
     function() {
     
-      allowBack && paychannel($)
+      allowBack && payChannel($)
     }
   )
 
-  $confirmpaypay.on(
+  $confirmPayPay.on(
     'click',
     function() {     
 
-      $confirmpaypay.prop('disabled', true)
-      $confirmpayother.addClass('Disabled')
+      $confirmPayPay.prop('disabled', true)
+      $confirmPayOther.addClass('Disabled')
       
       allowBack = false
       
@@ -41,12 +42,12 @@ export default ($, $wrapper, paytype) => {
         'Warn'
       )
 
-      apifetch({
+      apiFetch({
         url: 'pay/init',
         body: {
           type: 'stripe',
-          email: postcontentdata.email,
-          postid: postcontentdata.postid
+          email: postContentData.email,
+          postid: postContentData.postid
         }
       })
       .then(data => { 
@@ -66,7 +67,7 @@ export default ($, $wrapper, paytype) => {
 
         const waitStripe = setInterval(() => {
 
-          apifetch({
+          apiFetch({
             url: 'pay/stripe/session/check',
             body: {
               stripesessionid: data.stripesession.id
@@ -78,7 +79,7 @@ export default ($, $wrapper, paytype) => {
 
               clearInterval(waitStripe)
 
-              confirmpaystripeend($)
+              confirmPayStripeEnd($)
             }
           })
 
@@ -96,8 +97,9 @@ export default ($, $wrapper, paytype) => {
           'Error'
         )
 
-        $identifyemail.prop('disabled', false)  
-        $identifysendmail.prop('disabled', false)
+        $confirmPayPay.prop('disabled', false)  
+        $confirmPayOther.removeClass('Disabled')
+        allowBack = true
       })
     }
   )

@@ -1,7 +1,7 @@
 import forms from './forms'
 import message from '../common/message'
 import {
-  apifetch
+  apiFetch
 } from '../common/utils'
 
 export default ($, $wrapper, email, code) => {
@@ -10,22 +10,22 @@ export default ($, $wrapper, email, code) => {
   $forms.find('.Form').remove()
 
   $forms.html(forms({ 
-    form: 'confirmcode',
+    form: 'confirmCode',
     code: code
   }))
 
-  const $codeconfirm = $forms.find('.Form.ConfirmCode')
-  const $codeconfirminput = $codeconfirm.find('input.Code')
-  const $codeconfirmconfirmcode = $codeconfirm.find('button.ConfirmCode') 
-  const $identifyresendcode = $codeconfirm.find('a.ResendCode')
+  const $codeConfirm = $forms.find('.Form.ConfirmCode')
+  const $codeConfirmInput = $codeConfirm.find('input.Code')
+  const $codeConfirmConfirmCode = $codeConfirm.find('button.ConfirmCode') 
+  const $identifyResendCode = $codeConfirm.find('a.ResendCode')
   
-  $codeconfirmconfirmcode.on(
+  $codeConfirmConfirmCode.on(
     'click',
     function() {
 
-      const code = $codeconfirminput.val()
-      $codeconfirminput.prop('disabled', true)  
-      $codeconfirmconfirmcode.prop('disabled', true)
+      const code = $codeConfirmInput.val()
+      $codeConfirmInput.prop('disabled', true)  
+      $codeConfirmConfirmCode.prop('disabled', true)
 
       message(
         $, 
@@ -34,7 +34,7 @@ export default ($, $wrapper, email, code) => {
         'Warn'
       )
 
-      apifetch({
+      apiFetch({
         url: 'identify/subscriber/confirmcode',
         body: {
           email: email,
@@ -70,8 +70,8 @@ export default ($, $wrapper, email, code) => {
           )
         }
 
-        $codeconfirminput.prop('disabled', false)  
-        $codeconfirmconfirmcode.prop('disabled', false)
+        $codeConfirmInput.prop('disabled', false)  
+        $codeConfirmConfirmCode.prop('disabled', false)
 
       })
       .catch(error => {
@@ -85,19 +85,19 @@ export default ($, $wrapper, email, code) => {
           'Error'
         )
 
-        $codeconfirminput.prop('disabled', false)  
-        $codeconfirmconfirmcode.prop('disabled', false)
+        $codeConfirmInput.prop('disabled', false)  
+        $codeConfirmConfirmCode.prop('disabled', false)
       })
     }
   )  
 
-  $identifyresendcode.on(
+  $identifyResendCode.on(
     'click',
     function() {     
 
-      $codeconfirminput.val('')
-      $codeconfirminput.prop('disabled', false)  
-      $codeconfirmconfirmcode.prop('disabled', false)   
+      $codeConfirmInput.val('')
+      $codeConfirmInput.prop('disabled', false)  
+      $codeConfirmConfirmCode.prop('disabled', false)   
 
       message(
         $, 
@@ -106,7 +106,7 @@ export default ($, $wrapper, email, code) => {
         'Warn'
       )
 
-      apifetch({
+      apiFetch({
         url: 'identify/subscriber/identify',
         body: {
           email: email
@@ -116,7 +116,7 @@ export default ($, $wrapper, email, code) => {
 
         if(data.result == 'ok') {
           
-          // $codeconfirminput.val(data.code)
+          // $codeConfirmInput.val(data.code)
 
           message(
             $, 
@@ -138,8 +138,8 @@ export default ($, $wrapper, email, code) => {
           'Error'
         )
 
-        $codeconfirminput.prop('disabled', false)  
-        $codeconfirmconfirmcode.prop('disabled', false)
+        $codeConfirmInput.prop('disabled', false)  
+        $codeConfirmConfirmCode.prop('disabled', false)
       })
 
       return false

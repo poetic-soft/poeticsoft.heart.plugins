@@ -1,6 +1,6 @@
-/*!************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/block/mytools/editor.scss ***!
-  \************************************************************************************************************************/
+/*!****************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/block/mytools/editor.scss ***!
+  \****************************************************************************************************************************************************/
 :root {
   /* SIZES */
   --space: 8px;
@@ -54,21 +54,24 @@
   --fc-event-selected-overlay-color: var(--color-0);
 }
 
-.wp-block-poeticsoft-mytools {
+.wp-block-poeticsoft-heart-campus-mytools {
   border: solid #ccc;
   border-width: 0 0 1px;
   padding: var(--s05) 0;
   text-align: right;
   font-size: 0.8em;
 }
-.wp-block-poeticsoft-mytools .PostID,
-.wp-block-poeticsoft-mytools .Identify {
+.wp-block-poeticsoft-heart-campus-mytools .PostID,
+.wp-block-poeticsoft-heart-campus-mytools .Identify {
   margin: 0 var(--s) 0 0;
 }
-.wp-block-poeticsoft-mytools a {
+.wp-block-poeticsoft-heart-campus-mytools a {
   text-decoration: none;
 }
-.wp-block-poeticsoft-mytools button a {
+.wp-block-poeticsoft-heart-campus-mytools .wp-block-buttons {
+  display: inline-block;
+}
+.wp-block-poeticsoft-heart-campus-mytools button a {
   color: #fff;
 }
 

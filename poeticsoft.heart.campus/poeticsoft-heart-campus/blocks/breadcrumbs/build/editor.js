@@ -2,6 +2,61 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/block/common/uniqueid.js"
+/*!**************************************!*\
+  !*** ./src/block/common/uniqueid.js ***!
+  \**************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   useUniqueId: () => (/* binding */ useUniqueId)
+/* harmony export */ });
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/v4.js");
+
+var useEffect = wp.element.useEffect;
+var seenBlockIds = new Map();
+
+/**
+ * Hook para gestionar un blockId único y persistente.
+ * 
+ * @param {string} clientId El clientId del bloque proporcionado por Gutenberg.
+ * @param {Object} attributes Los atributos del bloque.
+ * @param {Function} setAttributes Función para actualizar los atributos.
+ */
+var useUniqueId = function useUniqueId(clientId, attributes, setAttributes) {
+  var blockId = attributes.blockId,
+    refClientId = attributes.refClientId;
+  useEffect(function () {
+    if (!blockId) {
+      var newId = (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])();
+      setAttributes({
+        blockId: newId,
+        refClientId: clientId
+      });
+      seenBlockIds.set(newId, clientId);
+    } else {
+      if (seenBlockIds.has(blockId) && seenBlockIds.get(blockId) !== clientId) {
+        var _newId = (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])();
+        setAttributes({
+          blockId: _newId,
+          refClientId: clientId
+        });
+        seenBlockIds.set(_newId, clientId);
+      } else {
+        seenBlockIds.set(blockId, clientId);
+        if (refClientId !== clientId) {
+          setAttributes({
+            refClientId: clientId
+          });
+        }
+      }
+    }
+  }, []);
+};
+
+/***/ },
+
 /***/ "./src/block/breadcrumbs/editor.scss"
 /*!*******************************************!*\
   !*** ./src/block/breadcrumbs/editor.scss ***!
@@ -188,10 +243,10 @@ function validate(uuid) {
 
 /***/ },
 
-/***/ "./poeticsoft-heart-campus/block/breadcrumbs/block.json"
-/*!**************************************************************!*\
-  !*** ./poeticsoft-heart-campus/block/breadcrumbs/block.json ***!
-  \**************************************************************/
+/***/ "./poeticsoft-heart-campus/blocks/breadcrumbs/block.json"
+/*!***************************************************************!*\
+  !*** ./poeticsoft-heart-campus/blocks/breadcrumbs/block.json ***!
+  \***************************************************************/
 (module) {
 
 module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"poeticsoft-heart-campus/breadcrumbs","title":"Breadcrumbs","description":"Campus path","category":"poeticsoft-heart-campus","icon":"media-archive","keywords":[],"textdomain":"poeticsoft-heart-campus","version":"1.0.0","supports":{"align":["left","center","right"],"anchor":false,"customClassName":true,"className":true,"html":false,"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true},"border":{"color":true,"radius":true,"style":true,"width":true},"spacing":{"margin":true,"padding":true},"dimensions":{"minHeight":true,"width":true}},"attributes":{"blockId":{"type":"string","default":""},"refClientId":{"type":"string","default":""}},"editorScript":"file:./build/editor.js","editorStyle":"file:./build/editor.css","viewScript":"file:./build/view.js","viewStyle":"file:./build/view.css","render":"file:./render.php"}');
@@ -267,13 +322,12 @@ var __webpack_exports__ = {};
   !*** ./src/block/breadcrumbs/editor.js ***!
   \*****************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/v4.js");
-/* harmony import */ var blocks_breadcrumbs_block_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! blocks/breadcrumbs/block.json */ "./poeticsoft-heart-campus/block/breadcrumbs/block.json");
+/* harmony import */ var blockscommon_uniqueid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! blockscommon/uniqueid */ "./src/block/common/uniqueid.js");
+/* harmony import */ var blocks_breadcrumbs_block_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! blocks/breadcrumbs/block.json */ "./poeticsoft-heart-campus/blocks/breadcrumbs/block.json");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editor.scss */ "./src/block/breadcrumbs/editor.scss");
-
 var registerBlockType = wp.blocks.registerBlockType;
 var useBlockProps = wp.blockEditor.useBlockProps;
-var useEffect = wp.element.useEffect;
+
 
 
 var Edit = function Edit(props) {
@@ -283,21 +337,7 @@ var Edit = function Edit(props) {
   var blockId = attributes.blockId,
     refClientId = attributes.refClientId;
   var blockProps = useBlockProps();
-  useEffect(function () {
-    if (!blockId) {
-      setAttributes({
-        blockId: (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])(),
-        refClientId: clientId
-      });
-    } else {
-      if (refClientId !== clientId) {
-        setAttributes({
-          blockId: (0,uuid__WEBPACK_IMPORTED_MODULE_0__["default"])(),
-          refClientId: clientId
-        });
-      }
-    }
-  }, []);
+  (0,blockscommon_uniqueid__WEBPACK_IMPORTED_MODULE_0__.useUniqueId)(clientId, attributes, setAttributes);
   return /*#__PURE__*/React.createElement("div", blockProps, "BREADCRUMBS");
 };
 var Save = function Save() {

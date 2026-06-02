@@ -17,8 +17,8 @@ export default ($, $mytools) => {
         </div>
       `)
       
-      const $loginwrapper = $('body .poeticsoft_content_payment_login_overlay')
-      const $wrapper = $loginwrapper.find('.poeticsoft_content_payment_login')
+      const $loginWrapper = $('body .poeticsoft_content_payment_login_overlay')
+      const $wrapper = $loginWrapper.find('.poeticsoft_content_payment_login')
       const $close = $wrapper.find('.Close')
 
       identify($, $wrapper)
@@ -27,7 +27,7 @@ export default ($, $mytools) => {
         'click',
         function() {
 
-          $loginwrapper.remove()
+          $loginWrapper.remove()
         }
       )
 

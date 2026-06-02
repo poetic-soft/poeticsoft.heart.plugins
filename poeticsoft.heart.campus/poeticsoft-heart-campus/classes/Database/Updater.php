@@ -16,7 +16,7 @@ class Updater
      * @return string
      */   
     
-    public function get_formated_access_data()
+    public function get_formatted_access_data()
     {   
         
         $campus_root_id_option_name = sprintf('%sroot_post_id', Campus::PREFIX);
@@ -39,8 +39,8 @@ class Updater
         ]);
     
         $campus_root = get_post($campus_root_id);
-        $campus_pages_ide_title = [];        
-        $campus_pages_ide_title[$campus_root_id] = get_the_title($campus_root_id);
+        $campus_pages_id_title = [];        
+        $campus_pages_id_title[$campus_root_id] = get_the_title($campus_root_id);
         
         /**
          * DEBUG WITH LOCAL POST!
@@ -48,7 +48,7 @@ class Updater
         $debug_ids = [];
         foreach ($campus_pages as $page) {            
             
-            $campus_pages_ide_title[$page->ID] = get_the_title($page->ID);
+            $campus_pages_id_title[$page->ID] = get_the_title($page->ID);
             $debug_ids[] = $page->ID;
         }
         
@@ -69,7 +69,7 @@ class Updater
              */
             $debug_post_id = $post_id ? $post_id : $debug_ids[rand(0, count($debug_ids) - 1)];
             
-            $campus_page_title = $campus_pages_ide_title[$debug_post_id];
+            $campus_page_title = $campus_pages_id_title[$debug_post_id];
             
             $user_mail = $access->user_mail;
             
@@ -154,10 +154,10 @@ class Updater
     public function get_directus_access_data()
     {
         
-        $directus_access_url_option_name = CAMPUS::PREFIX . 'access_url';
+        $directus_access_url_option_name = CAMPUS::PREFIX . 'directus_access_url';
         $directus_access_url = get_option($directus_access_url_option_name);
         
-        $directus_access_token_option_name = CAMPUS::PREFIX . 'access_token';
+        $directus_access_token_option_name = CAMPUS::PREFIX . 'directus_access_token';
         $directus_access_token = get_option($directus_access_token_option_name);   
         
         $args = [
@@ -189,26 +189,26 @@ class Updater
                 
                 foreach($directus_data->data as $row) {
 
-                    $emailvalue = sanitize_email(trim($row->humano_id->correo)); 
-                    $postidsvalue = trim($row->wp_post_ids);
-                    $postids = $postidsvalue == '' ?
+                    $email_value = sanitize_email(trim($row->humano_id->correo)); 
+                    $post_ids_value = trim($row->wp_post_ids);
+                    $post_ids = $post_ids_value == '' ?
                     []
                     :
-                    explode(' ', $postidsvalue);
-                    $postids = array_map(
-                        function($postid) { return trim($postid); },
-                        $postids
+                    explode(' ', $post_ids_value);
+                    $post_ids = array_map(
+                        function($post_id) { return trim($post_id); },
+                        $post_ids
                     );
 
-                    if(count($postids)) {
+                    if(count($post_ids)) {
 
-                        foreach($postids as $postid) {
+                        foreach($post_ids as $post_id) {
 
-                            $post = get_post($postid);
-                            $postid = $post ? $postid : 'no';
+                            $post = get_post($post_id);
+                            $post_id = $post ? $post_id : 'no';
                             $access = [
-                                'user_mail' => $emailvalue,
-                                'post_id' => $postid
+                                'user_mail' => $email_value,
+                                'post_id' => $post_id
                             ];
 
                             $data[] = $access;
@@ -217,7 +217,7 @@ class Updater
                     } else {
 
                         $access = [
-                            'user_mail' => $emailvalue,
+                            'user_mail' => $email_value,
                             'post_id' => 0
                         ];
                         

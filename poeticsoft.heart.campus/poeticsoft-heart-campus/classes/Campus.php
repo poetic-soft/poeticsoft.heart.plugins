@@ -9,6 +9,10 @@ use Poeticsoft\Heart\Rest\Rest;
 use Poeticsoft\Heart\Database\Database;
 use Poeticsoft\Heart\Languages\Languages;
 use Poeticsoft\Heart\Validation\Validation;
+use Poeticsoft\Heart\Blocks\Blocks;
+use Poeticsoft\Heart\Validation\Access;
+
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * Main Plugin Class (Campus).
@@ -53,7 +57,7 @@ final class Campus
     {
         if (is_null(self::$instance)) {
             self::$instance = new self();
-            // self::log(self::PLUGIN_NAME . ' Initialized', 'success');
+            // Utils::log(self::PLUGIN_NAME . ' Initialized', 'success');
             self::$instance->init();
         }
         return self::$instance;
@@ -79,49 +83,6 @@ final class Campus
     }
 
     /**
-     * Get absolute path to plugin folder or file.
-     *
-     * @param string $relative_path Path relative to plugin root.
-     * @return string
-     */
-    public static function path($relative_path = '')
-    {
-        return plugin_dir_path(dirname(__DIR__) . '/' . self::PLUGIN_SLUG . '.php') . ltrim($relative_path, '/');
-    }
-
-    /**
-     * Get public URL to plugin folder or file.
-     *
-     * @param string $relative_path Path relative to plugin root.
-     * @return string
-     */
-    public static function url($relative_path = '')
-    {
-        return plugin_dir_url(dirname(__DIR__) . '/' . self::PLUGIN_SLUG . '.php') . ltrim($relative_path, '/');
-    }
-
-    /**
-     * Custom Logger.
-     * Writes to a debug.log file in the plugin root for development purposes.
-     *
-     * @param mixed  $message The message or data to log.
-     * @param string $level   Log level (info, debug, error, success).
-     */
-    public static function log($message, $level = 'info')
-    {
-        $log_file = self::path('debug.log');
-        $timestamp = date('Y-m-d H:i:s');
-
-        if (! is_string($message)) {
-            $message = json_encode($message, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-        }
-
-        $formatted_message = sprintf("[%s] [%s]: %s\n", $timestamp, strtoupper($level), $message);
-
-        file_put_contents($log_file, $formatted_message, FILE_APPEND);
-    }
-
-    /**
      * Initialize the plugin based on context.
      */
     private function init()
@@ -140,29 +101,9 @@ final class Campus
 
         // 4. Frontend Context
         // We initialize frontend ONLY if it's not admin and not a REST request.
-        if (! is_admin() && ! $this->is_rest()) {
+        if (! is_admin() && ! Utils::is_rest()) {
             $this->init_frontend();
         }
-    }
-
-    /**
-     * Check if the current request is a REST API request.
-     * Useful for early detection before WordPress defines REST_REQUEST.
-     *
-     * @return bool
-     */
-    private function is_rest()
-    {
-        if (defined('REST_REQUEST') && REST_REQUEST) {
-            return true;
-        }
-
-        if (! isset($_SERVER['REQUEST_URI'])) {
-            return false;
-        }
-
-        // Standard WordPress REST prefix is 'wp-json'
-        return strpos($_SERVER['REQUEST_URI'], '/wp-json/') !== false;
     }
 
     /**
@@ -178,7 +119,7 @@ final class Campus
      * Load Frontend components.
      */
     private function init_frontend()
-    {        
+    {                
         self::get(Frontend::class)->init();
     }
 
@@ -202,5 +143,8 @@ final class Campus
 
         // Initialize Database Manager.
         self::get(Database::class)->init();
+        
+        // Initialize Blocls .
+        self::get(Blocks::class)->init();
     }
 }

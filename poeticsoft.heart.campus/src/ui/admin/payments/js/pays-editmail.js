@@ -10,14 +10,14 @@ import {
   validateMail
 } from './utils'
 import { 
-  apifetch
+  apiFetch
 } from 'uiutils/api'
 
 export default props => {
 
   const [editing, setEditing] = useState(false)
   const [email, setMail] = useState(false)
-  const [mailchanged, setMailchanged] = useState(false)
+  const [mailChanged, setMailChanged] = useState(false)
 
   const edit = () => {
 
@@ -61,7 +61,7 @@ export default props => {
         button: `Si`,
         confirm: () => {  
       
-          apifetch(
+          apiFetch(
             'campus/payments/update',
             {
               method: 'POST',
@@ -91,7 +91,7 @@ export default props => {
 
   useEffect(() => {
 
-    setMailchanged(props.field.value != email)
+    setMailChanged(props.field.value != email)
 
   }, [email])
 
@@ -107,7 +107,7 @@ export default props => {
       editing ?
       <>   
         {
-          mailchanged ?
+          mailChanged ?
           <Button
             icon="saved"
             onClick={ save }
@@ -138,4 +138,3 @@ export default props => {
     }
   </div>
 }
-

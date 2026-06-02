@@ -11,9 +11,9 @@ export const reducer = (state, action) => {
 export const initState = {
   pays: [],
   groupedPays: {},
-  campuspages: [],
-  campuspagesbyid: {},
-  campuspagestree: [],
+  campusPages: [],
+  campusPagesById: {},
+  campusPagesTree: [],
   tableFields: [
     'user_mail',
     'post_id'
@@ -32,9 +32,9 @@ export const initState = {
       console.log('confirm')
     }
   },
-  newpay: {
+  newPay: {
     email: 'email',
-    postid: null
+    postId: null
   },
   messages: {
     open: false,

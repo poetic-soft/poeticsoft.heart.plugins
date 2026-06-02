@@ -1,37 +1,37 @@
 import login from './js/identify/do-login'
 import identify from './js/identify/do-identify'
-import shouldpay from './js/shouldpay/do-shouldpay'
-import usetemporalcode from './js/identify/do-usetemporalcode'
+import shouldPay from './js/shouldpay/do-shouldpay'
+import useTemporalCode from './js/identify/do-usetemporalcode'
 
 import './main.scss'
 
 (function($) {
 
-  const waitidentyfyorigin = setInterval(() => {
+  const waitIdentifyOrigin = setInterval(() => {
 
-    if(poeticsoft_content_payment_core_block_postcontent_accesstype_origin) {
+    if(poeticsoft_heart_campus_access_by) {
 
-      clearInterval(waitidentyfyorigin)
+      clearInterval(waitIdentifyOrigin)
   
-      const $postcontent = $('.wp-block-poeticsoft_content_payment_postcontent')
+      const $postContent = $('.wp-block-poeticsoft_content_payment_postcontent')
       
-      const $formsusetemporalcode = $postcontent.find('.Forms.UseTemporalCode')  
-      const $formsidentify = $postcontent.find('.Forms.Identify')  
-      const $formsshouldpay = $postcontent.find('.Forms.ShouldPay')
+      const $formsUseTemporalCode = $postContent.find('.Forms.UseTemporalCode')  
+      const $formsIdentify = $postContent.find('.Forms.Identify')  
+      const $formsShouldPay = $postContent.find('.Forms.ShouldPay')
 
-      if($formsidentify.length) {
+      if($formsIdentify.length) {
 
-        identify($, $postcontent)
+        identify($, $postContent)
       }  
 
-      if($formsshouldpay.length) {
+      if($formsShouldPay.length) {
 
-        shouldpay($, $postcontent)
+        shouldPay($, $postContent)
       }
 
-      if($formsusetemporalcode.length) {
+      if($formsUseTemporalCode.length) {
 
-        usetemporalcode($, $postcontent)
+        useTemporalCode($, $postContent)
       }
       
       const $mytools = $('.wp-block-poeticsoft-mytools')
@@ -44,4 +44,3 @@ import './main.scss'
   }, 100)
 
 })(jQuery)
-

@@ -1,14 +1,14 @@
 import './main.scss'
 import {
-  editpageprice,
-  normalpagesprices
-} from './js/pageprice'
-import priceform from './js/priceform'
+  editpagestatus,
+  normalpagesstatus
+} from './js/pagestatus'
+import statusform from './js/statusform'
 
 (function($) {
 
   const $body = $('body')
-  let $pagesprices
+  let $pagesstatus
   let formclass
 
   const waitpageslist = setInterval(() => {
@@ -20,22 +20,22 @@ import priceform from './js/priceform'
       if($body.hasClass('block-editor-page')) {
 
         formclass = 'EditPage'
-        $pagesprices = editpageprice($)
+        $pagesstatus = editpagestatus($)
       }
 
       if($body.hasClass('edit-php')) {
 
         formclass = 'PagesList'
-        $pagesprices = normalpagesprices($)
+        $pagesstatus = normalpagesstatus($)
       }
       
       if(
-        $pagesprices 
+        $pagesstatus
         &&
-        $pagesprices.length
+        $pagesstatus.length
       ) {
         
-        priceform($, $pagesprices, formclass)
+        statusform($, $pagesstatus, formclass)
       }
     }
 

@@ -5,6 +5,7 @@ namespace Poeticsoft\Heart\Admin\Pages;
 use Poeticsoft\Heart\Admin\Page;
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\View\View;
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * Dashboard Page.
@@ -25,8 +26,9 @@ class Dashboard extends Page
     protected function handle_action($action)
     {
         if ('refresh_status' === $action) {
+            
             // Logic to refresh status...
-            Campus::log('System status refreshed by user.', 'info');
+            // Utils::log('System status refreshed by user.', 'info');
 
             // Add a notice using the View engine.
             add_action('admin_notices', function () {

@@ -1,36 +1,36 @@
 import message from '../common/message'
 import form from './forms'
 import {
-  apifetch
+  apiFetch
 } from '../common/utils'
-import paychannel from './do-paychannel'
+import payChannel from './do-paychannel'
 
 export default ($, $wrapper)=> {
   
-  const postcontentdata = $wrapper.data()
-  const $forms = $postcontent.find('.Forms.ShouldPay')  
+  const postContentData = $wrapper.data()
+  const $forms = $wrapper.find('.Forms.ShouldPay')  
 
-  $forms.html(form({ form: 'confirmpaytransfer' }))
+  $forms.html(form({ form: 'confirmPayTransfer' }))
 
-  const $confirmpay = $forms.find('.Form.ConfirmPay')
-  const $confirmpaypay = $confirmpay.find('button.Pay')
-  const $confirmpayother = $confirmpay.find('a.OtherChannel')
+  const $confirmPay = $forms.find('.Form.ConfirmPay')
+  const $confirmPayPay = $confirmPay.find('button.Pay')
+  const $confirmPayOther = $confirmPay.find('a.OtherChannel')
   
   let allowBack = true
-  $confirmpayother.on(
+  $confirmPayOther.on(
     'click',
     function() {
     
-      allowBack && paychannel($)
+      allowBack && payChannel($)
     }
   )
 
-  $confirmpaypay.on(
+  $confirmPayPay.on(
     'click',
     function() {        
     
-      $confirmpaypay.prop('disabled', true)
-      $confirmpayother.addClass('Disabled')
+      $confirmPayPay.prop('disabled', true)
+      $confirmPayOther.addClass('Disabled')
       
       allowBack = false
       
@@ -41,18 +41,18 @@ export default ($, $wrapper)=> {
         'Warn'
       )
 
-      apifetch({
+      apiFetch({
         url: 'pay/init',
         body: {
           type: 'transfer',
-          email: postcontentdata.email,
-          postid: postcontentdata.postid
+          email: postContentData.email,
+          postid: postContentData.postid
         }
       })
       .then(data => {   
       
         $forms.html(form({ 
-          form: 'confirmpaytransferend',
+          form: 'confirmPayTransferEnd',
           result: data
         }))
 
@@ -68,19 +68,19 @@ export default ($, $wrapper)=> {
           'Error'
         )   
 
-        $confirmpaypay.prop('disabled', false)
-        $confirmpayother.removeClass('Disabled')
+        $confirmPayPay.prop('disabled', false)
+        $confirmPayOther.removeClass('Disabled')
         
         allowBack = true
       })
     }
   )
 
-  $confirmpayother.on(
+  $confirmPayOther.on(
     'click',
     function() {
 
-      paychannel($)
+      payChannel($)
 
       return false
     }

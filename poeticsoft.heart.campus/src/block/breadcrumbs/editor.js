@@ -1,14 +1,11 @@
-import { v4 as uuidv4 } from 'uuid'
 const { 
   registerBlockType 
 } = wp.blocks
 const { 
   useBlockProps 
 } = wp.blockEditor
-const {
-  useEffect
-} = wp.element
 
+import { useUniqueId } from 'blockscommon/uniqueid'
 import metadata from 'blocks/breadcrumbs/block.json'
 import './editor.scss';
 
@@ -26,27 +23,7 @@ const Edit = props => {
 
   const blockProps = useBlockProps()
   
-  useEffect(() => {
-
-    if (!blockId) {
-
-      setAttributes({ 
-        blockId: uuidv4(),
-        refClientId: clientId
-      })
-
-    } else {
-
-      if (refClientId !== clientId) {
-
-        setAttributes({ 
-          blockId: uuidv4(),
-          refClientId: clientId
-        })
-      }
-    }
-
-  }, [])
+  useUniqueId(clientId, attributes, setAttributes)
    
   return <div { ...blockProps } >
     BREADCRUMBS

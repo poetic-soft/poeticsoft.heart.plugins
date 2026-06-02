@@ -1,25 +1,25 @@
 import form from './forms'
-import paychannel from './do-paychannel'
+import payChannel from './do-paychannel'
 
 export default ($, $wrapper) => {
 
-  const $advicetext = $wrapper.find('.AdviceText')
-  const advicetext = $advicetext.html()  
+  const $adviceText = $wrapper.find('.AdviceText')
+  const adviceText = $adviceText.html()  
   const $forms = $wrapper.find('.Forms.ShouldPay')  
 
   $forms.html(form({ 
-    form: 'shouldpay',
-    advicetext: advicetext
+    form: 'shouldPay',
+    adviceText: adviceText
   }))
 
-  const $shouldpay = $forms.find('.Form.ShouldPay')
-  const $shouldpaybuy = $shouldpay.find('button.Buy')
+  const $shouldPay = $forms.find('.Form.ShouldPay')
+  const $shouldPayBuy = $shouldPay.find('button.Buy')
 
-  $shouldpaybuy.on(
+  $shouldPayBuy.on(
     'click',
     function() {
 
-      paychannel($)
+      payChannel($)
     }
   )
 }

@@ -1,12 +1,12 @@
 import {
-  validatemail
+  validateEmail
 } from '../common/utils'
 import forms from './forms'
 import message from '../common/message'
 import identify from './do-identify'
-import confirmcode from './do-confirmcode'
+import confirmCode from './do-confirmcode'
 import {
-  apifetch
+  apiFetch
 } from '../common/utils'
 
 export default ($, $wrapper) => {
@@ -14,14 +14,14 @@ export default ($, $wrapper) => {
   const $forms = $wrapper.find('.Forms.Identify')  
   $forms.find('.Form').remove()
 
-  $forms.html(forms({ form: 'registerwant' }))
+  $forms.html(forms({ form: 'registerWant' }))
 
-  const $registerwant = $forms.find('.Form.RegisterWant')
-  const $registerwantemail = $registerwant.find('input.Email')
-  const $registerwantsendmail = $registerwant.find('button.SendEmail')  
-  const $registerwantbackidentify = $registerwant.find('a.BackIdentify') 
+  const $registerWant = $forms.find('.Form.RegisterWant')
+  const $registerWantEmail = $registerWant.find('input.Email')
+  const $registerWantSendEmail = $registerWant.find('button.SendEmail')  
+  const $registerWantBackIdentify = $registerWant.find('a.BackIdentify') 
   
-  function checkemail () {
+  function checkEmail () {
 
     const $this = $(this)      
     const email = $this.val()
@@ -29,14 +29,14 @@ export default ($, $wrapper) => {
     if(
       $this[0].checkValidity()
       &&
-      validatemail(email)
+      validateEmail(email)
     ) {
 
-      $registerwantsendmail.prop('disabled', false)
+      $registerWantSendEmail.prop('disabled', false)
 
     } else {
 
-      $registerwantsendmail.prop('disabled', true)
+      $registerWantSendEmail.prop('disabled', true)
       
     }
 
@@ -48,33 +48,33 @@ export default ($, $wrapper) => {
     )
   } 
 
-  $registerwantemail.on('keydown', checkemail)
-  $registerwantemail.on('change', checkemail)
+  $registerWantEmail.on('keydown', checkEmail)
+  $registerWantEmail.on('change', checkEmail)
 
-  $registerwantbackidentify.on(
+  $registerWantBackIdentify.on(
     'click',
     function() {
 
-      identify($)
+      identify($, $wrapper)
 
       return false
     }
   )
   
-  $registerwantsendmail.on(
+  $registerWantSendEmail.on(
     'click',
     function() {
 
-      const email = $registerwantemail.val()
+      const email = $registerWantEmail.val()
 
       if(
-        $registerwantemail[0].checkValidity()
+        $registerWantEmail[0].checkValidity()
         &&
-        validatemail(email)
+        validateEmail(email)
       ) {
 
-        $registerwantemail.prop('disabled', true)  
-        $registerwantsendmail.prop('disabled', true)
+        $registerWantEmail.prop('disabled', true)  
+        $registerWantSendEmail.prop('disabled', true)
 
         message(
           $, 
@@ -83,7 +83,7 @@ export default ($, $wrapper) => {
           'Warn'
         )
 
-        apifetch({
+        apiFetch({
           url: 'identify/subscriber/register',
           body: {
             email: email
@@ -105,12 +105,12 @@ export default ($, $wrapper) => {
               'Error'
             )
 
-            $registerwantemail.prop('disabled', false)  
-            $registerwantsendmail.prop('disabled', false)
+            $registerWantEmail.prop('disabled', false)  
+            $registerWantSendEmail.prop('disabled', false)
 
           } else {
 
-            confirmcode(
+            confirmCode(
               $,  
               $wrapper,
               email
@@ -128,8 +128,8 @@ export default ($, $wrapper) => {
             'Error'
           )
 
-          $registerwantemail.prop('disabled', false)  
-          $registerwantsendmail.prop('disabled', false)
+          $registerWantEmail.prop('disabled', false)  
+          $registerWantSendEmail.prop('disabled', false)
         })
 
       } else {

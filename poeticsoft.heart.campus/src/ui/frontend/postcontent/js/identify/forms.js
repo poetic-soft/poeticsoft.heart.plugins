@@ -1,17 +1,17 @@
-import formidentify from './form-identify'
-import formusetemporalcode from './form-usetemporalcode'
-import formsconfirmcode from './form-confirmcode'
-import formregistershould from './form-register-should'
-import formsregisterwant from './form-register-want'
-import formsregisterconfirm from './form-register-confirm'
+import formIdentify from './form-identify'
+import formUseTemporalCode from './form-usetemporalcode'
+import formConfirmCode from './form-confirmcode'
+import formRegisterShould from './form-register-should'
+import formRegisterWant from './form-register-want'
+import formRegisterConfirm from './form-register-confirm'
 
 const forms = {
-  identify: formidentify,
-  usetemporalcode: formusetemporalcode,
-  registershould: formregistershould,
-  registerwant: formsregisterwant,
-  registerconfirm: formsregisterconfirm,
-  confirmcode: formsconfirmcode
+  identify: formIdentify,
+  useTemporalCode: formUseTemporalCode,
+  registerShould: formRegisterShould,
+  registerWant: formRegisterWant,
+  registerConfirm: formRegisterConfirm,
+  confirmCode: formConfirmCode
 }
 
 export default data => forms[data.form](data)

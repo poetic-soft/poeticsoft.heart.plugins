@@ -8,158 +8,151 @@
 
 defined('ABSPATH') || exit;
 
-global $wpdb;
+use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Validation\Validation;
+
 global $post;
 
-if(!$post) {
-
-  return;
+if (!$post) {
+    return;
 }
 
-$includesmode = isset($attributes['includesMode']) ? $attributes['includesMode'] : 'related'; // related | tags | relatedandtags
-$mode = isset($attributes['mode']) ? $attributes['mode'] : 'compact'; // complete | compact
-$tags = isset($attributes['tags']) ? $attributes['tags'] : '[]'; // array of tag ids
-$sectionheadingtype = tag_escape(isset($attributes['sectionHeadingType']) ? $attributes['sectionHeadingType'] : 'h2');
-$areaheadingtype = tag_escape(isset($attributes['areaHeadingType']) ? $attributes['areaHeadingType'] : 'h3');
-$title = isset($attributes['title']) ? $attributes['title'] : '';
-$visibility = isset($attributes['visibility']) ? $attributes['visibility'] : '';
-$campusrootid = absint(get_option('pcp_settings_campus_root_post_id', 0)); 
+// 1. Validar y Sanitizar Atributos
+$validator = Campus::get(Validation::class);
+$schema = [
+    'blockId'            => ['type' => 'text', 'required' => false],
+    'refClientId'        => ['type' => 'text', 'required' => false],
+    'title'              => ['type' => 'text', 'required' => false],
+    'sectionHeadingType' => ['type' => 'key',  'required' => false],
+    'areaHeadingType'    => ['type' => 'key',  'required' => false],
+    'includesMode'       => ['type' => 'key',  'required' => false],
+    'tags'               => ['type' => 'text', 'required' => false], // JSON string
+    'mode'               => ['type' => 'key',  'required' => false],
+    'visibility'         => ['type' => 'key',  'required' => false],
+];
 
-$postchildids = get_posts([
-  'post_type' => 'page',
-  'posts_per_page' => -1,
-  'post_parent' => $campusrootid,
-  'fields' => 'ids'
-]);   
+$attrs = $validator->validate_schema($attributes, $schema);
 
-if(
-  !count($postchildids)
-  &&
-  $visibility == 'onlyincontainers'
-) {
-
-  echo '';
-
-} else { 
-
-  $tags = json_decode($tags);
-
-  $tags = $tags ? $tags : [];
-
-  $tagids = [];
-
-  if(
-    $includesmode === 'related' 
-    || 
-    $includesmode === 'relatedandtags'
-  ) {
-
-    $posttags = wp_get_post_tags(
-      $post->ID, 
-      [
-        'fields' => 'ids'
-      ]
-    );
-
-    if (!is_wp_error($posttags)) {
-      
-      $tagids = array_merge($tagids, $posttags);
-    }
-  }   
-
-  if (
-    $includesmode === 'tags'
-    || 
-    $includesmode === 'relatedandtags'
-  ) {
-    
-    $tagids = array_merge($tagids, $tags);
-  }
-
-  $tagids = array_unique($tagids);
-
-  $areas = '';
-  $results = [];
-
-  if(!empty($tagids)) {
-
-    $args = array(
-      'post_type'      => 'page',
-      'posts_per_page' => -1,
-      'post__not_in'   => array($post->ID),
-      'tag__in'        => $tagids,
-      'orderby'        => 'date',
-      'order'          => 'DESC'
-    );
-
-    $query = new WP_Query($args);
-
-    $results = $query->posts;
-  }
-
-  $relateddom = '';
-  $areas = '';
-  $titledom = '';
-
-  if(count($results)) {
-
-    if($title) {
-
-      $titledom .= '<' . $sectionheadingtype . ' class="Title">' . 
-        esc_html($title) . 
-      '</' . $sectionheadingtype . '>';
-    }
-
-    $areapages = array_map(
-      function($page) use ($mode, $areaheadingtype) {
-        $permalink = get_permalink($page->ID);
-        if (!$permalink) {
-          return '';
-        }
-
-        $pagedom = '<div class="Area">
-        <' . $areaheadingtype . ' class="Title">
-          <a href="' . esc_url($permalink) . '">' . 
-            esc_html($page->post_title) . 
-          '</a>
-        </' . $areaheadingtype . '>';
-      
-        if($mode == 'complete') {
-
-          $thumb = get_the_post_thumbnail_url($page->ID, 'full');
-          $thumbdom = $thumb ? '<img src="' . esc_url($thumb) . '" alt="' . esc_attr($page->post_title) . '">' : '';
-
-          $pagedom .= '<div class="Image">
-            <a href="' . esc_url($permalink) . '">
-              ' . $thumbdom . '
-            </a>
-          </div>
-          <div class="Excerpt">' .
-            esc_html($page->post_excerpt) . 
-          '</div>';
-        }
-
-        $pagedom .= '</div>';
-
-        return $pagedom;
-
-      },
-      $results
-    );
-
-    $relateddom = $titledom . 
-    '<div class="Areas">' . 
-      implode(
-        '',
-        $areapages
-      ) .  
-    '</div>';
-  }
-
-  echo '<div 
-    id="' . esc_attr(isset($attributes['blockId']) ? $attributes['blockId'] : '') . '" 
-    class="wp-block-poeticsoft-relatedcontent" 
-  >' .
-    $relateddom .
-  '</div>';
+if (is_wp_error($attrs)) {
+    $attrs = $attributes;
 }
+
+$block_id = $attrs['blockId'] ?? '';
+$cache_enabled = (bool) get_option(Campus::PREFIX . 'block_cache_enabled', true);
+$cache_key = ($block_id && $cache_enabled) ? 'poeticsoft_heart_campus_' . md5($block_id . '_' . $post->ID) : '';
+$related_dom = '';
+
+if ($cache_key) {
+    $related_dom = get_transient($cache_key);
+}
+
+if (false === $related_dom || empty($cache_key)) {
+
+    $includes_mode = $attrs['includesMode'] ?? 'related';
+    $mode = $attrs['mode'] ?? 'compact';
+    $tags_raw = $attrs['tags'] ?? '[]';
+    $section_heading_tag = tag_escape($attrs['sectionHeadingType'] ?? 'h2');
+    $area_heading_tag = tag_escape($attrs['areaHeadingType'] ?? 'h3');
+    $title = $attrs['title'] ?? '';
+    $visibility = $attrs['visibility'] ?? 'visiblealways';
+
+    $campus_root_id = absint(get_option(Campus::PREFIX . 'root_post_id', 0));
+
+    $has_children = count(get_posts([
+        'post_type'      => 'page',
+        'posts_per_page' => 1,
+        'post_parent'    => $campus_root_id,
+        'fields'         => 'ids'
+    ])) > 0;
+
+    if (!$has_children && $visibility === 'onlyincontainers') {
+        return;
+    }
+
+    $tags_decoded = json_decode($tags_raw, true);
+    $tag_ids_input = is_array($tags_decoded) ? $tags_decoded : [];
+    $final_tag_ids = [];
+
+    if ($includes_mode === 'related' || $includes_mode === 'relatedandtags') {
+        $post_tags = wp_get_post_tags($post->ID, ['fields' => 'ids']);
+        if (!is_wp_error($post_tags)) {
+            $final_tag_ids = array_merge($final_tag_ids, $post_tags);
+        }
+    }
+
+    if ($includes_mode === 'tags' || $includes_mode === 'relatedandtags') {
+        $final_tag_ids = array_merge($final_tag_ids, $tag_ids_input);
+    }
+
+    $final_tag_ids = array_unique($final_tag_ids);
+    $results = [];
+
+    if (!empty($final_tag_ids)) {
+        $query = new WP_Query([
+            'post_type'      => 'page',
+            'posts_per_page' => -1,
+            'post__not_in'   => [$post->ID],
+            'tag__in'        => $final_tag_ids,
+            'orderby'        => 'date',
+            'order'          => 'DESC'
+        ]);
+        $results = $query->posts;
+    }
+
+    if (count($results)) {
+        $title_dom = '';
+        if ($title) {
+            $title_dom = sprintf(
+                '<%1$s class="Title">%2$s</%1$s>',
+                $section_heading_tag,
+                esc_html($title)
+            );
+        }
+
+        $areas_dom = '';
+        foreach ($results as $result_post) {
+            $permalink = get_permalink($result_post->ID);
+            if (!$permalink) {
+                continue;
+            }
+
+            $area_dom = sprintf(
+                '<div class="Area"><%1$s class="Title"><a href="%2$s">%3$s</a></%1$s>',
+                $area_heading_tag,
+                esc_url($permalink),
+                esc_html($result_post->post_title)
+            );
+
+            if ($mode === 'complete') {
+                $thumb_url = get_the_post_thumbnail_url($result_post->ID, 'full');
+                $thumb_dom = $thumb_url ? sprintf('<img src="%s" alt="%s">', esc_url($thumb_url), esc_attr($result_post->post_title)) : '';
+
+                $area_dom .= sprintf(
+                    '<div class="Image"><a href="%1$s">%2$s</a></div><div class="Excerpt">%3$s</div>',
+                    esc_url($permalink),
+                    $thumb_dom,
+                    esc_html($result_post->post_excerpt)
+                );
+            }
+
+            $area_dom .= '</div>';
+            $areas_dom .= $area_dom;
+        }
+
+        $related_dom = sprintf('%s<div class="Areas">%s</div>', $title_dom, $areas_dom);
+    }
+
+    if ($cache_key) {
+        set_transient($cache_key, $related_dom, 0); 
+    }
+}
+
+$wrapper_attributes = get_block_wrapper_attributes([
+    'id' => $block_id,
+]);
+
+printf(
+    '<div %s>%s</div>',
+    $wrapper_attributes,
+    $related_dom
+);

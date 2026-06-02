@@ -1,23 +1,23 @@
-export const rowform = (
+export const rowForm = (
   $, 
-  postid, 
+  postId, 
   elm = 'div',
   data = {}
 ) => {
 
-  return `<${ elm } id="${ postid }" class="PHCPrice">
+  return `<${ elm } id="${ postId }" class="PHCPrice">
     <div class="PriceTools">
-      <div class="PostId">${ postid.replace('post-', '') }</div>
+      <div class="PostId">${ postId.replace('post-', '') }</div>
       <div class="Access">
         <input   
           type="checkbox"
-          id="isfree_${ postid }"
-          name="isfree_${ postid }"
+          id="isfree_${ postId }"
+          name="isfree_${ postId }"
           class="IsFree"
           ${ data.isfree ? 'checked' : '' }
         />
         <label 
-          for="isfree_${ postid }"
+          for="isfree_${ postId }"
           class="${ data.isfree ? 'Free' : '' }"
         >
           Abierta

@@ -6,317 +6,256 @@
  * - $block: array con info completa del bloque
  */
 
-// Kaldeera acoount
-// https://gemini.google.com/app/2447b822bc21eb69
-
 defined('ABSPATH') || exit;
 
-require_once dirname(__DIR__) . '/../class/Autoload.php';
+use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Validation\Access;
+use Poeticsoft\Heart\Validation\Validation;
 
-(function(
-  $attributes, 
-  $content, 
-  $block
-) {
-  
-  $PCP = \Poeticsoft\Heart\Campus::instance(dirname(__DIR__) . '/plugin.php');
-  $PCP->boot();
-  
-  global $wpdb;
-  global $post;
+(function ($attributes, $content, $block) {
 
-  if (!$post) {
-    return;
-  }
-  
-  $onlySubscriptions = !empty($attributes['onlySubscriptions']);
-  $campusrootid = absint(get_option('pcp_settings_campus_root_post_id', 0));
+    global $wpdb;
+    global $post;
 
-  if (!$campusrootid) {
-    return;
-  }
-
-  $campuspages = get_pages([  
-    'sort_column' => 'menu_order',
-    'sort_order'  => 'ASC',
-    'post_status' => 'publish',
-    'child_of' => $campusrootid,
-    'post_type' => 'page',
-  ]);
-  
-  $validuseremail = $PCP->validate_email();
-  
-  $isadminandcanviewall = current_user_can('manage_options')
-  &&
-  (bool) get_option('pcp_settings_campus_roles_access', false);
-
-  $usercontents = [];
-  
-  if($validuseremail) {
-
-    $tablename = $wpdb->prefix . 'payment_pays';
-    $query = "
-      SELECT post_id 
-      FROM {$tablename}
-      WHERE user_mail = %s
-    ";
-    $usercontents = array_map(
-      'intval',
-      $wpdb->get_col(
-        $wpdb->prepare($query, $validuseremail)
-      )
-    );
-  }
-
-  $buildPageTree = function( 
-    $parent=0,
-    $level=-1
-  )
-  use(
-    $campusrootid,
-    $usercontents,
-    $post, 
-    $campuspages,
-    &$buildPageTree
-  ) {
-
-    $list = [];
-
-    if($parent == 0) {
-
-      $page = get_page($campusrootid);
-      if (!$page) {
-        return $list;
-      }
-
-      $isUserContents = in_array($campusrootid, $usercontents);
-      $type = get_post_meta(
-        $campusrootid, 
-        'poeticsoft_content_payment_assign_price_type', 
-        true
-      );
-      $type = is_string($type) ? trim($type) : '';
-
-      $level++;
-
-      $list[] = [
-        'id' => $campusrootid,
-        'level' => $level,
-        'type' => $type,
-        'current' => $campusrootid == $post->ID,
-        'isUserContents' => $isUserContents,
-        'isFree' => $type == 'free',
-        'title' => $page->post_title,
-        'pages' => $buildPageTree($campusrootid, $level)
-      ];
-
-    } else {
-
-      foreach($campuspages as $page) {
-
-        if($page->post_parent == $parent) {
-
-          $isUserContents = in_array($page->ID, $usercontents);
-          $type = get_post_meta(
-            $page->ID, 
-            'poeticsoft_content_payment_assign_price_type', 
-            true
-          );
-          $type = is_string($type) ? trim($type) : '';
-
-          $level++;
-
-          $list[] = [
-            'id' => $page->ID,
-            'type' => $type,
-            'level' => $level,
-            'title' => $page->post_title,
-            'current' => $page->ID == $post->ID,
-            'isUserContents' => $isUserContents,
-            'isFree' => $type == 'free',
-            'pages' => $buildPageTree($page->ID, $level)
-          ];
-        }
-      }
+    if (!$post) {
+        return;
     }
 
-    return $list;
-  };
-
-  $buildObjectTree = function (
-    $pages, 
-    $parentIsUser = false, 
-    $parentIsFree = false
-  ) use (
-    $isadminandcanviewall,
-    &$buildObjectTree
-  ) {
-    
-    $pagedata = [];
-    $branchHasUserContent = false;
-    $branchHasFree = false;
-
-    foreach ($pages as $page) {
-
-      // 1. Detectar si el nodo actual es User o Free
-      $isThisNodeUser = $page['isUserContents'];
-      $isThisNodeFree = $page['isFree'];
-
-      // 2. Determinar herencia (si mi padre lo era o yo lo soy, mis hijos lo serán)
-      $inheritedUser = $parentIsUser || $isThisNodeUser;
-      $inheritedFree = $parentIsFree || $isThisNodeFree;
-
-      // 3. Llamada recursiva pasando la herencia hacia ABAJO
-      $childrenpages = $buildObjectTree($page['pages'], $inheritedUser, $inheritedFree);
-      
-      // 4. Determinar si hay algo especial hacia ARRIBA (descendientes)
-      $hasWithinUser = $isThisNodeUser || $childrenpages['hasUserContent'];
-      $hasWithinFree = $isThisNodeFree || $childrenpages['hasFree'];
-
-      // 5. Informar a mi propio padre
-      if ($hasWithinUser) $branchHasUserContent = true;
-      if ($hasWithinFree) $branchHasFree = true;
-
-      $pagePath = get_permalink($page['id']);
-      if (!$pagePath) {
-        continue;
-      }
-
-      $hasChildren = isset($page['pages']) && count($page['pages']) > 0;
-      
-      $visible = $isadminandcanviewall || $parentIsUser || $isThisNodeUser || $hasWithinUser || $hasWithinFree;
-      
-      $pagedata[] = [
-        'pageId' => $page['id'],
-        'level' => $page['level'],
-        'title' => $page['title'],
-        'pagePath' => $pagePath,
-        'current' => $page['current'],
-        'hasChildren' => $hasChildren,        
-        'isFree' => $page['isFree'],
-        'isUserContents' => $page['isUserContents'],
-        'hasWithinUser' => $hasWithinUser,
-        'hasWithinFree' => $hasWithinFree,
-        'parentIsUser' => $parentIsUser,
-        'parentIsFree' => $parentIsFree,
-        'visible' => $visible,
-        'pages' => $childrenpages['children']
-      ];
-    }
-
-    return [
-        'children' => $pagedata,
-        'hasUserContent' => $branchHasUserContent,
-        'hasFree' => $branchHasFree
+    // 1. Validar y Sanitizar Atributos
+    $validator = Campus::get(Validation::class);
+    $schema = [
+        'blockId'           => ['type' => 'text', 'required' => false],
+        'refClientId'       => ['type' => 'text', 'required' => false],
+        'onlySubscriptions' => ['type' => 'bool', 'required' => false],
+        'showLegend'        => ['type' => 'bool', 'required' => false],
     ];
-  };
 
-  $buildDomTree = function (
-    $pages
-  ) use (
-    &$buildDomTree,
-    $onlySubscriptions
-  ) {
-    
+    $attrs = $validator->validate_schema($attributes, $schema);
+
+    if (is_wp_error($attrs)) {
+        $attrs = $attributes;
+    }
+
+    $campus_root_id_option_name = Campus::PREFIX . 'root_post_id';
+    $campus_root_id = get_option($campus_root_id_option_name);
+
+    if (!$campus_root_id) {
+        return;
+    }
+
+    $only_subscriptions = $attrs['onlySubscriptions'] ?? true;
+    $show_legend = $attrs['showLegend'] ?? true;
+
+    $campus_pages = get_pages([
+        'sort_column' => 'menu_order',
+        'sort_order'  => 'ASC',
+        'post_status' => 'publish',
+        'child_of'    => $campus_root_id,
+        'post_type'   => 'page',
+    ]);
+
+    $valid_user_email = Campus::get(Access::class)->validate_email();
+
+    $block_id = $attrs['blockId'] ?? '';
+    $cache_enabled = (bool) get_option(Campus::PREFIX . 'block_cache_enabled', true);
+    $cache_key = ($block_id && $cache_enabled) ? 'poeticsoft_heart_campus_' . md5($block_id . '_' . $post->ID . '_' . $valid_user_email) : '';
     $dom = '';
 
-    foreach ($pages as $page) {
-        
-      if(
-        $onlySubscriptions 
-        &&
-        !$page['visible']
-      ) {
-        
-        continue;
-      }
-        
-      $innerdom = '';
-      if($page['hasChildren']) {
-        $innerdom = $buildDomTree($page['pages']);
-      }
-      
-      $pagePath = get_permalink($page['pageId']);
-      if (!$pagePath) {
-        continue;
-      }
-
-      $dom .= '<div 
-        id="' . esc_attr($page['pageId']) . '"
-        class="Page Level_' . $page['level'] . 
-          ($page['isUserContents'] ? ' IsUserContents' : '') .
-          ($page['hasChildren'] ? ' HasChildren' : '') .
-          ($page['isFree'] ? ' IsFree' : '') .
-        '"
-      >
-        <div class="Title' . 
-          ($page['current'] ? ' Current' : '') .
-        '">' . 
-          (
-            $page['hasChildren'] ? 
-            '<div class="OpenClose"></div>' 
-            : 
-            '<div class="Indent"></div>'
-          ) .
-          '<a 
-            class="TitleLink"
-            href="' . esc_url($pagePath) . '"
-          >
-              <span class="Text">' .
-                  esc_html($page['title']) . 
-              '</span>
-              <span class="Icon' .
-                ($page['isUserContents'] ? ' Paid' : '') .
-                ($page['isFree'] ? ' Free' : '') .
-              '">
-              </span>
-          </a>
-        </div>' . 
-        (
-          $page['hasChildren'] ? 
-          '<div class="Pages">' . $innerdom . '</div>' 
-          : 
-          ''
-        ) .
-      '</div>';
+    if ($cache_key) {
+        $dom = get_transient($cache_key);
     }
 
-    return $dom;
-  };
+    if (false === $dom || empty($cache_key)) {
 
-  $pagestree = $buildPageTree(); 
-  $objecttree = $buildObjectTree($pagestree, false, false);  
-  $domtreehtml = $buildDomTree($objecttree['children']);
-  $legend = !empty($attributes['showLegend']) ?
-  '<div class="Legend">
-    <div class="Type ShouldPay">
-      <span class="Icon ShouldPay"></span>
-      <span class="Text">Privado</span>
-    </div>
-    <div class="Type Free">
-      <span class="Icon Free"></span>
-      <span class="Text">Abierto</span>
-    </div>
-    <div class="Type Paid">
-      <span class="Icon Paid"></span>
-      <span class="Text">Tu contenido</span>
-    </div>
-  </div>'
-  :
-  '';
+        $admin_access_option_name = Campus::PREFIX . 'admin_access';
+        $admin_access = get_option($admin_access_option_name);
 
-  echo  '<div 
-    id="' . esc_attr(isset($attributes['blockId']) ? $attributes['blockId'] : '') . '" 
-    class="wp-block-poeticsoft-treenav" 
-  >
-    <div class="Nav">' .
-      $domtreehtml .
-    '</div>' . 
-    $legend .    
-  '</div>';
+        $is_admin_and_can_view_all = current_user_can('manage_options') && $admin_access;
 
-})(
-  $attributes, 
-  $content, 
-  $block
-);
+        $user_contents = [];
+        if ($valid_user_email) {
+            $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
+            $query = "SELECT post_id FROM {$table_name} WHERE user_mail = %s";
+            $user_contents = array_map(
+                'intval',
+                $wpdb->get_col($wpdb->prepare($query, $valid_user_email))
+            );
+        }
+
+        $build_page_tree = function ($parent = 0, $level = -1)
+        use ($campus_root_id, $user_contents, $post, $campus_pages, &$build_page_tree) {
+
+            $list = [];
+
+            if ($parent == 0) {
+                $page = get_page($campus_root_id);
+                if (!$page) {
+                    return $list;
+                }
+
+                $is_user_contents = in_array($campus_root_id, $user_contents);
+                $type = get_post_meta($campus_root_id, Campus::PREFIX . 'status', true);
+                $type = is_string($type) ? trim($type) : '';
+
+                $level++;
+
+                $list[] = [
+                    'id'               => $campus_root_id,
+                    'level'            => $level,
+                    'type'             => $type,
+                    'current'          => $campus_root_id == $post->ID,
+                    'is_user_contents' => $is_user_contents,
+                    'is_free'          => $type == '1',
+                    'title'            => $page->post_title,
+                    'pages'            => $build_page_tree($campus_root_id, $level)
+                ];
+            } else {
+                foreach ($campus_pages as $page) {
+                    if ($page->post_parent == $parent) {
+                        $is_user_contents = in_array($page->ID, $user_contents);
+                        $type = get_post_meta($page->ID, Campus::PREFIX . 'status', true);
+                        $type = is_string($type) ? trim($type) : '';
+
+                        $level++;
+
+                        $list[] = [
+                            'id'               => $page->ID,
+                            'type'             => $type,
+                            'level'            => $level,
+                            'title'            => $page->post_title,
+                            'current'          => $page->ID == $post->ID,
+                            'is_user_contents' => $is_user_contents,
+                            'is_free'          => $type == '1',
+                            'pages'            => $build_page_tree($page->ID, $level)
+                        ];
+                    }
+                }
+            }
+
+            return $list;
+        };
+
+        $build_object_tree = function ($pages, $parent_is_user = false, $parent_is_free = false)
+        use ($is_admin_and_can_view_all, &$build_object_tree) {
+
+            $page_data = [];
+            $branch_has_user_content = false;
+            $branch_has_free = false;
+
+            foreach ($pages as $page) {
+                $is_this_node_user = $page['is_user_contents'];
+                $is_this_node_free = $page['is_free'];
+
+                $inherited_user = $parent_is_user || $is_this_node_user;
+                $inherited_free = $parent_is_free || $is_this_node_free;
+
+                $children_pages = $build_object_tree($page['pages'], $inherited_user, $inherited_free);
+
+                $has_within_user = $is_this_node_user || $children_pages['has_user_content'];
+                $has_within_free = $is_this_node_free || $children_pages['has_free'];
+
+                if ($has_within_user) $branch_has_user_content = true;
+                if ($has_within_free) $branch_has_free = true;
+
+                $page_path = get_permalink($page['id']);
+                if (!$page_path) {
+                    continue;
+                }
+
+                $has_children = isset($page['pages']) && count($page['pages']) > 0;
+                $visible = $is_admin_and_can_view_all || $parent_is_user || $is_this_node_user || $has_within_user || $has_within_free;
+
+                $page_data[] = [
+                    'page_id'          => $page['id'],
+                    'level'            => $page['level'],
+                    'title'            => $page['title'],
+                    'page_path'        => $page_path,
+                    'current'          => $page['current'],
+                    'has_children'     => $has_children,
+                    'is_free'          => $page['is_free'],
+                    'is_user_contents' => $page['is_user_contents'],
+                    'has_within_user'  => $has_within_user,
+                    'has_within_free'  => $has_within_free,
+                    'parent_is_user'   => $parent_is_user,
+                    'parent_is_free'   => $parent_is_free,
+                    'visible'          => $visible,
+                    'pages'            => $children_pages['children']
+                ];
+            }
+
+            return [
+                'children'         => $page_data,
+                'has_user_content' => $branch_has_user_content,
+                'has_free'         => $branch_has_free
+            ];
+        };
+
+        $build_dom_tree = function ($pages) use (&$build_dom_tree, $only_subscriptions) {
+            $dom = '';
+
+            foreach ($pages as $page) {
+                if ($only_subscriptions && !$page['visible']) {
+                    continue;
+                }
+
+                $inner_dom = $page['has_children'] ? $build_dom_tree($page['pages']) : '';
+
+                $dom .= sprintf(
+                    '<div id="%d" class="Page Level_%d%s%s%s">
+                        <div class="Title%s">
+                            %s
+                            <a class="TitleLink" href="%s">
+                                <span class="Text">%s</span>
+                                <span class="Icon%s%s"></span>
+                            </a>
+                        </div>
+                        %s
+                    </div>',
+                    $page['page_id'],
+                    $page['level'],
+                    $page['is_user_contents'] ? ' IsUserContents' : '',
+                    $page['has_children'] ? ' HasChildren' : '',
+                    $page['is_free'] ? ' IsFree' : '',
+                    $page['current'] ? ' Current' : '',
+                    $page['has_children'] ? '<div class="OpenClose"></div>' : '<div class="Indent"></div>',
+                    esc_url($page['page_path']),
+                    esc_html($page['title']),
+                    $page['is_user_contents'] ? ' Paid' : '',
+                    $page['is_free'] ? ' Free' : '',
+                    $page['has_children'] ? '<div class="Pages">' . $inner_dom . '</div>' : ''
+                );
+            }
+
+            return $dom;
+        };
+
+        $pages_tree = $build_page_tree();
+        $object_tree = $build_object_tree($pages_tree, false, false);
+        $dom_tree_html = $build_dom_tree($object_tree['children']);
+
+        $legend = $show_legend ?
+            '<div class="Legend">
+                <div class="Type ShouldPay"><span class="Icon ShouldPay"></span><span class="Text">Privado</span></div>
+                <div class="Type Free"><span class="Icon Free"></span><span class="Text">Abierto</span></div>
+                <div class="Type Paid"><span class="Icon Paid"></span><span class="Text">Tu contenido</span></div>
+            </div>' : '';
+
+        $wrapper_attributes = get_block_wrapper_attributes([
+            'id' => $block_id,
+        ]);
+
+        $dom = sprintf(
+            '<div %s><div class="Nav">%s</div>%s</div>',
+            $wrapper_attributes,
+            $dom_tree_html,
+            $legend
+        );
+
+        if ($cache_key) {
+            set_transient($cache_key, $dom, 0);
+        }
+    }
+
+    echo $dom;
+
+})($attributes, $content, $block);

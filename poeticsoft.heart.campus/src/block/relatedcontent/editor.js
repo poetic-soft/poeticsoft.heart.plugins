@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 const { 
   registerBlockType 
 } = wp.blocks
@@ -21,6 +20,7 @@ const {
 import {
   HeadingSelector
  } from 'blockscommon/elementselector'
+import { useUniqueId } from 'blockscommon/uniqueid'
 
 import metadata from 'blocks/relatedcontent/block.json'
 import './editor.scss';
@@ -92,6 +92,8 @@ const Edit = props => {
 
   const blockProps = useBlockProps()
 
+  useUniqueId(clientId, attributes, setAttributes)
+
   const [ availableTags, setAvailableTags ] = useState()
   const [ selectedTags, setSelectedTags ] = useState()
 
@@ -105,24 +107,6 @@ const Edit = props => {
   }
 
   useEffect(() => {
-
-    if (!blockId) {
-
-      setAttributes({ 
-        blockId: uuidv4(),
-        refClientId: clientId
-      })
-
-    } else {
-
-      if (refClientId !== clientId) {
-
-        setAttributes({ 
-          blockId: uuidv4(),
-          refClientId: clientId
-        })
-      }
-    }
 
     apiFetch({ 
       path: '/wp/v2/tags?per_page=-1' 
@@ -139,9 +123,9 @@ const Edit = props => {
       )
     })
 
-    const savedtags = tags ? tags : '[]';
+    const savedTags = tags ? tags : '[]';
     
-    setSelectedTags(JSON.parse(savedtags))
+    setSelectedTags(JSON.parse(savedTags))
 
   }, [])
    

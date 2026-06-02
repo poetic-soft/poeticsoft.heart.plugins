@@ -1,26 +1,26 @@
 import message from '../common/message'
 import form from './forms'
-import confirmpaystripe from './do-confirmpay-stripe'
-import confirmpaytransfer from './do-confirmpay-transfer'
-import confirmpaybizum from './do-confirmpay-bizum'
+import confirmPayStripe from './do-confirmpay-stripe'
+import confirmPayTransfer from './do-confirmpay-transfer'
+import confirmPayBizum from './do-confirmpay-bizum'
 
-const confirmpay = {
-  stripe: confirmpaystripe,
-  transfer: confirmpaytransfer,
-  bizum: confirmpaybizum
+const confirmPay = {
+  stripe: confirmPayStripe,
+  transfer: confirmPayTransfer,
+  bizum: confirmPayBizum
 }
 
 export default ($, $wrapper) => {
   
   const $forms = $wrapper.find('.Forms.ShouldPay')  
 
-  $forms.html(form({ form: 'paychannel'}))
+  $forms.html(form({ form: 'payChannel'}))
 
   const $paychannel = $forms.find('.Form.PayChannel')
-  const $inputchannels = $paychannel.find('.Channel input[type=radio]')
+  const $inputChannels = $paychannel.find('.Channel input[type=radio]')
   const $paychannelpay = $paychannel.find('button.Pay')
 
-  $inputchannels.on(
+  $inputChannels.on(
     'change',
     function() {
 
@@ -32,11 +32,11 @@ export default ($, $wrapper) => {
     'click',
     function() {
 
-      const typeselected = $paychannel
+      const typeSelected = $paychannel
       .find('.Channel input[type=radio]:checked')
       .val()
 
-      $inputchannels.prop('disabled', true)
+      $inputChannels.prop('disabled', true)
       $paychannelpay.prop('disabled', true)
 
       message(
@@ -46,7 +46,7 @@ export default ($, $wrapper) => {
         'Warn'
       )
       
-      confirmpay[typeselected]($)
+      confirmPay[typeSelected]($)
     }
   )
 }

@@ -1,18 +1,18 @@
 import message from '../common/message'
 import {
-  validatemail
+  validateEmail
 } from '../common/utils'
 import {
-  apifetch
+  apiFetch
 } from '../common/utils'
 import form from './forms'
-import confirmcode from './do-confirmcode'
-import registershould from './do-register-should'
-import registerwant from './do-register-want'
+import confirmCode from './do-confirmcode'
+import registerShould from './do-register-should'
+import registerWant from './do-register-want'
 
 export default ($, $wrapper) => {
 
-  const accesstype = poeticsoft_content_payment_core_block_postcontent_accesstype_origin
+  const accessType = poeticsoft_content_payment_core_block_postcontent_accesstype_origin
   
   const $forms = $wrapper.find('.Forms.Identify')  
   $forms.find('.Form').remove()
@@ -20,11 +20,11 @@ export default ($, $wrapper) => {
   $forms.html(form({ form: 'identify'}))
 
   const $identify = $forms.find('.Form.Identify')
-  const $identifyemail = $identify.find('input.Email')
-  const $identifysendmail = $identify.find('button.SendEmail')
-  const $identifynotregistered = $identify.find('a.NotRegistered')
+  const $identifyEmail = $identify.find('input.Email')
+  const $identifySendEmail = $identify.find('button.SendEmail')
+  const $identifyNotRegistered = $identify.find('a.NotRegistered')
 
-  function checkemail () {
+  function checkEmail () {
 
     const $this = $(this)      
     const email = $this.val()
@@ -32,14 +32,14 @@ export default ($, $wrapper) => {
     if(
       $this[0].checkValidity()
       &&
-      validatemail(email)
+      validateEmail(email)
     ) {
 
-      $identifysendmail.prop('disabled', false)
+      $identifySendEmail.prop('disabled', false)
 
     } else {
 
-      $identifysendmail.prop('disabled', true)
+      $identifySendEmail.prop('disabled', true)
       
     }
 
@@ -51,25 +51,25 @@ export default ($, $wrapper) => {
     )
   }
 
-  $identifyemail.on('change', checkemail)
-  $identifyemail.on('keydown', checkemail)
-  $identifyemail.on('keyup', checkemail)
+  $identifyEmail.on('change', checkEmail)
+  $identifyEmail.on('keydown', checkEmail)
+  $identifyEmail.on('keyup', checkEmail)
 
-  $identifynotregistered.on(
+  $identifyNotRegistered.on(
     'click',
     function() {
 
-      registerwant($)
+      registerWant($, $wrapper)
 
       return false
     }
   )
 
-  $identifysendmail.on(
+  $identifySendEmail.on(
     'click',
     function() {
 
-      const email = $identifyemail.val()
+      const email = $identifyEmail.val()
 
       message(
         $, 
@@ -79,15 +79,15 @@ export default ($, $wrapper) => {
       )
 
       if(
-        $identifyemail[0].checkValidity()
+        $identifyEmail[0].checkValidity()
         &&
-        validatemail(email)
+        validateEmail(email)
       ) {
 
-        $identifyemail.prop('disabled', true)  
-        $identifysendmail.prop('disabled', true)
+        $identifyEmail.prop('disabled', true)  
+        $identifySendEmail.prop('disabled', true)
 
-        apifetch({
+        apiFetch({
           url: 'identify/subscriber/identify',
           body: {
             email: email
@@ -97,7 +97,7 @@ export default ($, $wrapper) => {
 
           if(data.result == 'error') {
 
-            switch (accesstype) {
+            switch (accessType) {
 
               case 'gsheets':
 
@@ -121,7 +121,7 @@ export default ($, $wrapper) => {
 
                 setTimeout(() => {
                   
-                  registershould($, email)
+                  registerShould($, $wrapper, email)
                   
                 }, 2000)
 
@@ -152,7 +152,7 @@ export default ($, $wrapper) => {
 
           } else {
 
-            confirmcode(
+            confirmCode(
               $, 
               $wrapper,
               email, 
@@ -172,8 +172,8 @@ export default ($, $wrapper) => {
             'Error'
           )
 
-          $identifyemail.prop('disabled', false)  
-          $identifysendmail.prop('disabled', false)
+          $identifyEmail.prop('disabled', false)  
+          $identifySendEmail.prop('disabled', false)
         })
 
       } else {

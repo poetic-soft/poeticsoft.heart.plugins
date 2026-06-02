@@ -1,6 +1,6 @@
 import message from '../common/message'
 import {
-  apifetch
+  apiFetch
 } from '../common/utils'
 import form from './forms'
 
@@ -9,24 +9,24 @@ export default ($, $wrapper) => {
   const $forms = $wrapper.find('.Forms.UseTemporalCode')  
   $forms.find('.Form').remove()
 
-  $forms.html(form({ form: 'usetemporalcode'}))
+  $forms.html(form({ form: 'useTemporalCode'}))
 
-  const $usetemporalcode = $forms.find('.Form.UseTemporalCode')
-  const $usetemporalcodecode = $usetemporalcode.find('input.TemporalCode')
-  const $usetemporalcodesend = $usetemporalcode.find('button.SendTemporalCode')
+  const $useTemporalCode = $forms.find('.Form.UseTemporalCode')
+  const $useTemporalCodeCode = $useTemporalCode.find('input.TemporalCode')
+  const $useTemporalCodeSend = $useTemporalCode.find('button.SendTemporalCode')
 
-  function checkcode () {
+  function checkCode () {
 
     const $this = $(this)      
     const code = $this.val()
 
     if(code.length > 4) {
 
-      $usetemporalcodesend.prop('disabled', false)
+      $useTemporalCodeSend.prop('disabled', false)
 
     } else {
 
-      $usetemporalcodesend.prop('disabled', true)
+      $useTemporalCodeSend.prop('disabled', true)
       
     }
 
@@ -38,15 +38,15 @@ export default ($, $wrapper) => {
     )
   }
 
-  $usetemporalcodecode.on('change', checkcode)
-  $usetemporalcodecode.on('keydown', checkcode)
-  $usetemporalcodecode.on('keyup', checkcode)
+  $useTemporalCodeCode.on('change', checkCode)
+  $useTemporalCodeCode.on('keydown', checkCode)
+  $useTemporalCodeCode.on('keyup', checkCode)
 
-  $usetemporalcodesend.on(
+  $useTemporalCodeSend.on(
     'click',
     function() {
 
-      const code = $usetemporalcodecode.val()
+      const code = $useTemporalCodeCode.val()
 
       message(
         $,
@@ -57,10 +57,10 @@ export default ($, $wrapper) => {
 
       if(code.length > 4) {
 
-        $usetemporalcodecode.prop('disabled', true)  
-        $usetemporalcodesend.prop('disabled', true)
+        $useTemporalCodeCode.prop('disabled', true)  
+        $useTemporalCodeSend.prop('disabled', true)
 
-        apifetch({
+        apiFetch({
           url: 'identify/subscriber/checktemporalcode',
           body: {
             code: code
@@ -94,8 +94,8 @@ export default ($, $wrapper) => {
                 ''
               )           
 
-              $usetemporalcodecode.prop('disabled', false)  
-              $usetemporalcodesend.prop('disabled', false)
+              $useTemporalCodeCode.prop('disabled', false)  
+              $useTemporalCodeSend.prop('disabled', false)
 
             }, 2000)
           }
@@ -112,8 +112,8 @@ export default ($, $wrapper) => {
             'Error'
           )
 
-          $identifyemail.prop('disabled', false)  
-          $identifysendmail.prop('disabled', false)
+          $useTemporalCodeCode.prop('disabled', false)  
+          $useTemporalCodeSend.prop('disabled', false)
         })
 
       } else {

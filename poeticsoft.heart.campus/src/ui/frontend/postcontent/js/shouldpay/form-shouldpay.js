@@ -1,26 +1,26 @@
 export default data => { 
   
-  const accesstype = poeticsoft_content_payment_core_block_postcontent_accesstype_origin
+  const accessType = poeticsoft_content_payment_core_block_postcontent_accesstype_origin
 
-  let paytext = ''
-  let accessbutton = ''
+  let payText = ''
+  let accessButton = ''
 
-  switch(accesstype) {
+  switch(accessType) {
 
     case 'gsheets':
 
-      paytext = data.advicetext   
+      payText = data.adviceText   
 
       break
 
     default:
 
-      paytext = `
+      payText = `
         Este contenido está disponible para suscriptores, 
         puedes obtener acceso a estos contenidos 
         por un periodo de <strong>12 meses</strong> a partir de la fecha de adquisición.  
       `
-      accessbutton = `
+      accessButton = `
         <div class="Tools wp-block-button">
           <button 
             class="
@@ -40,9 +40,9 @@ export default data => {
     <div class="Form ShouldPay">
       <div class="FormName">Should Pay</div>
       <div class="Explain">
-        ${ paytext }  
+        ${ payText }  
       </div>
-      ${ accessbutton }
+      ${ accessButton }
       <div class="Message"></div>          
     </div>
   `

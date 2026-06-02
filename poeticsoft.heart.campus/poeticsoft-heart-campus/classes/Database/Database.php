@@ -3,6 +3,7 @@
 namespace Poeticsoft\Heart\Database;
 
 use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * Database Orchestrator.
@@ -65,7 +66,7 @@ class Database
 
         update_option($this->get_db_version_option(), self::TARGET_VERSION);
 
-        Campus::log('Database migrated to version ' . self::TARGET_VERSION, 'success');
+        // Utils::log('Database migrated to version ' . self::TARGET_VERSION, 'success');
     }
 
     /**

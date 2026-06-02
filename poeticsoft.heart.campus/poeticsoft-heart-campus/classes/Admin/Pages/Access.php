@@ -44,7 +44,7 @@ class Access extends Page
     protected function render_content()
     {
         
-        $updated_data = Campus::get(Updater::class)->get_formated_access_data();        
+        $updated_data = Campus::get(Updater::class)->get_formatted_access_data();        
         $sorted_list = new \ArrayObject($updated_data);
         $sorted_list->ksort();
         $this->render_view(

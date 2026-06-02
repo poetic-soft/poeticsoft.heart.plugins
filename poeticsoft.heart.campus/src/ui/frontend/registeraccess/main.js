@@ -1,21 +1,21 @@
-const PCP_ACESS_DATA = poeticsoft_content_payment_register_access_data.split('||')
+const PHC_ACESS_DATA = poeticsoft_heart_campus_register_access_data.split('||')
 
-const PCP_POST_ID = PCP_ACESS_DATA[0]
-const PCP_USER_EMAIL = PCP_ACESS_DATA[1]
-const PCP_USER_IP = PCP_ACESS_DATA[2]
-const PCP_LOG_URL = '/wp-json/poeticsoft/contentpayment/campus/access'
-const PCP_HEARTBEAT_INTERVAL = 30000
+const PHC_POST_ID = PHC_ACESS_DATA[0]
+const PHC_USER_EMAIL = PHC_ACESS_DATA[1]
+const PHC_USER_IP = PHC_ACESS_DATA[2]
+const PHC_LOG_URL = '/wp-json/poeticsoft/heart/campus/access'
+const PHC_HEARTBEAT_INTERVAL = 30000
 
 function trikaLog(action) {
 
-  fetch(PCP_LOG_URL, {
+  fetch(PHC_LOG_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        correo: PCP_USER_EMAIL,
-        post_id: PCP_POST_ID,
+        correo: PHC_USER_EMAIL,
+        post_id: PHC_POST_ID,
         fecha_hora: new Date().toISOString(),
         accion: action
       }),
@@ -29,7 +29,7 @@ trikaLog('entrada')
 
 let heartbeat = setInterval(
   () => trikaLog('heartbeat'), 
-  PCP_HEARTBEAT_INTERVAL
+  PHC_HEARTBEAT_INTERVAL
 )
 
 document.addEventListener(
@@ -47,7 +47,7 @@ document.addEventListener(
         
         heartbeat = setInterval(
           () => trikaLog('heartbeat'), 
-          PCP_HEARTBEAT_INTERVAL
+          PHC_HEARTBEAT_INTERVAL
         )
       }
     }
@@ -59,8 +59,8 @@ window.addEventListener('pagehide', () => {
   clearInterval(heartbeat)
 
   const data = JSON.stringify({
-    correo: PCP_USER_EMAIL,
-    post_id: PCP_POST_ID,
+    correo: PHC_USER_EMAIL,
+    post_id: PHC_POST_ID,
     fecha_hora: new Date().toISOString(),
     accion: 'salida'
   });
@@ -68,7 +68,7 @@ window.addEventListener('pagehide', () => {
   const blob = new Blob([data], { type: 'application/json' });
 
   navigator.sendBeacon(
-    PCP_LOG_URL,
+    PHC_LOG_URL,
     blob
   )
 })

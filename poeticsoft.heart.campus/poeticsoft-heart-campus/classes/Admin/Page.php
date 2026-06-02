@@ -4,7 +4,7 @@ namespace Poeticsoft\Heart\Admin;
 
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\View\View;
-use Poeticsoft\Heart\Validation\Validation;
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * Abstract Page Base Class.
@@ -66,9 +66,9 @@ abstract class Page
 
             // 1. Register Setting with automatic sanitization.
             register_setting($this->slug, $option_name, [
-                'type'              => $this->map_field_type_to_wp($setting['field_type'] ?? 'text'),
+                'type'              => Utils::map_field_type_to_wp($setting['field_type'] ?? 'text'),
                 'sanitize_callback' => function ($value) use ($setting) {
-                    return Campus::get(Validation::class)->sanitize($value, $setting['field_type'] ?? 'text');
+                    return Utils::sanitize($value, $setting['field_type'] ?? 'text');
                 },
                 'default'           => $setting['value'] ?? '',
             ]);
@@ -96,19 +96,6 @@ abstract class Page
                 $setting
             );
         }
-    }
-
-    /**
-     * Internal helper to map custom field types to WP register_setting types.
-     */
-    private function map_field_type_to_wp($type)
-    {
-        $map = [
-            'int'   => 'integer',
-            'float' => 'number',
-            'bool'  => 'boolean',
-        ];
-        return $map[$type] ?? 'string';
     }
 
     /**

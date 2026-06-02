@@ -19,10 +19,10 @@ import {
 
 export default () => {
 
-  const accesstype = poeticsoft_content_payment_admin_accesstype_origin
-  const canedit = [
+  const accessType = poeticsoft_content_payment_admin_accesstype_origin
+  const canEdit = [
     'mailrelay'
-  ].includes(accesstype)
+  ].includes(accessType)
 
   const [state, dispatch ] = useReducer(
     reducer,
@@ -86,13 +86,13 @@ export default () => {
       } else { 
       
         dispatch({
-          campuspages: data.data,
-          campuspagesbyid: data.data
-          .reduce((pagesbyid, page) => {
-            pagesbyid[page.id] = page
-            return pagesbyid
+          campusPages: data.data,
+          campusPagesById: data.data
+          .reduce((pagesById, page) => {
+            pagesById[page.id] = page
+            return pagesById
           }, {}),
-          campuspagestree: [{
+          campusPagesTree: [{
             value: 0,
             label: 'Selecciona página'
           }]
@@ -110,14 +110,14 @@ export default () => {
     })
   }
 
-  const refreshall = () => {
+  const refreshAll = () => {
 
     refreshPages(true)    
   }
 
   useEffect(() => {
 
-    refreshall()
+    refreshAll()
     
   }, [])
 
@@ -126,21 +126,21 @@ export default () => {
       <Header
         state={ state }
         dispatch={ dispatch }
-        refreshAll={ refreshall }
+        refreshAll={ refreshAll }
       />
       <Pays
         state={ state }
         dispatch={ dispatch }
-        refreshAll={ refreshall }
-        canedit={ canedit }
+        refreshAll={ refreshAll }
+        canEdit={ canEdit }
       />    
     </div>
     {
-      canedit &&
+      canEdit &&
       <AddPay
         state={ state }
         dispatch={ dispatch }
-        refreshAll={ refreshall }
+        refreshAll={ refreshAll }
       />
     }
     <Modal

@@ -8,19 +8,19 @@ export default $ => {
 
       console.log('editinline')
     
-      const postid = $(this).closest('tr').attr('id').replace('post-', '');
-      const valoractual = $('#post-' + postid).find('.valor-meta-contenedor').data('valor');
+      const postId = $(this).closest('tr').attr('id').replace('post-', '');
+      let valorActual = $('#post-' + postId).find('.valor-meta-contenedor').data('valor');
       
-      console.log(postid)
+      console.log(postId)
 
-      if (valor_actual === undefined || valor_actual === '') {
-          valor_actual = '0';
+      if (valorActual === undefined || valorActual === '') {
+          valorActual = '0';
       }
-      var inline_edit_row = $(this).closest('tr').next();
-      if(!inline_edit_row.hasClass('inline-edit-row')) {
-          inline_edit_row = inline_edit_row.next(); // A veces hay filas intermedias
+      var inlineEditRow = $(this).closest('tr').next();
+      if(!inlineEditRow.hasClass('inline-edit-row')) {
+          inlineEditRow = inlineEditRow.next(); // A veces hay filas intermedias
       }
-      inline_edit_row.find('.mi-meta-bool-select').val(valor_actual);
+      inlineEditRow.find('.mi-meta-bool-select').val(valorActual);
     }
   );
 

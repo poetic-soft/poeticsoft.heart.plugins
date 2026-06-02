@@ -35,8 +35,8 @@ export default props => {
                   <span className="PageTitle">
                     <strong>
                       { 
-                        props.state.campuspagesbyid[access.post_id] ? 
-                        props.state.campuspagesbyid[access.post_id].title
+                        props.state.campusPagesById[access.post_id] ? 
+                        props.state.campusPagesById[access.post_id].title
                         :
                         'No Post'
                       }

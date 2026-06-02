@@ -1,6 +1,5 @@
 import './editor.scss'
 
-import { v4 as uuidv4 } from 'uuid'
 const { 
   registerBlockType 
 } = wp.blocks
@@ -9,18 +8,12 @@ const {
   InspectorControls 
 } = wp.blockEditor
 const {
-  useState,
-  useEffect
-} = wp.element
-const {
   PanelBody,
   ToggleControl 
 } = wp.components
-const { 
-  useSelect 
-} = wp.data
 
 import metadata from 'blocks/treenav/block.json'
+import { useUniqueId } from 'blockscommon/uniqueid'
 import './editor.scss'
 
 const Edit = props => {
@@ -38,27 +31,7 @@ const Edit = props => {
   } = attributes  
   const blockProps = useBlockProps()
 
-  useEffect(() => {
-
-    if (!blockId) {
-
-      setAttributes({ 
-        blockId: uuidv4(),
-        refClientId: clientId
-      })
-
-    } else {
-
-      if (refClientId !== clientId) {
-
-        setAttributes({ 
-          blockId: uuidv4(),
-          refClientId: clientId
-        })
-      }
-    }
-
-  }, [])
+  useUniqueId(clientId, attributes, setAttributes)
    
   return <>
     <InspectorControls>

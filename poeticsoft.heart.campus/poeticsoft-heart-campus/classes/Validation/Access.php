@@ -3,6 +3,7 @@
 namespace Poeticsoft\Heart\Validation;
 
 use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * Validation Accesos a Páginas del campus.
@@ -17,42 +18,6 @@ class Access {
         
 		add_action('template_redirect', [$this, 'check_logout']);
 	}
-    
-    public function get_campus_root_id() {
-        
-        $campus_root_id_option_name = sprintf('%sroot_post_id', Campus::PREFIX);
-        $campus_root_id = get_option($campus_root_id_option_name);
-        
-        return $campus_root_id ?? null;
-    }
-    
-    public function get_allow_admin() {
-        
-        $allow_admin_option_name = sprintf('%sadmin_access', Campus::PREFIX);
-        $allow_admin = get_option($allow_admin_option_name);
-        
-        return $$allow_admin ?? false;
-    }
-    
-    public function post_is_in_campus($post_id) {
-
-        if($post_id) {
-
-            $campus_root_id = $this->get_campus_root_id();
-            $ancestors = get_post_ancestors($post_id);
-
-            if(
-                in_array(intval($campus_root_id), $ancestors)
-                ||
-                $post_id == $campus_root_id
-            ) {
-
-                return true;
-            }   
-        }
-        
-        return false;
-    }
     
     public function check_logout() {
 
@@ -80,6 +45,18 @@ class Access {
             
             exit;
         }
+    }
+    
+    public function get_campus_root_id() {
+        return Utils::get_campus_root_id();
+    }
+    
+    public function get_allow_admin() {
+        return Utils::get_allow_admin();
+    }
+    
+    public function post_is_in_campus($post_id) {
+        return Utils::post_is_in_campus($post_id);
     }
     
     public function logged_user_mail() {   
@@ -158,16 +135,16 @@ class Access {
         }
     } 
 
-    public function can_access_causenotincampus($post_id) { 
+    public function can_access_cause_not_in_campus($post_id) { 
 
         return !$this->post_is_in_campus($post_id);
     } 
   
-    public function can_access_causeisadmin() { 
+    public function can_access_cause_is_admin() { 
 
         $current_user = wp_get_current_user();
         $allow_admin = $this->get_allow_admin();
-        $can_access = 'false';
+        $can_access = false;
 
         if (
             in_array(
@@ -178,15 +155,13 @@ class Access {
             $allow_admin
         ) {
 
-            $can_access = 'true';
+            $can_access = true;
         }  
 
-        return $can_access === 'true';
+        return $can_access;
     }
 
-    function can_access_causeisfree($post_id) {
-
-        $can_access = 'false';
+    function can_access_cause_is_free($post_id) {
 
         if($post_id) {
 
@@ -196,27 +171,35 @@ class Access {
                 true
             );
 
-            return $type;
+            return !empty($type);
         }
 
-        return $can_access == 'true';
+        return false;
     }
 
-    function can_access_bypostpaid($post_id) {
+    function can_access_by_post_paid($post_id) {
       
         $valid_user_mail = $this->validate_email();
         if(!$valid_user_mail) {
         
             return false;
         }
-      
-        $can_access = 'false';
 
+        $cache_enabled = (bool) get_option(Campus::PREFIX . 'block_cache_enabled', true);
+        $cache_key = $cache_enabled ? 'poeticsoft_heart_campus_acc_' . md5($valid_user_mail . '_' . $post_id) : '';
+
+        if ($cache_key) {
+            $cached = get_transient($cache_key);
+            if (false !== $cached) {
+                return $cached === '1';
+            }
+        }
+      
         global $wpdb;
 
         if($post_id) {
             
-            $ancestor_ids = $ancestors ?? get_post_ancestors($postid);
+            $ancestor_ids = get_post_ancestors($post_id);
             array_unshift($ancestor_ids, $post_id);
             $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
             $placeholders = implode(',', array_fill(0, count($ancestor_ids), '%d'));
@@ -229,7 +212,13 @@ class Access {
             );
             $exists = $wpdb->get_var($query);
             
-            return $exists > 0;
+            $result = $exists > 0;
+
+            if ($cache_key) {
+                set_transient($cache_key, $result ? '1' : '0', 0);
+            }
+
+            return $result;
 
         } else {
 
@@ -237,9 +226,22 @@ class Access {
         }
     }
 
-    public function can_access_causechildaccesible($post_id) {
-    
-        $can_access = 'false';
+    public function can_access_cause_child_accessible($post_id) {
+
+        $valid_user_mail = $this->validate_email();
+        if (!$valid_user_mail) { 
+            return false;
+        }
+
+        $cache_enabled = (bool) get_option(Campus::PREFIX . 'block_cache_enabled', true);
+        $cache_key = $cache_enabled ? 'poeticsoft_heart_campus_child_acc_' . md5($valid_user_mail . '_' . $post_id) : '';
+
+        if ($cache_key) {
+            $cached = get_transient($cache_key);
+            if (false !== $cached) {
+                return $cached === '1';
+            }
+        }
 
         global $wpdb;
 
@@ -250,69 +252,69 @@ class Access {
         $descendants_ids = wp_list_pluck($descendants, 'ID');
 
         if(!empty($descendants_ids)) {  
-        
-            $valid_user_mail = $this->validate_email();
-            if (!$valid_user_mail) { 
-
-                return false;
-            }
             
             $post_meta_table_name = $wpdb->prefix . 'postmeta';
             $access_table_name = $wpdb->prefix . Campus::PREFIX . 'access';
             $meta_key = Campus::PREFIX . 'status';
-            $descendants_ids = implode(',', $descendants_ids);
-            $sql = "
+            $descendants_ids_str = implode(',', array_map('intval', $descendants_ids));
+            $sql = $wpdb->prepare("
                 SELECT post_id AS id FROM {$post_meta_table_name}
                 WHERE 
-                meta_key = '{$meta_key}' 
+                meta_key = %s 
                 AND 
-                meta_value = true
+                meta_value = '1'
                 AND 
-                post_id IN ($descendants_ids)  
+                post_id IN ($descendants_ids_str)  
 
                 UNION 
 
                 SELECT post_id AS id FROM {$access_table_name} 
                 WHERE 
-                user_mail = '$valid_user_mail' 
+                user_mail = %s 
                 AND 
-                post_id IN ($descendants_ids)
-            ";
+                post_id IN ($descendants_ids_str)
+            ", $meta_key, $valid_user_mail);
+            
             $descendants_visibles = $wpdb->get_results($sql);
             
-            if (count($descendants_visibles)) {
-                
-                $can_access = 'true';
+            $result = count($descendants_visibles) > 0;
+
+            if ($cache_key) {
+                set_transient($cache_key, $result ? '1' : '0', 0);
             }
+
+            return $result;
         }
 
-        return $can_access == 'true'; 
+        if ($cache_key) {
+            set_transient($cache_key, '0', 0);
+        }
+
+        return false; 
     }
   
     public function can_access($post_id) { 
      
-        $can_access = 'false';
-    
-        if($this->can_access_causenotincampus($post_id)) {
+        if($this->can_access_cause_not_in_campus($post_id)) {
 
-            $can_access = 'true';    
+            return true;    
         }
 
-        if($this->can_access_causeisadmin()) { 
+        if($this->can_access_cause_is_admin()) { 
         
-            $can_access = 'true';     
+            return true;     
         }
 
-        if($this->can_access_causeisfree($post_id)) {
+        if($this->can_access_cause_is_free($post_id)) {
         
-            $can_access = 'true';     
+            return true;     
         }
 
-        if($this->can_access_bypostpaid($post_id)) { 
+        if($this->can_access_by_post_paid($post_id)) { 
         
-            $can_access = 'true';     
+            return true;     
         }
 
-        return $can_access === 'true';
+        return false;
     } 
 }

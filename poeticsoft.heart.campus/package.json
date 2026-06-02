@@ -4,24 +4,26 @@
   "license": "GPL-2.0-or-later",
   "scripts": {
 
-    "adminpageprice": "webpack --env=ui-admin/pageprice",
-    "adminpageslist": "webpack --env=ui-admin/pageslist",
-    "adminaccess": "webpack --env=ui-admin/access",
-    "alladmin": "npm run adminpageprice && npm run adminpageslist && npm run adminaccess",
-
-    "editcoreconfigs": "webpack --env=ui-edit/coreconfigs",
-    "uipostcontent": "webpack --env=ui-frontend/postcontent",
-    "allcontent": "npm run editcoreconfigs && npm run uipostcontent",
-
-    "uiregisteraccess": "webpack --env=ui-frontend/registeraccess",
-    
     "blockbreadcrumbs": "webpack --env=block-breadcrumbs",
     "blockcolumntools": "webpack --env=block-columntools",
     "blockcontainerchildren": "webpack --env=block-containerchildren",
     "blockmytools": "webpack --env=block-mytools",  
     "blockrelatedcontent": "webpack --env=block-relatedcontent",
     "blocktreenav": "webpack --env=block-treenav",
-    "allblocks": "npm run blockbreadcrumbs && npm run blockcolumntools && npm run blockcontainerchildren && npm run blockmytools && npm run blockrelatedcontent && npm run blocktreenav" 
+    "allblocks": "npm run blockbreadcrumbs && npm run blockcolumntools && npm run blockcontainerchildren && npm run blockmytools && npm run blockrelatedcontent && npm run blocktreenav", 
+
+    "adminpagestatus": "webpack --env=ui-admin/pagestatus",
+    "adminpageslist": "webpack --env=ui-admin/pageslist",
+    "adminaccess": "webpack --env=ui-admin/access",
+    "alladmin": "npm run adminpagestatus && npm run adminpageslist && npm run adminaccess",
+
+    "editcoreconfigs": "webpack --env=ui-edit/coreconfigs",
+    "uipostcontent": "webpack --env=ui-frontend/postcontent",
+    "allcontent": "npm run editcoreconfigs && npm run uipostcontent",
+
+    "uiregisteraccess": "webpack --env=ui-frontend/registeraccess",
+
+    "all": "npm run allblocks && npm run alladmin && npm run allcontent && npm run uiregisteraccess"
   },
   "dependencies": {
     "@babel/core": "^7.18.10",

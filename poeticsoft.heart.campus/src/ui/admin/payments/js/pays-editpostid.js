@@ -8,14 +8,14 @@ const {
   useEffect
 } = wp.element
 import { 
-  apifetch
+  apiFetch
 } from 'uiutils/api'
 
 export default props => {
 
   const [editing, setEditing] = useState(false)
-  const [postid, setPostid] = useState(false)
-  const [postidchanged, setPostidchanged] = useState(false)
+  const [postId, setPostId] = useState(false)
+  const [postIdChanged, setPostIdChanged] = useState(false)
 
   const edit = () => {
 
@@ -29,7 +29,7 @@ export default props => {
   
   const save = () => {
 
-    if(!postid) {
+    if(!postId) {
 
       props.dispatch({
         modal: {
@@ -59,13 +59,13 @@ export default props => {
         button: `Si`,
         confirm: () => {  
       
-          apifetch(
+          apiFetch(
             'campus/payments/update',
             {
               method: 'POST',
               body: {
                 id: props.pay.id,
-                post_id: postid
+                post_id: postId
               }
             }
           )
@@ -89,14 +89,14 @@ export default props => {
 
   useEffect(() => {
 
-    setPostidchanged(props.field.value != postid)
+    setPostIdChanged(props.field.value != postId)
 
-  }, [postid])
+  }, [postId])
 
 
   useEffect(() => {
 
-    setPostid(props.field.value)
+    setPostId(props.field.value)
 
   }, [])
 
@@ -105,7 +105,7 @@ export default props => {
       editing ?
       <>      
         {
-          postidchanged ?
+          postIdChanged ?
           <Button
             icon="saved"
             onClick={ save }
@@ -117,10 +117,10 @@ export default props => {
           />
         }
         <SelectControl 
-          value={ postid }
-          options={ props.state.campuspagestree }
+          value={ postId }
+          options={ props.state.campusPagesTree }
           onChange={
-            value => setPostid(value)
+            value => setPostId(value)
           }
         />
       </>
@@ -131,11 +131,11 @@ export default props => {
           onClick={ () => setEditing(true) }
         />
         { 
-          postid 
+          postId 
           && 
           <span className="PostTitle">{ 
-            props.state.campuspagesbyid[postid] ?
-            `[${ postid }] ${ props.state.campuspagesbyid[postid].title }`
+            props.state.campusPagesById[postId] ?
+            `[${ postId }] ${ props.state.campusPagesById[postId].title }`
             :
             'selecciona página'
           }</span> 
@@ -144,11 +144,11 @@ export default props => {
       :
       <>
         { 
-          postid 
+          postId 
           && 
           <span className="PostTitle">{ 
-            props.state.campuspagesbyid[postid] ?
-            `[${ postid }] ${ props.state.campuspagesbyid[postid].title }`
+            props.state.campusPagesById[postId] ?
+            `[${ postId }] ${ props.state.campusPagesById[postId].title }`
             :
             'sin asignar'
           }</span> 

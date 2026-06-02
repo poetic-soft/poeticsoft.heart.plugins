@@ -28,8 +28,8 @@ __webpack_require__.r(__webpack_exports__);
   $trs.each(function () {
     var $tr = $(this);
     var id = $tr.attr('id');
-    var childids = poeticsoft_heart_campus_admin_pageslist[id];
-    $trsbyparentid[id] = childids.map(function (cid) {
+    var childIds = poeticsoft_heart_campus_admin_pageslist[id];
+    $trsbyparentid[id] = childIds.map(function (cid) {
       return $thelist.find('tr#' + cid);
     });
     if (poeticsoft_heart_campus_admin_campus_ids.includes(id)) {
@@ -75,10 +75,10 @@ __webpack_require__.r(__webpack_exports__);
     var id = $tr.attr('id');
     var $title = $tr.find('td.column-title a.row-title');
     var $titlecontainer = $title.parent('strong');
-    var childids = poeticsoft_heart_campus_admin_pageslist[id];
+    var childIds = poeticsoft_heart_campus_admin_pageslist[id];
     $title.html($title.html().split('— ').join(''));
     $titlecontainer.addClass('TitleContainer');
-    if (childids.length) {
+    if (childIds.length) {
       $tr.addClass('HasChildren');
       $titlecontainer.prepend('<span class="OpenClose"></span>');
     } else {
@@ -137,17 +137,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
   $(document).on('click', '.editinline', function () {
     console.log('editinline');
-    var postid = $(this).closest('tr').attr('id').replace('post-', '');
-    var valoractual = $('#post-' + postid).find('.valor-meta-contenedor').data('valor');
-    console.log(postid);
-    if (valor_actual === undefined || valor_actual === '') {
-      valor_actual = '0';
+    var postId = $(this).closest('tr').attr('id').replace('post-', '');
+    var valorActual = $('#post-' + postId).find('.valor-meta-contenedor').data('valor');
+    console.log(postId);
+    if (valorActual === undefined || valorActual === '') {
+      valorActual = '0';
     }
-    var inline_edit_row = $(this).closest('tr').next();
-    if (!inline_edit_row.hasClass('inline-edit-row')) {
-      inline_edit_row = inline_edit_row.next(); // A veces hay filas intermedias
+    var inlineEditRow = $(this).closest('tr').next();
+    if (!inlineEditRow.hasClass('inline-edit-row')) {
+      inlineEditRow = inlineEditRow.next(); // A veces hay filas intermedias
     }
-    inline_edit_row.find('.mi-meta-bool-select').val(valor_actual);
+    inlineEditRow.find('.mi-meta-bool-select').val(valorActual);
   });
 });
 __webpack_require__.dn(__WEBPACK_DEFAULT_EXPORT__);

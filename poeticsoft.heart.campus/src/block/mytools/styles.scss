@@ -1,6 +1,6 @@
 @use 'styles/root';
 
-.wp-block-poeticsoft-mytools {
+.wp-block-poeticsoft-heart-campus-mytools {
 
   border: solid #ccc;
   border-width: 0 0 1px;
@@ -17,6 +17,11 @@
   a {
     
     text-decoration: none;
+  }
+
+  .wp-block-buttons {
+
+    display: inline-block;
   }
 
   button {

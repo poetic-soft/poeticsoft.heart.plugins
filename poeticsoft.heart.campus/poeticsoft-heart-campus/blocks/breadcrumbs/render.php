@@ -6,54 +6,75 @@
  * - $block: array con info completa del bloque
  */
 
+use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Validation\Validation;
+
 defined('ABSPATH') || exit;
 
+// 1. Validar y Sanitizar Atributos
+$validator = Campus::get(Validation::class);
+$schema = [
+    'blockId'     => ['type' => 'text', 'required' => false],
+    'refClientId' => ['type' => 'text', 'required' => false],
+];
+
+$attrs = $validator->validate_schema($attributes, $schema);
+
+if (is_wp_error($attrs)) {
+    $attrs = $attributes;
+}
+
 $breadcrumbs = '';
-$campusrootid = absint(get_option('pcp_settings_campus_root_post_id', 0));
 
 if (is_single() || is_page()) {
 
-  global $post;
+    global $post;
 
-  if (!$post) {
-    return;
-  }
+    if (!$post) {
+        return;
+    }
 
-  $separator = '<span class="Separator">&raquo;</span>';
+    $campus_root_id_option_name = sprintf('%sroot_post_id', Campus::PREFIX);
+    $campus_root_id = get_option($campus_root_id_option_name);
 
-  $ancestors = get_post_ancestors($post);
-  $ancestors = array_reverse($ancestors);
-  $breadcrumbs = implode(
-    $separator,
-    array_filter(
-      array_map(
-        function($id) use ($campusrootid) {
-          $permalink = get_permalink($id);
-          if (!$permalink) {
-            return '';
-          }
+    $separator = '<span class="Separator">&raquo;</span>';
 
-          return $id == $campusrootid ?
-          '<a class="Root" aria-label="Campus" href="' . esc_url($permalink) . '"></a>'
-          :
-          '<a class="Page" href="' . esc_url($permalink) . '">' .
-            esc_html(get_the_title($id)) .
-          '</a>';
-        },
-        $ancestors
-      )
-    )
-  );
+    $ancestors = get_post_ancestors($post);
+    $ancestors = array_reverse($ancestors);
+    $breadcrumbs = implode(
+        $separator,
+        array_filter(
+            array_map(
+                function ($id) use ($campus_root_id) {
+                    $permalink = get_permalink($id);
+                    if (!$permalink) {
+                        return '';
+                    }
 
-  $breadcrumbs .= count($ancestors) ?
-  $separator . '<span class="Actual">' . esc_html(get_the_title()) . '</span>'
-  :
-  '<span class="Root">&#128218;</span>';
+                    return $id == $campus_root_id ?
+                        sprintf('<a class="Root" aria-label="Campus" href="%s"></a>', esc_url($permalink)) :
+                        sprintf(
+                            '<a class="Page" href="%s">%s</a>',
+                            esc_url($permalink),
+                            esc_html(get_the_title($id))
+                        );
+                },
+                $ancestors
+            )
+        )
+    );
+
+    $breadcrumbs .= count($ancestors) ?
+        $separator . sprintf('<span class="Actual">%s</span>', esc_html(get_the_title())) :
+        '<span class="Root">&#128218;</span>';
 }
 
-echo '<div 
-  id="' . esc_attr(isset($attributes['blockId']) ? $attributes['blockId'] : '') . '" 
-  class="wp-block-poeticsoft-breadcrumbs"
->' .
-  $breadcrumbs .
-'</div>';
+$wrapper_attributes = get_block_wrapper_attributes([
+    'id' => $attrs['blockId'] ?? '',
+]);
+
+printf(
+    '<div %s>%s</div>',
+    $wrapper_attributes,
+    $breadcrumbs
+);

@@ -9,6 +9,10 @@
   "keywords": [],
   "textdomain": "poeticsoft-heart-campus",
   "version": "1.0.0",
+  "style": [ 
+    "wp-block-button",     
+    "wp-block-buttons"
+   ],
   "supports": {
     "align": ["left", "center", "right"],    
     "anchor": false,

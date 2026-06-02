@@ -30,10 +30,10 @@ __webpack_require__.dn(__WEBPACK_DEFAULT_EXPORT__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   apifetch: () => (/* binding */ apifetch),
-/* harmony export */   validatemail: () => (/* binding */ validatemail)
+/* harmony export */   apiFetch: () => (/* binding */ apiFetch),
+/* harmony export */   validateEmail: () => (/* binding */ validateEmail)
 /* harmony export */ });
-var apifetch = function apifetch(data) {
+var apiFetch = function apiFetch(data) {
   return new Promise(function (resolve, reject) {
     fetch('/wp-json/poeticsoft/contentpayment/' + data.url, {
       method: "POST",
@@ -53,7 +53,7 @@ var apifetch = function apifetch(data) {
     });
   });
 };
-var validatemail = function validatemail(email) {
+var validateEmail = function validateEmail(email) {
   var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
 };
@@ -80,19 +80,19 @@ __webpack_require__.r(__webpack_exports__);
   var $forms = $wrapper.find('.Forms.Identify');
   $forms.find('.Form').remove();
   $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_0__["default"])({
-    form: 'confirmcode',
+    form: 'confirmCode',
     code: code
   }));
-  var $codeconfirm = $forms.find('.Form.ConfirmCode');
-  var $codeconfirminput = $codeconfirm.find('input.Code');
-  var $codeconfirmconfirmcode = $codeconfirm.find('button.ConfirmCode');
-  var $identifyresendcode = $codeconfirm.find('a.ResendCode');
-  $codeconfirmconfirmcode.on('click', function () {
-    var code = $codeconfirminput.val();
-    $codeconfirminput.prop('disabled', true);
-    $codeconfirmconfirmcode.prop('disabled', true);
+  var $codeConfirm = $forms.find('.Form.ConfirmCode');
+  var $codeConfirmInput = $codeConfirm.find('input.Code');
+  var $codeConfirmConfirmCode = $codeConfirm.find('button.ConfirmCode');
+  var $identifyResendCode = $codeConfirm.find('a.ResendCode');
+  $codeConfirmConfirmCode.on('click', function () {
+    var code = $codeConfirmInput.val();
+    $codeConfirmInput.prop('disabled', true);
+    $codeConfirmConfirmCode.prop('disabled', true);
     (0,_common_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, $wrapper, 'Confirmando...', 'Warn');
-    (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apifetch)({
+    (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apiFetch)({
       url: 'identify/subscriber/confirmcode',
       body: {
         email: email,
@@ -108,36 +108,36 @@ __webpack_require__.r(__webpack_exports__);
         console.log(data);
         (0,_common_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, $wrapper, data.message, 'Error');
       }
-      $codeconfirminput.prop('disabled', false);
-      $codeconfirmconfirmcode.prop('disabled', false);
+      $codeConfirmInput.prop('disabled', false);
+      $codeConfirmConfirmCode.prop('disabled', false);
     })["catch"](function (error) {
       console.log(error);
       (0,_common_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, $wrapper, 'Error de servidor, intentalo de nuevo, por favor.', 'Error');
-      $codeconfirminput.prop('disabled', false);
-      $codeconfirmconfirmcode.prop('disabled', false);
+      $codeConfirmInput.prop('disabled', false);
+      $codeConfirmConfirmCode.prop('disabled', false);
     });
   });
-  $identifyresendcode.on('click', function () {
-    $codeconfirminput.val('');
-    $codeconfirminput.prop('disabled', false);
-    $codeconfirmconfirmcode.prop('disabled', false);
+  $identifyResendCode.on('click', function () {
+    $codeConfirmInput.val('');
+    $codeConfirmInput.prop('disabled', false);
+    $codeConfirmConfirmCode.prop('disabled', false);
     (0,_common_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, $wrapper, 'Reenviando...', 'Warn');
-    (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apifetch)({
+    (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apiFetch)({
       url: 'identify/subscriber/identify',
       body: {
         email: email
       }
     }).then(function (data) {
       if (data.result == 'ok') {
-        // $codeconfirminput.val(data.code)
+        // $codeConfirmInput.val(data.code)
 
         (0,_common_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, $wrapper, 'Se ha reenviado el código.', 'Info');
       }
     })["catch"](function (error) {
       console.log(error);
       (0,_common_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, $wrapper, 'Error de servidor, intentalo de nuevo, por favor.', 'Error');
-      $codeconfirminput.prop('disabled', false);
-      $codeconfirmconfirmcode.prop('disabled', false);
+      $codeConfirmInput.prop('disabled', false);
+      $codeConfirmConfirmCode.prop('disabled', false);
     });
     return false;
   });
@@ -170,54 +170,54 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, $wrapper) {
-  var accesstype = poeticsoft_content_payment_core_block_postcontent_accesstype_origin;
+  var accessType = poeticsoft_content_payment_core_block_postcontent_accesstype_origin;
   var $forms = $wrapper.find('.Forms.Identify');
   $forms.find('.Form').remove();
   $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_2__["default"])({
     form: 'identify'
   }));
   var $identify = $forms.find('.Form.Identify');
-  var $identifyemail = $identify.find('input.Email');
-  var $identifysendmail = $identify.find('button.SendEmail');
-  var $identifynotregistered = $identify.find('a.NotRegistered');
-  function checkemail() {
+  var $identifyEmail = $identify.find('input.Email');
+  var $identifySendEmail = $identify.find('button.SendEmail');
+  var $identifyNotRegistered = $identify.find('a.NotRegistered');
+  function checkEmail() {
     var $this = $(this);
     var email = $this.val();
-    if ($this[0].checkValidity() && (0,_common_utils__WEBPACK_IMPORTED_MODULE_1__.validatemail)(email)) {
-      $identifysendmail.prop('disabled', false);
+    if ($this[0].checkValidity() && (0,_common_utils__WEBPACK_IMPORTED_MODULE_1__.validateEmail)(email)) {
+      $identifySendEmail.prop('disabled', false);
     } else {
-      $identifysendmail.prop('disabled', true);
+      $identifySendEmail.prop('disabled', true);
     }
     (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, '', '');
   }
-  $identifyemail.on('change', checkemail);
-  $identifyemail.on('keydown', checkemail);
-  $identifyemail.on('keyup', checkemail);
-  $identifynotregistered.on('click', function () {
-    (0,_do_register_want__WEBPACK_IMPORTED_MODULE_5__["default"])($);
+  $identifyEmail.on('change', checkEmail);
+  $identifyEmail.on('keydown', checkEmail);
+  $identifyEmail.on('keyup', checkEmail);
+  $identifyNotRegistered.on('click', function () {
+    (0,_do_register_want__WEBPACK_IMPORTED_MODULE_5__["default"])($, $wrapper);
     return false;
   });
-  $identifysendmail.on('click', function () {
-    var email = $identifyemail.val();
+  $identifySendEmail.on('click', function () {
+    var email = $identifyEmail.val();
     (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Enviando...', 'Warn');
-    if ($identifyemail[0].checkValidity() && (0,_common_utils__WEBPACK_IMPORTED_MODULE_1__.validatemail)(email)) {
-      $identifyemail.prop('disabled', true);
-      $identifysendmail.prop('disabled', true);
-      (0,_common_utils__WEBPACK_IMPORTED_MODULE_1__.apifetch)({
+    if ($identifyEmail[0].checkValidity() && (0,_common_utils__WEBPACK_IMPORTED_MODULE_1__.validateEmail)(email)) {
+      $identifyEmail.prop('disabled', true);
+      $identifySendEmail.prop('disabled', true);
+      (0,_common_utils__WEBPACK_IMPORTED_MODULE_1__.apiFetch)({
         url: 'identify/subscriber/identify',
         body: {
           email: email
         }
       }).then(function (data) {
         if (data.result == 'error') {
-          switch (accesstype) {
+          switch (accessType) {
             case 'gsheets':
               (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Email no registrado, solicita tu identificación', 'Error');
               break;
             case 'mailrelay':
               (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Email no registrado, tienes que registrarte', 'Error');
               setTimeout(function () {
-                (0,_do_register_should__WEBPACK_IMPORTED_MODULE_4__["default"])($, email);
+                (0,_do_register_should__WEBPACK_IMPORTED_MODULE_4__["default"])($, $wrapper, email);
               }, 2000);
               break;
             case 'directus':
@@ -233,8 +233,8 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
         (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Error de servidor, intentalo de nuevo, por favor.', 'Error');
-        $identifyemail.prop('disabled', false);
-        $identifysendmail.prop('disabled', false);
+        $identifyEmail.prop('disabled', false);
+        $identifySendEmail.prop('disabled', false);
       });
     } else {
       (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'El mail no es válido.', 'Error');
@@ -261,12 +261,12 @@ __webpack_require__.r(__webpack_exports__);
   var $login = $mytools.find('.Login');
   $login.on('click', function () {
     $('body').append("\n        <div class=\"poeticsoft_content_payment_login_overlay\">\n          <div class=\"poeticsoft_content_payment_login\">\n            <div class=\"Forms Identify\"></div>\n            <div class=\"Close\"></div>\n          </div>\n        </div>\n      ");
-    var $loginwrapper = $('body .poeticsoft_content_payment_login_overlay');
-    var $wrapper = $loginwrapper.find('.poeticsoft_content_payment_login');
+    var $loginWrapper = $('body .poeticsoft_content_payment_login_overlay');
+    var $wrapper = $loginWrapper.find('.poeticsoft_content_payment_login');
     var $close = $wrapper.find('.Close');
     (0,_do_identify__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper);
     $close.on('click', function () {
-      $loginwrapper.remove();
+      $loginWrapper.remove();
     });
     return false;
   });
@@ -299,16 +299,16 @@ __webpack_require__.r(__webpack_exports__);
   var $forms = $wrapper.find('.Forms.Identify');
   $forms.find('.Form').remove();
   $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_0__["default"])({
-    form: 'registershould',
+    form: 'registerShould',
     email: email
   }));
-  var $registershould = $forms.find('.Form.RegisterShould');
-  var $registershouldconfirmcode = $registershould.find('button.RegistryEmail');
-  var $registershouldothermail = $registershould.find('a.OtherMail');
-  $registershouldconfirmcode.on('click', function () {
-    $registershouldconfirmcode.prop('disabled', true);
+  var $registerShould = $forms.find('.Form.RegisterShould');
+  var $registerShouldConfirmCode = $registerShould.find('button.RegistryEmail');
+  var $registerShouldOtherMail = $registerShould.find('a.OtherMail');
+  $registerShouldConfirmCode.on('click', function () {
+    $registerShouldConfirmCode.prop('disabled', true);
     (0,_common_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, $wrapper, 'Enviando...', 'Warn');
-    (0,_common_utils__WEBPACK_IMPORTED_MODULE_4__.apifetch)({
+    (0,_common_utils__WEBPACK_IMPORTED_MODULE_4__.apiFetch)({
       url: 'identify/subscriber/register',
       body: {
         email: email
@@ -321,19 +321,18 @@ __webpack_require__.r(__webpack_exports__);
           });
         }).join(', ');
         (0,_common_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, $wrapper, errors, 'Error');
-        $registershouldconfirmcode.prop('disabled', false);
+        $registerShouldConfirmCode.prop('disabled', false);
       } else {
         (0,_do_confirmcode__WEBPACK_IMPORTED_MODULE_2__["default"])($, $wrapper, email, result.usercode);
       }
     })["catch"](function (error) {
       console.log(error);
       (0,_common_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, $wrapper, 'Error de servidor, intentalo de nuevo, por favor.', 'Error');
-      $registerwantemail.prop('disabled', false);
-      $registerwantsendmail.prop('disabled', false);
+      $registerShouldConfirmCode.prop('disabled', false);
     });
   });
-  $registershouldothermail.on('click', function () {
-    (0,_do_register_want__WEBPACK_IMPORTED_MODULE_3__["default"])($);
+  $registerShouldOtherMail.on('click', function () {
+    (0,_do_register_want__WEBPACK_IMPORTED_MODULE_3__["default"])($, $wrapper);
     return false;
   });
 });
@@ -366,35 +365,35 @@ __webpack_require__.r(__webpack_exports__);
   var $forms = $wrapper.find('.Forms.Identify');
   $forms.find('.Form').remove();
   $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_1__["default"])({
-    form: 'registerwant'
+    form: 'registerWant'
   }));
-  var $registerwant = $forms.find('.Form.RegisterWant');
-  var $registerwantemail = $registerwant.find('input.Email');
-  var $registerwantsendmail = $registerwant.find('button.SendEmail');
-  var $registerwantbackidentify = $registerwant.find('a.BackIdentify');
-  function checkemail() {
+  var $registerWant = $forms.find('.Form.RegisterWant');
+  var $registerWantEmail = $registerWant.find('input.Email');
+  var $registerWantSendEmail = $registerWant.find('button.SendEmail');
+  var $registerWantBackIdentify = $registerWant.find('a.BackIdentify');
+  function checkEmail() {
     var $this = $(this);
     var email = $this.val();
-    if ($this[0].checkValidity() && (0,_common_utils__WEBPACK_IMPORTED_MODULE_0__.validatemail)(email)) {
-      $registerwantsendmail.prop('disabled', false);
+    if ($this[0].checkValidity() && (0,_common_utils__WEBPACK_IMPORTED_MODULE_0__.validateEmail)(email)) {
+      $registerWantSendEmail.prop('disabled', false);
     } else {
-      $registerwantsendmail.prop('disabled', true);
+      $registerWantSendEmail.prop('disabled', true);
     }
     (0,_common_message__WEBPACK_IMPORTED_MODULE_2__["default"])($, $wrapper, '', '');
   }
-  $registerwantemail.on('keydown', checkemail);
-  $registerwantemail.on('change', checkemail);
-  $registerwantbackidentify.on('click', function () {
-    (0,_do_identify__WEBPACK_IMPORTED_MODULE_3__["default"])($);
+  $registerWantEmail.on('keydown', checkEmail);
+  $registerWantEmail.on('change', checkEmail);
+  $registerWantBackIdentify.on('click', function () {
+    (0,_do_identify__WEBPACK_IMPORTED_MODULE_3__["default"])($, $wrapper);
     return false;
   });
-  $registerwantsendmail.on('click', function () {
-    var email = $registerwantemail.val();
-    if ($registerwantemail[0].checkValidity() && (0,_common_utils__WEBPACK_IMPORTED_MODULE_0__.validatemail)(email)) {
-      $registerwantemail.prop('disabled', true);
-      $registerwantsendmail.prop('disabled', true);
+  $registerWantSendEmail.on('click', function () {
+    var email = $registerWantEmail.val();
+    if ($registerWantEmail[0].checkValidity() && (0,_common_utils__WEBPACK_IMPORTED_MODULE_0__.validateEmail)(email)) {
+      $registerWantEmail.prop('disabled', true);
+      $registerWantSendEmail.prop('disabled', true);
       (0,_common_message__WEBPACK_IMPORTED_MODULE_2__["default"])($, $wrapper, 'Enviando...', 'Warn');
-      (0,_common_utils__WEBPACK_IMPORTED_MODULE_0__.apifetch)({
+      (0,_common_utils__WEBPACK_IMPORTED_MODULE_0__.apiFetch)({
         url: 'identify/subscriber/register',
         body: {
           email: email
@@ -407,16 +406,16 @@ __webpack_require__.r(__webpack_exports__);
             });
           }).join(', ');
           (0,_common_message__WEBPACK_IMPORTED_MODULE_2__["default"])($, $wrapper, errors, 'Error');
-          $registerwantemail.prop('disabled', false);
-          $registerwantsendmail.prop('disabled', false);
+          $registerWantEmail.prop('disabled', false);
+          $registerWantSendEmail.prop('disabled', false);
         } else {
           (0,_do_confirmcode__WEBPACK_IMPORTED_MODULE_4__["default"])($, $wrapper, email);
         }
       })["catch"](function (error) {
         console.log(error);
         (0,_common_message__WEBPACK_IMPORTED_MODULE_2__["default"])($, $wrapper, 'Error de servidor, intentalo de nuevo, por favor.', 'Error');
-        $registerwantemail.prop('disabled', false);
-        $registerwantsendmail.prop('disabled', false);
+        $registerWantEmail.prop('disabled', false);
+        $registerWantSendEmail.prop('disabled', false);
       });
     } else {
       (0,_common_message__WEBPACK_IMPORTED_MODULE_2__["default"])($, $wrapper, 'El mail no es válido.', 'Error');
@@ -447,31 +446,31 @@ __webpack_require__.r(__webpack_exports__);
   var $forms = $wrapper.find('.Forms.UseTemporalCode');
   $forms.find('.Form').remove();
   $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_2__["default"])({
-    form: 'usetemporalcode'
+    form: 'useTemporalCode'
   }));
-  var $usetemporalcode = $forms.find('.Form.UseTemporalCode');
-  var $usetemporalcodecode = $usetemporalcode.find('input.TemporalCode');
-  var $usetemporalcodesend = $usetemporalcode.find('button.SendTemporalCode');
-  function checkcode() {
+  var $useTemporalCode = $forms.find('.Form.UseTemporalCode');
+  var $useTemporalCodeCode = $useTemporalCode.find('input.TemporalCode');
+  var $useTemporalCodeSend = $useTemporalCode.find('button.SendTemporalCode');
+  function checkCode() {
     var $this = $(this);
     var code = $this.val();
     if (code.length > 4) {
-      $usetemporalcodesend.prop('disabled', false);
+      $useTemporalCodeSend.prop('disabled', false);
     } else {
-      $usetemporalcodesend.prop('disabled', true);
+      $useTemporalCodeSend.prop('disabled', true);
     }
     (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, '', '');
   }
-  $usetemporalcodecode.on('change', checkcode);
-  $usetemporalcodecode.on('keydown', checkcode);
-  $usetemporalcodecode.on('keyup', checkcode);
-  $usetemporalcodesend.on('click', function () {
-    var code = $usetemporalcodecode.val();
+  $useTemporalCodeCode.on('change', checkCode);
+  $useTemporalCodeCode.on('keydown', checkCode);
+  $useTemporalCodeCode.on('keyup', checkCode);
+  $useTemporalCodeSend.on('click', function () {
+    var code = $useTemporalCodeCode.val();
     (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Enviando...', 'Warn');
     if (code.length > 4) {
-      $usetemporalcodecode.prop('disabled', true);
-      $usetemporalcodesend.prop('disabled', true);
-      (0,_common_utils__WEBPACK_IMPORTED_MODULE_1__.apifetch)({
+      $useTemporalCodeCode.prop('disabled', true);
+      $useTemporalCodeSend.prop('disabled', true);
+      (0,_common_utils__WEBPACK_IMPORTED_MODULE_1__.apiFetch)({
         url: 'identify/subscriber/checktemporalcode',
         body: {
           code: code
@@ -485,15 +484,15 @@ __webpack_require__.r(__webpack_exports__);
           (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, result.message, 'Error');
           setTimeout(function () {
             (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, '', '');
-            $usetemporalcodecode.prop('disabled', false);
-            $usetemporalcodesend.prop('disabled', false);
+            $useTemporalCodeCode.prop('disabled', false);
+            $useTemporalCodeSend.prop('disabled', false);
           }, 2000);
         }
       })["catch"](function (error) {
         console.log(error);
         (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Error de servidor, intentalo de nuevo, por favor.', 'Error');
-        $identifyemail.prop('disabled', false);
-        $identifysendmail.prop('disabled', false);
+        $useTemporalCodeCode.prop('disabled', false);
+        $useTemporalCodeSend.prop('disabled', false);
       });
     } else {
       (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'El mail no es válido.', 'Error');
@@ -534,10 +533,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (data) {
-  var needregister = ['mailrelay'];
-  var accesstype = poeticsoft_content_payment_core_block_postcontent_accesstype_origin;
-  var wantregister = needregister.includes(accesstype) ? "\n  <a \n    class=\"Extra NotRegistered\"\n    href=\"#\"\n  >\n    Quiero suscribirme\n  </a>\n  " : '';
-  return "\n    <div class=\"Form Identify\">\n      <div class=\"FormName\">Identify</div>\n      <div class=\"Explain\">\n        Identif\xEDcate para acceder a los contenidos.\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field Email\">\n          <input\n            class=\"Email\"\n            type=\"email\"\n            placeholder=\"Tu E-mail\"\n            name=\"user-email\"\n          />      \n          <div class=\"Tools wp-block-button\">\n            <button \n              class=\"\n                SendEmail\n                wp-block-button__link \n                wp-element-button\n              \"\n              disabled=\"disabled\"\n            >\n              ENVIAR\n            </button>\n          </div>\n        </div>\n      </div>\n      ".concat(wantregister, "\n      <div class=\"Message\"></div>          \n    </div>\n  ");
+  var needRegister = ['mailrelay'];
+  var accessType = poeticsoft_content_payment_core_block_postcontent_accesstype_origin;
+  var wantRegister = needRegister.includes(accessType) ? "\n  <a \n    class=\"Extra NotRegistered\"\n    href=\"#\"\n  >\n    Quiero suscribirme\n  </a>\n  " : '';
+  return "\n    <div class=\"Form Identify\">\n      <div class=\"FormName\">Identify</div>\n      <div class=\"Explain\">\n        Identif\xEDcate para acceder a los contenidos.\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field Email\">\n          <input\n            class=\"Email\"\n            type=\"email\"\n            placeholder=\"Tu E-mail\"\n            name=\"user-email\"\n          />      \n          <div class=\"Tools wp-block-button\">\n            <button \n              class=\"\n                SendEmail\n                wp-block-button__link \n                wp-element-button\n              \"\n              disabled=\"disabled\"\n            >\n              ENVIAR\n            </button>\n          </div>\n        </div>\n      </div>\n      ".concat(wantRegister, "\n      <div class=\"Message\"></div>          \n    </div>\n  ");
 });
 __webpack_require__.dn(__WEBPACK_DEFAULT_EXPORT__);
 
@@ -635,11 +634,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var forms = {
   identify: _form_identify__WEBPACK_IMPORTED_MODULE_0__["default"],
-  usetemporalcode: _form_usetemporalcode__WEBPACK_IMPORTED_MODULE_1__["default"],
-  registershould: _form_register_should__WEBPACK_IMPORTED_MODULE_3__["default"],
-  registerwant: _form_register_want__WEBPACK_IMPORTED_MODULE_4__["default"],
-  registerconfirm: _form_register_confirm__WEBPACK_IMPORTED_MODULE_5__["default"],
-  confirmcode: _form_confirmcode__WEBPACK_IMPORTED_MODULE_2__["default"]
+  useTemporalCode: _form_usetemporalcode__WEBPACK_IMPORTED_MODULE_1__["default"],
+  registerShould: _form_register_should__WEBPACK_IMPORTED_MODULE_3__["default"],
+  registerWant: _form_register_want__WEBPACK_IMPORTED_MODULE_4__["default"],
+  registerConfirm: _form_register_confirm__WEBPACK_IMPORTED_MODULE_5__["default"],
+  confirmCode: _form_confirmcode__WEBPACK_IMPORTED_MODULE_2__["default"]
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (data) {
   return forms[data.form](data);
@@ -667,44 +666,44 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, $wrapper) {
-  var postcontentdata = $wrapper.data();
-  var $forms = $postcontent.find('.Forms.ShouldPay');
+  var postContentData = $wrapper.data();
+  var $forms = $wrapper.find('.Forms.ShouldPay');
   $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_1__["default"])({
-    form: 'confirmpaybizum'
+    form: 'confirmPayBizum'
   }));
-  var $confirmpay = $forms.find('.Form.ConfirmPay');
-  var $confirmpaypay = $confirmpay.find('button.Pay');
-  var $confirmpayother = $confirmpay.find('a.OtherChannel');
+  var $confirmPay = $forms.find('.Form.ConfirmPay');
+  var $confirmPayPay = $confirmPay.find('button.Pay');
+  var $confirmPayOther = $confirmPay.find('a.OtherChannel');
   var allowBack = true;
-  $confirmpayother.on('click', function () {
+  $confirmPayOther.on('click', function () {
     allowBack && (0,_do_paychannel__WEBPACK_IMPORTED_MODULE_3__["default"])($);
   });
-  $confirmpaypay.on('click', function () {
-    $confirmpaypay.prop('disabled', true);
-    $confirmpayother.addClass('Disabled');
+  $confirmPayPay.on('click', function () {
+    $confirmPayPay.prop('disabled', true);
+    $confirmPayOther.addClass('Disabled');
     allowBack = false;
     (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Enviando...', 'Warn');
-    (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apifetch)({
+    (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apiFetch)({
       url: 'pay/init',
       body: {
         type: 'bizum',
-        email: postcontentdata.email,
-        postid: postcontentdata.postid
+        email: postContentData.email,
+        postid: postContentData.postid
       }
     }).then(function (data) {
       $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_1__["default"])({
-        form: 'confirmpaybizumend',
+        form: 'confirmPayBizumEnd',
         result: data
       }));
     })["catch"](function (error) {
       console.log(error);
       (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Error de servidor, intentalo de nuevo, por favor.', 'Error');
-      $confirmpaypay.prop('disabled', false);
-      $confirmpayother.removeClass('Disabled');
+      $confirmPayPay.prop('disabled', false);
+      $confirmPayOther.removeClass('Disabled');
       allowBack = true;
     });
   });
-  $confirmpayother.on('click', function () {
+  $confirmPayOther.on('click', function () {
     (0,_do_paychannel__WEBPACK_IMPORTED_MODULE_3__["default"])($);
     return false;
   });
@@ -754,40 +753,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forms */ "./src/ui/frontend/postcontent/js/shouldpay/forms.js");
 /* harmony import */ var _common_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../common/utils */ "./src/ui/frontend/postcontent/js/common/utils.js");
 /* harmony import */ var _do_confirmpay_stripe_end__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./do-confirmpay-stripe-end */ "./src/ui/frontend/postcontent/js/shouldpay/do-confirmpay-stripe-end.js");
+/* harmony import */ var _do_paychannel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./do-paychannel */ "./src/ui/frontend/postcontent/js/shouldpay/do-paychannel.js");
+
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, $wrapper, paytype) {
-  var postcontentdata = $wrapper.data();
-  var $forms = $postcontent.find('.Forms.ShouldPay');
+  var postContentData = $wrapper.data();
+  var $forms = $wrapper.find('.Forms.ShouldPay');
   $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_1__["default"])({
-    form: 'confirmpaystripe'
+    form: 'confirmPayStripe'
   }));
-  var $confirmpay = $forms.find('.Form.ConfirmPay');
-  var $confirmpaypay = $confirmpay.find('button.Pay');
-  var $confirmpayother = $confirmpay.find('a.OtherChannel');
+  var $confirmPay = $forms.find('.Form.ConfirmPay');
+  var $confirmPayPay = $confirmPay.find('button.Pay');
+  var $confirmPayOther = $confirmPay.find('a.OtherChannel');
   var allowBack = true;
-  $confirmpayother.on('click', function () {
-    allowBack && paychannel($);
+  $confirmPayOther.on('click', function () {
+    allowBack && (0,_do_paychannel__WEBPACK_IMPORTED_MODULE_4__["default"])($);
   });
-  $confirmpaypay.on('click', function () {
-    $confirmpaypay.prop('disabled', true);
-    $confirmpayother.addClass('Disabled');
+  $confirmPayPay.on('click', function () {
+    $confirmPayPay.prop('disabled', true);
+    $confirmPayOther.addClass('Disabled');
     allowBack = false;
     (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Conectando con Stripe...', 'Warn');
-    (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apifetch)({
+    (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apiFetch)({
       url: 'pay/init',
       body: {
         type: 'stripe',
-        email: postcontentdata.email,
-        postid: postcontentdata.postid
+        email: postContentData.email,
+        postid: postContentData.postid
       }
     }).then(function (data) {
       window.open(data.stripesession.url, 'STRIPE', 'width=1080,height=800');
       (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Esperando confirmación de pago, no cierres esta ventana...', 'Warn');
       var waitStripe = setInterval(function () {
-        (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apifetch)({
+        (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apiFetch)({
           url: 'pay/stripe/session/check',
           body: {
             stripesessionid: data.stripesession.id
@@ -802,8 +803,9 @@ __webpack_require__.r(__webpack_exports__);
     })["catch"](function (error) {
       console.log(error);
       (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Error de servidor, intentalo de nuevo, por favor.', 'Error');
-      $identifyemail.prop('disabled', false);
-      $identifysendmail.prop('disabled', false);
+      $confirmPayPay.prop('disabled', false);
+      $confirmPayOther.removeClass('Disabled');
+      allowBack = true;
     });
   });
 });
@@ -830,44 +832,44 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, $wrapper) {
-  var postcontentdata = $wrapper.data();
-  var $forms = $postcontent.find('.Forms.ShouldPay');
+  var postContentData = $wrapper.data();
+  var $forms = $wrapper.find('.Forms.ShouldPay');
   $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_1__["default"])({
-    form: 'confirmpaytransfer'
+    form: 'confirmPayTransfer'
   }));
-  var $confirmpay = $forms.find('.Form.ConfirmPay');
-  var $confirmpaypay = $confirmpay.find('button.Pay');
-  var $confirmpayother = $confirmpay.find('a.OtherChannel');
+  var $confirmPay = $forms.find('.Form.ConfirmPay');
+  var $confirmPayPay = $confirmPay.find('button.Pay');
+  var $confirmPayOther = $confirmPay.find('a.OtherChannel');
   var allowBack = true;
-  $confirmpayother.on('click', function () {
+  $confirmPayOther.on('click', function () {
     allowBack && (0,_do_paychannel__WEBPACK_IMPORTED_MODULE_3__["default"])($);
   });
-  $confirmpaypay.on('click', function () {
-    $confirmpaypay.prop('disabled', true);
-    $confirmpayother.addClass('Disabled');
+  $confirmPayPay.on('click', function () {
+    $confirmPayPay.prop('disabled', true);
+    $confirmPayOther.addClass('Disabled');
     allowBack = false;
     (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Enviando...', 'Warn');
-    (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apifetch)({
+    (0,_common_utils__WEBPACK_IMPORTED_MODULE_2__.apiFetch)({
       url: 'pay/init',
       body: {
         type: 'transfer',
-        email: postcontentdata.email,
-        postid: postcontentdata.postid
+        email: postContentData.email,
+        postid: postContentData.postid
       }
     }).then(function (data) {
       $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_1__["default"])({
-        form: 'confirmpaytransferend',
+        form: 'confirmPayTransferEnd',
         result: data
       }));
     })["catch"](function (error) {
       console.log(error);
       (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Error de servidor, intentalo de nuevo, por favor.', 'Error');
-      $confirmpaypay.prop('disabled', false);
-      $confirmpayother.removeClass('Disabled');
+      $confirmPayPay.prop('disabled', false);
+      $confirmPayOther.removeClass('Disabled');
       allowBack = true;
     });
   });
-  $confirmpayother.on('click', function () {
+  $confirmPayOther.on('click', function () {
     (0,_do_paychannel__WEBPACK_IMPORTED_MODULE_3__["default"])($);
     return false;
   });
@@ -896,7 +898,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var confirmpay = {
+var confirmPay = {
   stripe: _do_confirmpay_stripe__WEBPACK_IMPORTED_MODULE_2__["default"],
   transfer: _do_confirmpay_transfer__WEBPACK_IMPORTED_MODULE_3__["default"],
   bizum: _do_confirmpay_bizum__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -904,20 +906,20 @@ var confirmpay = {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, $wrapper) {
   var $forms = $wrapper.find('.Forms.ShouldPay');
   $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_1__["default"])({
-    form: 'paychannel'
+    form: 'payChannel'
   }));
   var $paychannel = $forms.find('.Form.PayChannel');
-  var $inputchannels = $paychannel.find('.Channel input[type=radio]');
+  var $inputChannels = $paychannel.find('.Channel input[type=radio]');
   var $paychannelpay = $paychannel.find('button.Pay');
-  $inputchannels.on('change', function () {
+  $inputChannels.on('change', function () {
     $paychannelpay.prop('disabled', false);
   });
   $paychannelpay.on('click', function () {
-    var typeselected = $paychannel.find('.Channel input[type=radio]:checked').val();
-    $inputchannels.prop('disabled', true);
+    var typeSelected = $paychannel.find('.Channel input[type=radio]:checked').val();
+    $inputChannels.prop('disabled', true);
     $paychannelpay.prop('disabled', true);
     (0,_common_message__WEBPACK_IMPORTED_MODULE_0__["default"])($, $wrapper, 'Conectando...', 'Warn');
-    confirmpay[typeselected]($);
+    confirmPay[typeSelected]($);
   });
 });
 __webpack_require__.dn(__WEBPACK_DEFAULT_EXPORT__);
@@ -939,16 +941,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, $wrapper) {
-  var $advicetext = $wrapper.find('.AdviceText');
-  var advicetext = $advicetext.html();
+  var $adviceText = $wrapper.find('.AdviceText');
+  var adviceText = $adviceText.html();
   var $forms = $wrapper.find('.Forms.ShouldPay');
   $forms.html((0,_forms__WEBPACK_IMPORTED_MODULE_0__["default"])({
-    form: 'shouldpay',
-    advicetext: advicetext
+    form: 'shouldPay',
+    adviceText: adviceText
   }));
-  var $shouldpay = $forms.find('.Form.ShouldPay');
-  var $shouldpaybuy = $shouldpay.find('button.Buy');
-  $shouldpaybuy.on('click', function () {
+  var $shouldPay = $forms.find('.Form.ShouldPay');
+  var $shouldPayBuy = $shouldPay.find('button.Buy');
+  $shouldPayBuy.on('click', function () {
     (0,_do_paychannel__WEBPACK_IMPORTED_MODULE_1__["default"])($);
   });
 });
@@ -1086,19 +1088,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (data) {
-  var accesstype = poeticsoft_content_payment_core_block_postcontent_accesstype_origin;
-  var paytext = '';
-  var accessbutton = '';
-  switch (accesstype) {
+  var accessType = poeticsoft_content_payment_core_block_postcontent_accesstype_origin;
+  var payText = '';
+  var accessButton = '';
+  switch (accessType) {
     case 'gsheets':
-      paytext = data.advicetext;
+      payText = data.adviceText;
       break;
     default:
-      paytext = "\n        Este contenido est\xE1 disponible para suscriptores, \n        puedes obtener acceso a estos contenidos \n        por un periodo de <strong>12 meses</strong> a partir de la fecha de adquisici\xF3n.  \n      ";
-      accessbutton = "\n        <div class=\"Tools wp-block-button\">\n          <button \n            class=\"\n              Buy\n              wp-block-button__link \n              wp-element-button\n            \"\n          >\n            OBTENER ACCESO\n          </button>\n        </div>\n      ";
+      payText = "\n        Este contenido est\xE1 disponible para suscriptores, \n        puedes obtener acceso a estos contenidos \n        por un periodo de <strong>12 meses</strong> a partir de la fecha de adquisici\xF3n.  \n      ";
+      accessButton = "\n        <div class=\"Tools wp-block-button\">\n          <button \n            class=\"\n              Buy\n              wp-block-button__link \n              wp-element-button\n            \"\n          >\n            OBTENER ACCESO\n          </button>\n        </div>\n      ";
       break;
   }
-  return "\n    <div class=\"Form ShouldPay\">\n      <div class=\"FormName\">Should Pay</div>\n      <div class=\"Explain\">\n        ".concat(paytext, "  \n      </div>\n      ").concat(accessbutton, "\n      <div class=\"Message\"></div>          \n    </div>\n  ");
+  return "\n    <div class=\"Form ShouldPay\">\n      <div class=\"FormName\">Should Pay</div>\n      <div class=\"Explain\">\n        ".concat(payText, "  \n      </div>\n      ").concat(accessButton, "\n      <div class=\"Message\"></div>          \n    </div>\n  ");
 });
 __webpack_require__.dn(__WEBPACK_DEFAULT_EXPORT__);
 
@@ -1131,14 +1133,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var forms = {
-  shouldpay: _form_shouldpay__WEBPACK_IMPORTED_MODULE_0__["default"],
-  paychannel: _form_paychannel__WEBPACK_IMPORTED_MODULE_1__["default"],
-  confirmpaystripe: _form_confirmpay_stripe__WEBPACK_IMPORTED_MODULE_2__["default"],
-  confirmpaystripeend: _form_confirmpay_stripe_end__WEBPACK_IMPORTED_MODULE_3__["default"],
-  confirmpaytransfer: _form_confirmpay_transfer__WEBPACK_IMPORTED_MODULE_4__["default"],
-  confirmpaytransferend: _form_confirmpay_transfer_end__WEBPACK_IMPORTED_MODULE_5__["default"],
-  confirmpaybizum: _form_confirmpay_bizum__WEBPACK_IMPORTED_MODULE_6__["default"],
-  confirmpaybizumend: _form_confirmpay_bizum_end__WEBPACK_IMPORTED_MODULE_7__["default"]
+  shouldPay: _form_shouldpay__WEBPACK_IMPORTED_MODULE_0__["default"],
+  payChannel: _form_paychannel__WEBPACK_IMPORTED_MODULE_1__["default"],
+  confirmPayStripe: _form_confirmpay_stripe__WEBPACK_IMPORTED_MODULE_2__["default"],
+  confirmPayStripeEnd: _form_confirmpay_stripe_end__WEBPACK_IMPORTED_MODULE_3__["default"],
+  confirmPayTransfer: _form_confirmpay_transfer__WEBPACK_IMPORTED_MODULE_4__["default"],
+  confirmPayTransferEnd: _form_confirmpay_transfer_end__WEBPACK_IMPORTED_MODULE_5__["default"],
+  confirmPayBizum: _form_confirmpay_bizum__WEBPACK_IMPORTED_MODULE_6__["default"],
+  confirmPayBizumEnd: _form_confirmpay_bizum_end__WEBPACK_IMPORTED_MODULE_7__["default"]
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (data) {
   return forms[data.form](data);
@@ -1247,21 +1249,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 (function ($) {
-  var waitidentyfyorigin = setInterval(function () {
-    if (poeticsoft_content_payment_core_block_postcontent_accesstype_origin) {
-      clearInterval(waitidentyfyorigin);
-      var $postcontent = $('.wp-block-poeticsoft_content_payment_postcontent');
-      var $formsusetemporalcode = $postcontent.find('.Forms.UseTemporalCode');
-      var $formsidentify = $postcontent.find('.Forms.Identify');
-      var $formsshouldpay = $postcontent.find('.Forms.ShouldPay');
-      if ($formsidentify.length) {
-        (0,_js_identify_do_identify__WEBPACK_IMPORTED_MODULE_1__["default"])($, $postcontent);
+  var waitIdentifyOrigin = setInterval(function () {
+    if (poeticsoft_heart_campus_access_by) {
+      clearInterval(waitIdentifyOrigin);
+      var $postContent = $('.wp-block-poeticsoft_content_payment_postcontent');
+      var $formsUseTemporalCode = $postContent.find('.Forms.UseTemporalCode');
+      var $formsIdentify = $postContent.find('.Forms.Identify');
+      var $formsShouldPay = $postContent.find('.Forms.ShouldPay');
+      if ($formsIdentify.length) {
+        (0,_js_identify_do_identify__WEBPACK_IMPORTED_MODULE_1__["default"])($, $postContent);
       }
-      if ($formsshouldpay.length) {
-        (0,_js_shouldpay_do_shouldpay__WEBPACK_IMPORTED_MODULE_2__["default"])($, $postcontent);
+      if ($formsShouldPay.length) {
+        (0,_js_shouldpay_do_shouldpay__WEBPACK_IMPORTED_MODULE_2__["default"])($, $postContent);
       }
-      if ($formsusetemporalcode.length) {
-        (0,_js_identify_do_usetemporalcode__WEBPACK_IMPORTED_MODULE_3__["default"])($, $postcontent);
+      if ($formsUseTemporalCode.length) {
+        (0,_js_identify_do_usetemporalcode__WEBPACK_IMPORTED_MODULE_3__["default"])($, $postContent);
       }
       var $mytools = $('.wp-block-poeticsoft-mytools');
       if ($mytools.length) {

@@ -3,6 +3,7 @@
 namespace Poeticsoft\Heart\Frontend;
 
 use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * Frontend Assets Handler.
@@ -16,7 +17,10 @@ class Assets
      */
     public function init()
     {
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action(
+            'wp_enqueue_scripts', 
+            [$this, 'enqueue_scripts']
+        );
     }
 
     /**
@@ -25,27 +29,22 @@ class Assets
     public function enqueue_scripts()
     {
         // Global frontend assets.
-        wp_register_style(
-            Campus::PREFIX . 'main',
-            Campus::url('assets/front/style.css'),
-            [],
-            Campus::VERSION
-        );
+        // wp_enqueue_style(
+        //     Campus::PREFIX . 'main',
+        //     Utils::url('assets/front/style.css'),
+        //     [],
+        //     filemtime(Utils::path('assets/front/style.css')),
+        // );
 
-        // Conditional: Only on specific pages or post types.
-        if (is_singular()) {
-            wp_enqueue_style(Campus::PREFIX . 'main');
-        }
-
-        // Example: Only on a specific page slug.
-        if (is_page('contact')) {
-            wp_enqueue_script(
-                Campus::PREFIX . 'contact',
-                Campus::url('assets/front/contact.js'),
-                [],
-                Campus::VERSION,
-                true
-            );
-        }
+        // // Example: Only on a specific page slug.
+        // if (is_page('contact')) {
+        //     wp_enqueue_script(
+        //         Campus::PREFIX . 'contact',
+        //         Utils::url('assets/front/contact.js'),
+        //         [],
+        //         filemtime(Utils::path('assets/front/contact.js')),
+        //         true
+        //     );
+        // }
     }
 }

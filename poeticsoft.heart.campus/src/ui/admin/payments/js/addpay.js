@@ -7,14 +7,14 @@ import {
   validateMail
 } from './utils'
 import { 
-  apifetch
+  apiFetch
 } from 'uiutils/api'
 
 export default props => {
 
   const addPay = () => {
 
-    if(!validateMail(props.state.newpay.email)) {
+    if(!validateMail(props.state.newPay.email)) {
 
       props.dispatch({
         modal: {
@@ -36,7 +36,7 @@ export default props => {
       return
     }
 
-    if(!props.state.newpay.postid) {
+    if(!props.state.newPay.postId) {
 
       props.dispatch({
         modal: {
@@ -62,17 +62,17 @@ export default props => {
       modal: {
         open: true,
         title: 'Añadir pago',
-        text: `Seguro que quieres dar acceso a esta página al mail <strong>${ props.state.newpay.email }</strong>`,
+        text: `Seguro que quieres dar acceso a esta página al mail <strong>${ props.state.newPay.email }</strong>`,
         button: `Si, añadir pago`,
         confirm: () => {  
       
-          apifetch(
+          apiFetch(
             'campus/payments/create',
             {
               method: 'POST',
               body: {
-                user_mail: props.state.newpay.email,
-                post_id: props.state.newpay.postid
+                user_mail: props.state.newPay.email,
+                post_id: props.state.newPay.postId
               }
             }
           )
@@ -96,42 +96,42 @@ export default props => {
     {
       props.state.pays.length ?
       Object.keys(props.state.pays[0])
-      .reduce((fieldtitles, key) => {
+      .reduce((fieldTitles, key) => {
 
         if(props.state.tableFields.includes(key)) {
 
-          fieldtitles.push({
+          fieldTitles.push({
             key: key,
             title: props.state.tableFieldTitles[key]
           })
         }
 
-        return fieldtitles
+        return fieldTitles
       }, [])
-      .map(fieldtitle => <div className={`
+      .map(fieldTitle => <div className={`
         Column Field
-        ${ fieldtitle.key }
+        ${ fieldTitle.key }
       `}>
         { 
-          fieldtitle.key == 'post_id' ?
+          fieldTitle.key == 'post_id' ?
           <SelectControl 
-            value={ props.state.newpay.postid }
-            options={ props.state.campuspagestree }
+            value={ props.state.newPay.postId }
+            options={ props.state.campusPagesTree }
             onChange={
               value => props.dispatch({
-                newpay: {
-                  postid: value
+                newPay: {
+                  postId: value
                 }
               })
             }
           />
           :
-          fieldtitle.key == 'user_mail' ?
+          fieldTitle.key == 'user_mail' ?
           <InputControl
-            value={ props.state.newpay.email }
+            value={ props.state.newPay.email }
             onChange={ 
               value => props.dispatch({
-                newpay: {
+                newPay: {
                   email: value
                 }
               })

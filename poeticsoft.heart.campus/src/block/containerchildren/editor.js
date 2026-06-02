@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 const { 
   registerBlockType 
 } = wp.blocks
@@ -11,12 +10,11 @@ const {
   PanelBody,
   SelectControl 
 } = wp.components
-const {
-  useEffect
-} = wp.element
+
 import {
   HeadingSelector
  } from 'blockscommon/elementselector'
+import { useUniqueId } from 'blockscommon/uniqueid'
 
 import metadata from 'blocks/containerchildren/block.json'
 import './editor.scss'; 
@@ -74,27 +72,7 @@ const Edit = props => {
   } = attributes;
   const blockProps = useBlockProps()
 
-  useEffect(() => {
-
-    if (!blockId) {
-
-      setAttributes({ 
-        blockId: uuidv4(),
-        refClientId: clientId
-      })
-
-    } else {
-
-      if (refClientId !== clientId) {
-
-        setAttributes({ 
-          blockId: uuidv4(),
-          refClientId: clientId
-        })
-      }
-    }
-
-  }, [])
+  useUniqueId(clientId, attributes, setAttributes)
    
   return <>
     <InspectorControls>

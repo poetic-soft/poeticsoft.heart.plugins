@@ -1,4 +1,4 @@
-export const apifetch = data => {
+export const apiFetch = data => {
 
   return new Promise(
     (resolve, reject) => {
@@ -32,7 +32,7 @@ export const apifetch = data => {
   )
 }
 
-export const validatemail = email => {
+export const validateEmail = email => {
 
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);

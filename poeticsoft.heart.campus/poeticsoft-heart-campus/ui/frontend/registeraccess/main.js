@@ -2,21 +2,21 @@
 /*!************************************************!*\
   !*** ./src/ui/frontend/registeraccess/main.js ***!
   \************************************************/
-var PCP_ACESS_DATA = poeticsoft_content_payment_register_access_data.split('||');
-var PCP_POST_ID = PCP_ACESS_DATA[0];
-var PCP_USER_EMAIL = PCP_ACESS_DATA[1];
-var PCP_USER_IP = PCP_ACESS_DATA[2];
-var PCP_LOG_URL = '/wp-json/poeticsoft/contentpayment/campus/access';
-var PCP_HEARTBEAT_INTERVAL = 30000;
+var PHC_ACESS_DATA = poeticsoft_heart_campus_register_access_data.split('||');
+var PHC_POST_ID = PHC_ACESS_DATA[0];
+var PHC_USER_EMAIL = PHC_ACESS_DATA[1];
+var PHC_USER_IP = PHC_ACESS_DATA[2];
+var PHC_LOG_URL = '/wp-json/poeticsoft/heart/campus/access';
+var PHC_HEARTBEAT_INTERVAL = 30000;
 function trikaLog(action) {
-  fetch(PCP_LOG_URL, {
+  fetch(PHC_LOG_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      correo: PCP_USER_EMAIL,
-      post_id: PCP_POST_ID,
+      correo: PHC_USER_EMAIL,
+      post_id: PHC_POST_ID,
       fecha_hora: new Date().toISOString(),
       accion: action
     }),
@@ -26,7 +26,7 @@ function trikaLog(action) {
 trikaLog('entrada');
 var heartbeat = setInterval(function () {
   return trikaLog('heartbeat');
-}, PCP_HEARTBEAT_INTERVAL);
+}, PHC_HEARTBEAT_INTERVAL);
 document.addEventListener('visibilitychange', function () {
   if (document.visibilityState === 'hidden') {
     clearInterval(heartbeat);
@@ -35,22 +35,22 @@ document.addEventListener('visibilitychange', function () {
     if (!heartbeat) {
       heartbeat = setInterval(function () {
         return trikaLog('heartbeat');
-      }, PCP_HEARTBEAT_INTERVAL);
+      }, PHC_HEARTBEAT_INTERVAL);
     }
   }
 });
 window.addEventListener('pagehide', function () {
   clearInterval(heartbeat);
   var data = JSON.stringify({
-    correo: PCP_USER_EMAIL,
-    post_id: PCP_POST_ID,
+    correo: PHC_USER_EMAIL,
+    post_id: PHC_POST_ID,
     fecha_hora: new Date().toISOString(),
     accion: 'salida'
   });
   var blob = new Blob([data], {
     type: 'application/json'
   });
-  navigator.sendBeacon(PCP_LOG_URL, blob);
+  navigator.sendBeacon(PHC_LOG_URL, blob);
 });
 /******/ })()
 ;

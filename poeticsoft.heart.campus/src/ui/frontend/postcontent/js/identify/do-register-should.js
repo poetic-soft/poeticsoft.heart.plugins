@@ -1,9 +1,9 @@
 import forms from './forms'
 import message from '../common/message'
-import confirmcode from './do-confirmcode'
-import registerwant from './do-register-want'
+import confirmCode from './do-confirmcode'
+import registerWant from './do-register-want'
 import {
-  apifetch
+  apiFetch
 } from '../common/utils'
 
 export default ($, $wrapper, email) => {
@@ -12,19 +12,19 @@ export default ($, $wrapper, email) => {
   $forms.find('.Form').remove()
 
   $forms.html(forms({ 
-    form: 'registershould',
+    form: 'registerShould',
     email: email
   }))  
 
-  const $registershould = $forms.find('.Form.RegisterShould')
-  const $registershouldconfirmcode = $registershould.find('button.RegistryEmail')  
-  const $registershouldothermail = $registershould.find('a.OtherMail') 
+  const $registerShould = $forms.find('.Form.RegisterShould')
+  const $registerShouldConfirmCode = $registerShould.find('button.RegistryEmail')  
+  const $registerShouldOtherMail = $registerShould.find('a.OtherMail') 
 
-  $registershouldconfirmcode.on(
+  $registerShouldConfirmCode.on(
     'click',
     function() {
 
-      $registershouldconfirmcode.prop('disabled', true)  
+      $registerShouldConfirmCode.prop('disabled', true)  
     
       message(
         $, 
@@ -33,7 +33,7 @@ export default ($, $wrapper, email) => {
         'Warn'
       )
 
-      apifetch({
+      apiFetch({
         url: 'identify/subscriber/register',
         body: {
           email: email
@@ -55,11 +55,11 @@ export default ($, $wrapper, email) => {
             'Error'
           )
 
-          $registershouldconfirmcode.prop('disabled', false) 
+          $registerShouldConfirmCode.prop('disabled', false) 
 
         } else {
 
-          confirmcode(
+          confirmCode(
             $,  
             $wrapper,
             email, 
@@ -78,17 +78,16 @@ export default ($, $wrapper, email) => {
           'Error'
         )
 
-        $registerwantemail.prop('disabled', false)  
-        $registerwantsendmail.prop('disabled', false)
+        $registerShouldConfirmCode.prop('disabled', false) 
       })
     }
   )
 
-  $registershouldothermail.on(
+  $registerShouldOtherMail.on(
     'click',
     function() {
       
-      registerwant($)      
+      registerWant($, $wrapper)      
 
       return false
     }
