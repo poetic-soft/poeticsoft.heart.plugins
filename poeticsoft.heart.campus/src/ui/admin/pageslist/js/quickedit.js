@@ -1,3 +1,5 @@
+import { getPageStatus} from './utils'
+
 export default $ => {
 
   $(document)
@@ -6,21 +8,34 @@ export default $ => {
     '.editinline', 
     function() {
 
-      console.log('editinline')
+      const $this = $(this);
     
-      const postId = $(this).closest('tr').attr('id').replace('post-', '');
-      let valorActual = $('#post-' + postId).find('.valor-meta-contenedor').data('valor');
+      const postId = $this.closest('tr').attr('id').replace('post-', '');
+      getPageStatus(postId)
+      .then(result => {
       
-      console.log(postId)
+        if(result.success) {
 
-      if (valorActual === undefined || valorActual === '') {
-          valorActual = '0';
-      }
-      var inlineEditRow = $(this).closest('tr').next();
-      if(!inlineEditRow.hasClass('inline-edit-row')) {
-          inlineEditRow = inlineEditRow.next(); // A veces hay filas intermedias
-      }
-      inlineEditRow.find('.mi-meta-bool-select').val(valorActual);
+          const inCampus = result.data.in_campus          
+          let $inlineEditRow = $(this).closest('tr').next();
+          if(!$inlineEditRow.hasClass('inline-edit-row')) {
+              $inlineEditRow = $inlineEditRow.next();
+          }
+          const $statusFieldset = $inlineEditRow.find('fieldset.inline-edit-col-right.poeticsoft-heart-campus-access')
+
+          if(inCampus) {
+
+            const status = result.data.access
+            const $statusSelect = $statusFieldset.find('select.poeticsoft-heart-campus-access')
+
+            $statusSelect.val(status)
+
+          } else {
+
+            $statusFieldset.remove()
+          }
+        }
+      })
     }
   );
 

@@ -1,5 +1,5 @@
 import {
-  updateFree,
+  updateOpen,
   updateData
 } from './utils'
 
@@ -8,10 +8,10 @@ export default ($, $pageStatuses, formClass='') => {
   $pageStatuses
   .each(function() {
     
-    const $this = $(this)
+    const $this = $(this) 
     const id = $this.attr('id').replace('post-', '')
-    const $toggleFree = $this.find('.PriceTools .Access input.IsFree')
-    const $toggleLabel = $this.find('.PriceTools .Access label')
+    const $toggleFree = $this.find('.AccessTools .Access input.IsOpen')
+    const $toggleLabel = $this.find('.AccessTools .Access label')
 
     $toggleFree
     .on(
@@ -21,11 +21,11 @@ export default ($, $pageStatuses, formClass='') => {
         const $this = $(this)
         const isChecked = $this.is(':checked')
 
-        $toggleLabel.removeClass('Free')
+        $toggleLabel.removeClass('Open')
         $toggleLabel.addClass('Updating')
         $toggleLabel.html('Actualizando')
 
-        updateFree($, id, isChecked) 
+        updateOpen($, id, isChecked) 
         .then(result => {
 
           $toggleLabel.removeClass('Updating')
@@ -34,7 +34,7 @@ export default ($, $pageStatuses, formClass='') => {
 
             if(isChecked) {
 
-              $toggleLabel.addClass('Free')
+              $toggleLabel.addClass('Open')
               $toggleLabel.html('Abierta')
 
             } else {
@@ -47,7 +47,7 @@ export default ($, $pageStatuses, formClass='') => {
             // If failed, revert the checkbox state
             $this.prop('checked', !isChecked);
             if (!isChecked) {
-               $toggleLabel.addClass('Free')
+               $toggleLabel.addClass('Open')
                $toggleLabel.html('Abierta')
             } else {
                $toggleLabel.html('Restringida')

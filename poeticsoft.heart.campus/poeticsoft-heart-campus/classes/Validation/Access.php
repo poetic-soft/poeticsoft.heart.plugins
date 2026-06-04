@@ -161,23 +161,24 @@ class Access {
         return $can_access;
     }
 
-    function can_access_cause_is_free($post_id) {
+    function can_access_cause_is_open($post_id) {
 
         if($post_id) {
 
-            $type = get_post_meta(
+            $access = get_post_meta(
                 $post_id,
-                Campus::PREFIX . 'status',
+                Campus::PREFIX . 'access',
                 true
-            );
+            )
+            ?: 'restringida';
 
-            return !empty($type);
+            return $access != 'restringida';
         }
 
         return false;
     }
 
-    function can_access_by_post_paid($post_id) {
+    function can_access_by_post_access($post_id) {
       
         $valid_user_mail = $this->validate_email();
         if(!$valid_user_mail) {
@@ -255,14 +256,14 @@ class Access {
             
             $post_meta_table_name = $wpdb->prefix . 'postmeta';
             $access_table_name = $wpdb->prefix . Campus::PREFIX . 'access';
-            $meta_key = Campus::PREFIX . 'status';
+            $meta_key = Campus::PREFIX . 'access';
             $descendants_ids_str = implode(',', array_map('intval', $descendants_ids));
             $sql = $wpdb->prepare("
                 SELECT post_id AS id FROM {$post_meta_table_name}
                 WHERE 
                 meta_key = %s 
                 AND 
-                meta_value = '1'
+                meta_value = 'abierta'
                 AND 
                 post_id IN ($descendants_ids_str)  
 
@@ -305,12 +306,12 @@ class Access {
             return true;     
         }
 
-        if($this->can_access_cause_is_free($post_id)) {
+        if($this->can_access_cause_is_open($post_id)) {
         
             return true;     
         }
 
-        if($this->can_access_by_post_paid($post_id)) { 
+        if($this->can_access_by_post_access($post_id)) { 
         
             return true;     
         }

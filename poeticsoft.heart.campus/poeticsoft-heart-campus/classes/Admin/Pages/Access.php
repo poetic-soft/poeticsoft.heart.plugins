@@ -2,7 +2,7 @@
 
 namespace Poeticsoft\Heart\Admin\Pages;
 
-use Poeticsoft\Heart\Admin\Page;
+use Poeticsoft\Heart\Admin\AdminPage;
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\View\View;
 use Poeticsoft\Heart\Database\Updater;
@@ -10,7 +10,7 @@ use Poeticsoft\Heart\Database\Updater;
 /**
  * Dashboard Page.
  */
-class Access extends Page
+class Access extends AdminPage
 {
 
     protected function define_page_props()

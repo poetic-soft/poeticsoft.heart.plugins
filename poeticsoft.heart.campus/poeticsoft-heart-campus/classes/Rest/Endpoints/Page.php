@@ -4,6 +4,7 @@ namespace Poeticsoft\Heart\Rest\Endpoints;
 
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\Rest\Endpoint;
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * System Endpoint Section.
@@ -18,23 +19,28 @@ class Page extends Endpoint
     public function get_routes()
     {
         return [
-            '/page/free-get' => [
+            '/page/access/get' => [
                 'methods'  => 'GET',
-                'callback' => 'free_get',
+                'callback' => 'access_get',
                 'auth'     => self::AUTH_ADMIN,
             ],
-            '/page/free-update' => [
+            '/page/access/get/(?P<pageid>\d+)' => [
+                'methods'  => 'GET',
+                'callback' => 'access_get_pageid',
+                'auth'     => self::AUTH_ADMIN,
+            ],
+            '/page/access/update' => [
                 'methods'  => 'POST',
-                'callback' => 'free_update',
+                'callback' => 'access_update',
                 'auth'     => self::AUTH_ADMIN,
             ],
         ];
     }
 
     /**
-     * GEt status of pages.
+     * Get access of pages.
      */
-    public function free_get($request)
+    public function access_get($request)
     {      
               
         $campus_root_id_option_name = sprintf('%sroot_post_id', Campus::PREFIX);
@@ -73,7 +79,7 @@ class Page extends Endpoint
             
             $post_status = get_post_meta(
                 $id,
-                Campus::PREFIX . 'status',
+                Campus::PREFIX . 'access',
                 true
             );
             
@@ -87,12 +93,47 @@ class Page extends Endpoint
     }
 
     /**
-     * Get System Info (Admin Only).
+     * Get access of page.
      */
-    public function free_update($request)
+    public function access_get_pageid($request)
+    {      
+              
+        $page_id = $request->get_param('pageid');
+      
+        if(!$page_id) { 
+
+            throw new Exception('Page id not provided', 404); 
+        }
+      
+        $page = get_post($page_id);
+        if(!$page) { 
+
+            throw new Exception('Page not found', 404); 
+        }
+
+        $page_is_in_campus = Utils::post_is_in_campus($page_id);
+        
+        $page_access = get_post_meta(
+            $page_id,
+            Campus::PREFIX . 'access',
+            true
+        );
+            
+        return $this->send_success([
+            'in_campus' => $page_is_in_campus,
+            'access' => $page_access ?: 'restringida',
+            'time'   => current_time('mysql'),
+        ]);
+    }
+
+
+    /**
+     * Update access of page 
+     */
+    public function access_update($request)
     {
         $post_id = $request->get_param('postid');
-        $type = $request->get_param('isfree') ? 'free' : 'paid';
+        $access = $request->get_param('isopen') ? 'abierta' : 'restringida';
       
         if(!$post_id) { 
 
@@ -107,14 +148,14 @@ class Page extends Endpoint
 
         $update = update_post_meta(
             $post_id,
-            Campus::PREFIX . 'status',
-            $type
+            Campus::PREFIX . 'access',
+            $access
         );
         
         return $this->send_success([
             'postid' => $post_id,
             'updated' => $update ? 'ok' : 'ko',
-            'type' => $type
+            'access' => $access
         ]);
     }
 }

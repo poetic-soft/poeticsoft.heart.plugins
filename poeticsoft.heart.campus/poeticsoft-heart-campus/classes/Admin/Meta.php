@@ -25,9 +25,11 @@ class Meta
         $this->metas = [
             [
                 'post_type' => 'page',
-                'key' => 'status',
-                'type' => 'boolean',
+                'type' => 'string',
+                'label' => 'Page Access [abierta, restringida]',
+                'key' => 'access',
                 'cap' => 'edit_posts',
+                'default' => 'restringida'
             ]
         ];
     }
@@ -44,7 +46,9 @@ class Meta
                     [
                         'show_in_rest' => true,
                         'single'       => true,
+                        'label'        => $meta['label'],
                         'type'         => $meta['type'],
+                        'default'      => $meta['default'],
                         'auth_callback' => function() {
                             return current_user_can($meta['cap']);
                         }

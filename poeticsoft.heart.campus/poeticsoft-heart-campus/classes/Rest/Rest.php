@@ -6,6 +6,7 @@ use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\Rest\Endpoint;
 use Poeticsoft\Heart\Rest\Endpoints\System;
 use Poeticsoft\Heart\Rest\Endpoints\Page;
+use Poeticsoft\Heart\Rest\Endpoints\Access;
 
 /**
  * REST API Controller (Orchestrator).
@@ -25,9 +26,8 @@ class Rest
      * @var array
      */
     private $sections = [
-        System::class,
         Page::class,
-        // Add more endpoint classes here.
+        Access::class,
     ];
 
     /**

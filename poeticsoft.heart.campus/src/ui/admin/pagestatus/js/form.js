@@ -5,20 +5,20 @@ export const rowForm = (
   data = {}
 ) => {
 
-  return `<${ elm } id="${ postId }" class="PHCPrice">
-    <div class="PriceTools">
+  return `<${ elm } id="${ postId }" class="PHCAccess">
+    <div class="AccessTools">
       <div class="PostId">${ postId.replace('post-', '') }</div>
       <div class="Access">
         <input   
           type="checkbox"
-          id="isfree_${ postId }"
-          name="isfree_${ postId }"
-          class="IsFree"
-          ${ data.isfree ? 'checked' : '' }
+          id="isopen_${ postId }"
+          name="isopen_${ postId }"
+          class="IsOpen"
+          ${ data.isopen ? 'checked' : '' }
         />
         <label 
-          for="isfree_${ postId }"
-          class="${ data.isfree ? 'Free' : '' }"
+          for="isopen_${ postId }"
+          class="${ data.isopen ? 'Open' : '' }"
         >
           Abierta
         </label>

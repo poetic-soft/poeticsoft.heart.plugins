@@ -34,19 +34,21 @@ export const normalPagesStatus = $ =>  {
       }
     )
 
-    return $pagesRow
+    const $pageRows = $pagesRow
     .map(
       function() {
 
         const $pageRow = $(this)
         const postId = $pageRow.attr('id')
-        const $columnStatus = $pageRow.find('> .status.column-status')
+        const $columnStatus = $pageRow.find('> .access.column-access')
 
         $columnStatus.append(rowForm($, postId))
 
-        return $columnStatus.find('.PHCPrice').eq(0)
+        return $columnStatus.find('.PHCAccess').eq(0)
       }
     )
+
+    return $pageRows
   }
 
   return null

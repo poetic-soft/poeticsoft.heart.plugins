@@ -6,7 +6,7 @@ var PHC_ACESS_DATA = poeticsoft_heart_campus_register_access_data.split('||');
 var PHC_POST_ID = PHC_ACESS_DATA[0];
 var PHC_USER_EMAIL = PHC_ACESS_DATA[1];
 var PHC_USER_IP = PHC_ACESS_DATA[2];
-var PHC_LOG_URL = '/wp-json/poeticsoft/heart/campus/access';
+var PHC_LOG_URL = '/wp-json/poeticsoft/heart/campus/v1/access';
 var PHC_HEARTBEAT_INTERVAL = 30000;
 function trikaLog(action) {
   fetch(PHC_LOG_URL, {

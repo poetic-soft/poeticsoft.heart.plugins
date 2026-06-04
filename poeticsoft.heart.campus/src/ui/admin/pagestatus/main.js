@@ -1,41 +1,41 @@
 import './main.scss'
 import {
-  editpagestatus,
-  normalpagesstatus
+  editPageStatus,
+  normalPagesStatus
 } from './js/pagestatus'
-import statusform from './js/statusform'
+import statusForm from './js/statusform'
 
 (function($) {
 
   const $body = $('body')
-  let $pagesstatus
-  let formclass
+  let $pagesStatus
+  let formClass
 
-  const waitpageslist = setInterval(() => {
+  const waitPageslist = setInterval(() => {
 
     if(poeticsoft_heart_campus_admin_pageslist) {
 
-      clearInterval(waitpageslist)
+      clearInterval(waitPageslist)
       
       if($body.hasClass('block-editor-page')) {
 
-        formclass = 'EditPage'
-        $pagesstatus = editpagestatus($)
+        formClass = 'EditPage'
+        $pagesStatus = editPageStatus($)
       }
 
       if($body.hasClass('edit-php')) {
 
-        formclass = 'PagesList'
-        $pagesstatus = normalpagesstatus($)
+        formClass = 'PagesList'
+        $pagesStatus = normalPagesStatus($)
       }
       
       if(
-        $pagesstatus
+        $pagesStatus
         &&
-        $pagesstatus.length
+        $pagesStatus.length
       ) {
         
-        statusform($, $pagesstatus, formclass)
+        statusForm($, $pagesStatus, formClass)
       }
     }
 

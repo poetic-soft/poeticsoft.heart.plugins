@@ -21,12 +21,14 @@ class Admin
      */
     public function init()
     {       
-        
         Campus::get(Assets::class)->init();
         Campus::get(Menu::class)->init();
-        Campus::get(Meta::class)->init();     
+        Campus::get(Meta::class)->init(); 
         
-        add_action('current_screen', [$this, 'route_sub_controllers']);
+        add_action(
+            'current_screen', 
+            [$this, 'route_sub_controllers']
+        );
     }
 
     /**
@@ -39,23 +41,18 @@ class Admin
 
         if (! $screen) {
             return;
+        }        
+        
+        if ($screen->post_type !== 'page') {
+            return;
         }
-        
-        $screen_id = $screen->base . '_' . $screen->id;
-        
-        switch($screen_id) {
-            
-            case 'post_page':
-                
-                Campus::get(PageEditor::class)->init();
-                
-                break;
-                
-            case 'edit_edit-page':
-                
-                Campus::get(PagesList::class)->init();
-                
-                break;
+
+        if (
+            $screen->base === 'edit'
+            ||
+            $screen->base === 'post'
+        ) {
+            Campus::get(Pages::class)->init();
         }
     }
 }

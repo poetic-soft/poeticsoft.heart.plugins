@@ -1,11 +1,11 @@
-.PHCPrice {
+.PHCAccess {
 
   position: relative;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 
-  .PriceTools {
+  .AccessTools {
 
     width: 100%;
     display: flex;
@@ -34,7 +34,7 @@
       align-items: center;
       padding: 0 var(--s05);
 
-      .IsFree {
+      .IsOpen {
 
         margin: 1px var(--s05) 0 0;
       }
@@ -46,7 +46,7 @@
         
         opacity: 0.3;
 
-        &.Free {
+        &.Open {
 
           opacity: 1;
           font-weight: bold;

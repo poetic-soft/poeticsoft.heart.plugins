@@ -3,7 +3,7 @@ const PHC_ACESS_DATA = poeticsoft_heart_campus_register_access_data.split('||')
 const PHC_POST_ID = PHC_ACESS_DATA[0]
 const PHC_USER_EMAIL = PHC_ACESS_DATA[1]
 const PHC_USER_IP = PHC_ACESS_DATA[2]
-const PHC_LOG_URL = '/wp-json/poeticsoft/heart/campus/access'
+const PHC_LOG_URL = '/wp-json/poeticsoft/heart/campus/v1/access'
 const PHC_HEARTBEAT_INTERVAL = 30000
 
 function trikaLog(action) {

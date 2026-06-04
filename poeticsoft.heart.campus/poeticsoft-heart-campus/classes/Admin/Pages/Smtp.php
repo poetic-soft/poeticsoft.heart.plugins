@@ -2,13 +2,13 @@
 
 namespace Poeticsoft\Heart\Admin\Pages;
 
-use Poeticsoft\Heart\Admin\Page;
+use Poeticsoft\Heart\Admin\AdminPage;
 use Poeticsoft\Heart\Campus;
 
 /**
  * SMTP Settings Page.
  */
-class Smtp extends Page
+class Smtp extends AdminPage
 {
 
     protected function define_page_props()

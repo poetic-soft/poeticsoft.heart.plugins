@@ -54,19 +54,19 @@
   --fc-event-selected-overlay-color: var(--color-0);
 }
 
-.PHCPrice {
+.PHCAccess {
   position: relative;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 }
-.PHCPrice .PriceTools {
+.PHCAccess .AccessTools {
   width: 100%;
   display: flex;
   align-items: center;
   gap: var(--s05);
 }
-.PHCPrice .PriceTools .PostId {
+.PHCAccess .AccessTools .PostId {
   border: solid #ccc;
   border-radius: 3px;
   border-width: 1px;
@@ -79,36 +79,36 @@
   font-weight: bold;
   background-color: var(--color-4);
 }
-.PHCPrice .PriceTools .Access {
+.PHCAccess .AccessTools .Access {
   flex: 1;
   display: flex;
   align-items: center;
   padding: 0 var(--s05);
 }
-.PHCPrice .PriceTools .Access .IsFree {
+.PHCAccess .AccessTools .Access .IsOpen {
   margin: 1px var(--s05) 0 0;
 }
-.PHCPrice .PriceTools .Access label {
+.PHCAccess .AccessTools .Access label {
   text-transform: uppercase;
   cursor: pointer;
   opacity: 0.3;
 }
-.PHCPrice .PriceTools .Access label.Free {
+.PHCAccess .AccessTools .Access label.Open {
   opacity: 1;
   font-weight: bold;
 }
 
-#the-list tr td.PHCPrice,
-.wrap.nestedpages .nestedpages ol li .row .PHCPrice {
+#the-list tr td.PHCAccess,
+.wrap.nestedpages .nestedpages ol li .row .PHCAccess {
   width: 120px;
 }
 
-.wrap.nestedpages .nestedpages ol li .row .PHCPrice {
+.wrap.nestedpages .nestedpages ol li .row .PHCAccess {
   display: table-cell;
   padding: 0 var(--s) 0 0;
 }
 
-#pcp_page_assign_status .inside .statuswrapper .PHCPrice .PriceForm {
+#phc_page_assign_status .inside .statuswrapper .PHCAccess .AccessForm {
   width: 100%;
 }
 

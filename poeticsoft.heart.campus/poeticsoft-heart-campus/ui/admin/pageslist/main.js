@@ -134,23 +134,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/ui/admin/pageslist/js/utils.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
   $(document).on('click', '.editinline', function () {
-    console.log('editinline');
-    var postId = $(this).closest('tr').attr('id').replace('post-', '');
-    var valorActual = $('#post-' + postId).find('.valor-meta-contenedor').data('valor');
-    console.log(postId);
-    if (valorActual === undefined || valorActual === '') {
-      valorActual = '0';
-    }
-    var inlineEditRow = $(this).closest('tr').next();
-    if (!inlineEditRow.hasClass('inline-edit-row')) {
-      inlineEditRow = inlineEditRow.next(); // A veces hay filas intermedias
-    }
-    inlineEditRow.find('.mi-meta-bool-select').val(valorActual);
+    var _this = this;
+    var $this = $(this);
+    var postId = $this.closest('tr').attr('id').replace('post-', '');
+    (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getPageStatus)(postId).then(function (result) {
+      if (result.success) {
+        var inCampus = result.data.in_campus;
+        var $inlineEditRow = $(_this).closest('tr').next();
+        if (!$inlineEditRow.hasClass('inline-edit-row')) {
+          $inlineEditRow = $inlineEditRow.next();
+        }
+        var $statusFieldset = $inlineEditRow.find('fieldset.inline-edit-col-right.poeticsoft-heart-campus-access');
+        if (inCampus) {
+          var status = result.data.access;
+          var $statusSelect = $statusFieldset.find('select.poeticsoft-heart-campus-access');
+          $statusSelect.val(status);
+        } else {
+          $statusFieldset.remove();
+        }
+      }
+    });
   });
 });
 __webpack_require__.dn(__WEBPACK_DEFAULT_EXPORT__);
+
+/***/ },
+
+/***/ "./src/ui/admin/pageslist/js/utils.js"
+/*!********************************************!*\
+  !*** ./src/ui/admin/pageslist/js/utils.js ***!
+  \********************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getPageStatus: () => (/* binding */ getPageStatus)
+/* harmony export */ });
+var _wp = wp,
+  apiFetch = _wp.apiFetch;
+var getPageStatus = function getPageStatus(pageId) {
+  return apiFetch({
+    path: "poeticsoft/heart/campus/v1/page/access/get/".concat(pageId),
+    method: "GET"
+  })["catch"](function (error) {
+    return console.error('Heart Campus API Error:', error);
+  });
+};
 
 /***/ },
 

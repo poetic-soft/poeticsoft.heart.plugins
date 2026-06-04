@@ -48,7 +48,7 @@ class PostContent
         }  
 
         wp_enqueue_script(
-          Campus::PLUGIN_SLUG . 'postcontent',
+          Campus::PLUGIN_SLUG . '-postcontent',
           Utils::url('ui/frontend/postcontent/main.js'),
           [
             'jquery'
@@ -58,26 +58,27 @@ class PostContent
         );
 
         wp_enqueue_style(
-          Campus::PLUGIN_SLUG . 'postcontent',
+          Campus::PLUGIN_SLUG . '-postcontent',
           Utils::url('ui/frontend/postcontent/main.css'),
           [],
           filemtime(Utils::path('ui/frontend/postcontent/main.css')),
           'all'
-        );       
+        );  
         
         $access_by_option_name = Campus::PREFIX . 'access_by';
         $access_by = get_option($access_by_option_name);
         $data_json = json_encode($access_by);
         $prefix = Campus::PREFIX;
         $inline_js = "var {$prefix}access_by = {$data_json};";
+
         wp_add_inline_script(
-            Campus::PREFIX . 'postcontent',
+            Campus::PLUGIN_SLUG . '-postcontent',
             $inline_js, 
             'after'
         );
         
         wp_enqueue_script(          
-          Campus::PLUGIN_SLUG . 'register-access',
+          Campus::PLUGIN_SLUG . '-register-access',
           Utils::url('ui/frontend/registeraccess/main.js'),
           [
             'jquery'
@@ -92,10 +93,9 @@ class PostContent
         $ip = Utils::get_request_ip();
         $accessdata = $post_id . '||' . $email . '||' . $ip;
         $campus_access_data_key = Campus::PREFIX . 'register_access_data';
-        // $encripted_accessdata = self::encrypt($post_id . '||' . $email . '||' . $ip);
         $inline_js = "var {$campus_access_data_key} = '{$accessdata}';";
         wp_add_inline_script(
-          Campus::PLUGIN_SLUG . 'register-access', 
+          Campus::PLUGIN_SLUG . '-register-access', 
           $inline_js, 
           'before'
         );        
@@ -141,8 +141,8 @@ class PostContent
     
     private function render_access_form($post_id, $block_attrs) {
     
-        $show_restrictedtext = isset($block_attrs['show_restricted_text']) ?
-        $block_attrs['show_restricted_text'] : '';        
+        $show_restricted_text = isset($block_attrs['showRestrictedText']) ?
+        $block_attrs['showRestrictedText'] : '';        
         $post_child_ids = get_posts([
             'post_type' => 'page',
             'posts_per_page' => -1,
@@ -166,12 +166,12 @@ class PostContent
         $access_by_option_name = Campus::PREFIX . 'access_by';
         $access_by = get_option($access_by_option_name);
         
-        $restricted_visible_text = isset($block_attrs['restricted_visible_text']) ?
-        $block_attrs['restricted_visible_text']
+        $restricted_visible_text = isset($block_attrs['restrictedVisibleText']) ?
+        $block_attrs['restrictedVisibleText']
         :
         ''; 
-        $payvisibletext = isset($block_attrs['payvisibletext']) ?
-        $block_attrs['payvisibletext']
+        $pay_visible_text = isset($block_attrs['payVisibleText']) ?
+        $block_attrs['payVisibleText']
         :
         '';
         $vars = [
@@ -179,7 +179,7 @@ class PostContent
             '{currency}'           => $currency,
             '{suscriptionduration}'=> $duration
         ];
-        $payvisibletextinterpolated = strtr($payvisibletext, $vars);
+        $pay_visible_text_interpolated = strtr($pay_visible_text, $vars);
         $restrictedtext = '';
         
         switch($campusaccessby) {
@@ -193,41 +193,32 @@ class PostContent
         case 'mailrelay':
         default:
 
-            $restrictedtext = $payvisibletextinterpolated;
+            $restrictedtext = $pay_visible_text_interpolated;
 
             break;
         }
         
-        $validusermail = $this->validate_email();   
-        if($validusermail) { 
+        $valid_user_mail = Campus::get(Access::class)->validate_email();   
+        if($valid_user_mail) { 
 
-        return '<div
-            class="wp-block-poeticsoft_content_payment_postcontent"
-            data-email="' . esc_attr($validusermail) . '"
-            data-post_id="' . esc_attr($post_id) . '"
-        >
-            <div class="Forms ShouldPay">
-            <div class="AdviceText">' . 
-                $restrictedtext . 
-            '</div>
-            <div class="Dummy">SHOULD PAY</div>
-            </div>
-        </div>';
-
-        } else {
-
-        if($this->get_use_temporal_code()) {
-
-            return '<div class="wp-block-poeticsoft_content_payment_postcontent">
-            <div class="Forms UseTemporalCode"></div>
+            return '<div
+                class="wp-block-poeticsoft-heart-campus-postcontent"
+                data-email="' . esc_attr($valid_user_mail) . '"
+                data-post_id="' . esc_attr($post_id) . '"
+            >
+                <div class="Forms ShouldPay">
+                <div class="AdviceText">' . 
+                    $restrictedtext . 
+                '</div>
+                <div class="Dummy">SHOULD PAY</div>
+                </div>
             </div>';
 
         } else {
 
-            return '<div class="wp-block-poeticsoft_content_payment_postcontent">
-            <div class="Forms Identify"></div>
+            return '<div class="wp-block-poeticsoft-heart-campus-postcontent">
+                <div class="Forms Identify"></div>
             </div>';
-        }
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Poeticsoft\Heart\Admin\Pages;
 
-use Poeticsoft\Heart\Admin\Page;
+use Poeticsoft\Heart\Admin\AdminPage;
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\View\View;
 use Poeticsoft\Heart\Utils\Utils;
@@ -10,7 +10,7 @@ use Poeticsoft\Heart\Utils\Utils;
 /**
  * Dashboard Page.
  */
-class Dashboard extends Page
+class Dashboard extends AdminPage
 {
 
     protected function define_page_props()
@@ -27,14 +27,14 @@ class Dashboard extends Page
     {
         if ('refresh_status' === $action) {
             
-            // Logic to refresh status...
-            // Utils::log('System status refreshed by user.', 'info');
+            // Logic to refresh access...
+            // Utils::log('System access refreshed by user.', 'info');
 
             // Add a notice using the View engine.
             add_action('admin_notices', function () {
                 Campus::get(View::class)->render('admin/notice', [
                     'type'    => 'success',
-                    'message' => __('System status refreshed successfully.', Campus::TEXT_DOMAIN),
+                    'message' => __('System access refreshed successfully.', Campus::TEXT_DOMAIN),
                 ]);
             });
         }

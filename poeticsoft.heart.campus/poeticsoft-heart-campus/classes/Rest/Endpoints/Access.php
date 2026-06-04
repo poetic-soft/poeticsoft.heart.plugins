@@ -4,6 +4,8 @@ namespace Poeticsoft\Heart\Rest\Endpoints;
 
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\Rest\Endpoint;
+use Poeticsoft\Heart\Utils\Utils
+;
 
 /**
  * System Endpoint Section.
@@ -35,9 +37,9 @@ class Access extends Endpoint
       $directus_log_access_url_option_name = Campus::PREFIX . 'directus_log_access_url';
       $directus_log_access_url = get_option($directus_log_access_url_option_name);
       $directus_log_access_token_option_name = Campus::PREFIX . 'directus_log_access_token';      
-      $directus_log_access_token = get_option($directus_endpoint_log_access_token_option_name);
+      $directus_log_access_token = get_option($directus_log_access_token_option_name);
       
-      $body = $req->get_params();
+      $body = $request->get_params();
       
       $args = [
         'method'      => 'POST',
@@ -53,37 +55,13 @@ class Access extends Endpoint
         'cookies'     => [],
       ];
       
-      /*
+      /* TODO Connect with Directus and log access events
 
       $response = wp_remote_post(
         $directus_log_access_url,
         $args
-      ); 
+      );
       
-      $this->log('---------------------------------------------');
-      if (is_wp_error($response)) {
-        
-        $this->log('Error en wp_remote_post: ' . $response->get_error_message());
-        
-      } else {  
-      
-        $this->log($response);
-      }
-      
-      $result = [
-        // 'url_option_name' => $directus_endpoint_log_access_option_name,
-        // 'token_option_name' => $directus_endpoint_log_access_token_option_name,
-        'url' => $directus_endpoint_log_access,
-        'token' => $directus_endpoint_log_access_token,
-        'body' => $body        
-      ];
-      
-      $this->log('---------------------------------------------');
-      $this->log($result);
-
-      $res->set_data($result);
-      
-      */  
+      Utils::log($response);  */
     }
-
 }

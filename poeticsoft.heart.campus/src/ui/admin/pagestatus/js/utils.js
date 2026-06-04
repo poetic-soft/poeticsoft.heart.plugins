@@ -1,13 +1,13 @@
 const { apiFetch } = wp
 
-export const updateFree = ($, id, isChecked) => {
+export const updateOpen = ($, id, isChecked) => {
 
   return apiFetch({
-    path: 'poeticsoft/heart/campus/v1/page/free-update',
+    path: 'poeticsoft/heart/campus/v1/page/access/update',
     method: "POST",
     data: {
       postid: id,
-      isfree: isChecked
+      isopen: isChecked
     }
   })
 }
@@ -15,7 +15,7 @@ export const updateFree = ($, id, isChecked) => {
 export const updateData = ($, $pageStatuses) => {
 
   return apiFetch({
-    path: 'poeticsoft/heart/campus/v1/page/free-get',
+    path: 'poeticsoft/heart/campus/v1/page/access/get',
     method: "GET"
   })
   .then(response => {
@@ -26,13 +26,13 @@ export const updateData = ($, $pageStatuses) => {
 
       const $this = $(this);
       const id = $this.attr('id').replace('post-', '');
-      const $toggleFree = $this.find('.PriceTools .Access input.IsFree');
-      const $toggleLabel = $this.find('.PriceTools .Access label');
+      const $toggleOpen = $this.find('.AccessTools .Access input.IsOpen');
+      const $toggleLabel = $this.find('.AccessTools .Access label');
 
-      if (pages[id] === 'free') {
-        $toggleFree.prop("checked", true);
+      if (pages[id] === 'abierta') {
+        $toggleOpen.prop("checked", true);
         $toggleLabel.html('Abierta');
-        $toggleLabel.addClass('Free');
+        $toggleLabel.addClass('Open');
       } else {
         $toggleLabel.html('Restringida');
       }

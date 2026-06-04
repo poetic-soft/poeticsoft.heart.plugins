@@ -94,7 +94,7 @@ use Poeticsoft\Heart\Validation\Validation;
                 }
 
                 $is_user_contents = in_array($campus_root_id, $user_contents);
-                $type = get_post_meta($campus_root_id, Campus::PREFIX . 'status', true);
+                $type = get_post_meta($campus_root_id, Campus::PREFIX . 'access', true);
                 $type = is_string($type) ? trim($type) : '';
 
                 $level++;
@@ -113,7 +113,7 @@ use Poeticsoft\Heart\Validation\Validation;
                 foreach ($campus_pages as $page) {
                     if ($page->post_parent == $parent) {
                         $is_user_contents = in_array($page->ID, $user_contents);
-                        $type = get_post_meta($page->ID, Campus::PREFIX . 'status', true);
+                        $type = get_post_meta($page->ID, Campus::PREFIX . 'access', true);
                         $type = is_string($type) ? trim($type) : '';
 
                         $level++;

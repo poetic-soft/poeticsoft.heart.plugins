@@ -10,7 +10,7 @@ use Poeticsoft\Heart\Utils\Utils;
  * Abstract Page Base Class.
  * Standardizes how admin pages are defined and rendered.
  */
-abstract class Page
+abstract class AdminPage
 {
 
     /**
