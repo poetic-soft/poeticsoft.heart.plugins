@@ -73,7 +73,6 @@ class Utils {
 
         $formatted_message = sprintf("[%s] [%s]: %s\n", $timestamp, strtoupper($level), $message);
 
-        error_log($formatted_message);
         file_put_contents($log_file, $formatted_message, FILE_APPEND);
     }
 

@@ -1,5 +1,8 @@
 @use 'styles/root';
 @use './scss/pagelist';
+@use './scss/pagestatus';
+@use './scss/pagestatusform';
+
 
 body.edit-php.post-type-page {
   

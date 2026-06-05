@@ -38,7 +38,6 @@ class Assets
         
         $enqueue_handle = Campus::PLUGIN_SLUG . 'admin-';
         $enqueue_url = 'ui/admin/';
-        $enqueue = false;
         
         // hook_suffix based admin page location
         switch($hook_suffix) {
@@ -74,18 +73,12 @@ class Assets
                     $this->enqueue($enqueue_data);
                 }
                 
-                $enqueue_data = [
-                    'handle' => $enqueue_handle . 'pagestatus',
-                    'url' => $enqueue_url . 'pagestatus/main.',
-                    'enqueue' => $screen_id,
-                    'js_deps' => ['wp-api-fetch']
-                ];
-                    
-                $this->enqueue($enqueue_data);
-        
-                $this->add_inline_script($enqueue_data);
-                
                 break;
+        }
+
+        if($enqueue_data) {
+            
+            $this->add_inline_script($enqueue_data);
         }
     }
     

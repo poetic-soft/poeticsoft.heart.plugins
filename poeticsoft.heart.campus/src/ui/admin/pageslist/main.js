@@ -4,19 +4,26 @@ import quickedit from './js/quickedit'
 
 (function($) {
 
+  const $body = $('body')
+
   const waitpages = setInterval(() => {    
 
     if(poeticsoft_heart_campus_admin_pageslist) {
 
       clearInterval(waitpages)
 
-      const $body = $('body')
       if($body.hasClass('edit-php')) {
 
-        pagelist($)
-        quickedit($)
+        window.poeticsoft_heart_campus_admin_pageslist_refresh = () => {
 
+          pagelist($)
+        }
+
+        window.poeticsoft_heart_campus_admin_pageslist_refresh();
+        
         $('body').addClass('PHCVisible')
+
+        quickedit($)
       }
     }
   }, 100)  

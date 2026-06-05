@@ -15,7 +15,7 @@ __webpack_require__.r(__webpack_exports__);
 var rowForm = function rowForm($, postId) {
   var elm = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'div';
   var data = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
-  return "<".concat(elm, " id=\"").concat(postId, "\" class=\"PHCAccess\">\n    <div class=\"AccessTools\">\n      <div class=\"PostId\">").concat(postId.replace('post-', ''), "</div>\n      <div class=\"Access\">\n        <input   \n          type=\"checkbox\"\n          id=\"isopen_").concat(postId, "\"\n          name=\"isopen_").concat(postId, "\"\n          class=\"IsOpen\"\n          ").concat(data.isopen ? 'checked' : '', "\n        />\n        <label \n          for=\"isopen_").concat(postId, "\"\n          class=\"").concat(data.isopen ? 'Open' : '', "\"\n        >\n          Abierta\n        </label>\n      </div>\n    </div>\n  </").concat(elm, ">");
+  return "<".concat(elm, " id=\"").concat(postId, "\" class=\"PHCAccess\">\n    <div class=\"AccessTools\">\n      <div class=\"PostId\">").concat(postId.replace('post-', ''), "</div>\n      <div class=\"Access\">").concat(data.isopen ? 'Abierta' : 'Restringida', "</div>\n    </div>\n  </").concat(elm, ">");
 };
 
 /***/ },
@@ -66,10 +66,10 @@ var normalPagesStatus = function normalPagesStatus($) {
 
 /***/ },
 
-/***/ "./src/ui/admin/pagestatus/js/statusform.js"
-/*!**************************************************!*\
-  !*** ./src/ui/admin/pagestatus/js/statusform.js ***!
-  \**************************************************/
+/***/ "./src/ui/admin/pagestatus/js/quickedit.js"
+/*!*************************************************!*\
+  !*** ./src/ui/admin/pagestatus/js/quickedit.js ***!
+  \*************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -78,45 +78,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/ui/admin/pagestatus/js/utils.js");
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, $pageStatuses) {
-  var formClass = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  $pageStatuses.each(function () {
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
+  $(document).on('click', '.editinline', function () {
+    var _this = this;
     var $this = $(this);
-    var id = $this.attr('id').replace('post-', '');
-    var $toggleFree = $this.find('.AccessTools .Access input.IsOpen');
-    var $toggleLabel = $this.find('.AccessTools .Access label');
-    $toggleFree.on('click', function () {
-      var $this = $(this);
-      var isChecked = $this.is(':checked');
-      $toggleLabel.removeClass('Open');
-      $toggleLabel.addClass('Updating');
-      $toggleLabel.html('Actualizando');
-      (0,_utils__WEBPACK_IMPORTED_MODULE_0__.updateOpen)($, id, isChecked).then(function (result) {
-        $toggleLabel.removeClass('Updating');
-        if (result && result.success) {
-          if (isChecked) {
-            $toggleLabel.addClass('Open');
-            $toggleLabel.html('Abierta');
-          } else {
-            $toggleLabel.html('Restringida');
-          }
-        } else {
-          // If failed, revert the checkbox state
-          $this.prop('checked', !isChecked);
-          if (!isChecked) {
-            $toggleLabel.addClass('Open');
-            $toggleLabel.html('Abierta');
-          } else {
-            $toggleLabel.html('Restringida');
-          }
-          console.error('Update failed:', result);
+    var postId = $this.closest('tr').attr('id').replace('post-', '');
+    (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getPageStatus)(postId).then(function (result) {
+      if (result.success) {
+        var inCampus = result.data.in_campus;
+        var $inlineEditRow = $(_this).closest('tr').next();
+        if (!$inlineEditRow.hasClass('inline-edit-row')) {
+          $inlineEditRow = $inlineEditRow.next();
         }
-      })["catch"](function (error) {
-        console.log(error);
-      });
+        var $statusFieldset = $inlineEditRow.find('fieldset.inline-edit-col-right.poeticsoft-heart-campus-access');
+        if (inCampus) {
+          var status = result.data.access;
+          var $statusSelect = $statusFieldset.find('select.poeticsoft-heart-campus-access');
+          $statusSelect.val(status);
+        } else {
+          $statusFieldset.remove();
+        }
+      }
     });
   });
-  (0,_utils__WEBPACK_IMPORTED_MODULE_0__.updateData)($, $pageStatuses);
+  $(document).ajaxSuccess(function (event, xhr, settings) {
+    if (settings.data && settings.data.indexOf('action=inline-save') !== -1) {
+      var formData = Object.fromEntries(new URLSearchParams(settings.data));
+      window.poeticsoft_heart_campus_admin_pageslist_refresh();
+      window.poeticsoft_heart_campus_admin_pageslist_updatedata();
+    }
+  });
 });
 __webpack_require__.dn(__WEBPACK_DEFAULT_EXPORT__);
 
@@ -130,19 +121,17 @@ __webpack_require__.dn(__WEBPACK_DEFAULT_EXPORT__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   updateData: () => (/* binding */ updateData),
-/* harmony export */   updateOpen: () => (/* binding */ updateOpen)
+/* harmony export */   getPageStatus: () => (/* binding */ getPageStatus),
+/* harmony export */   updateData: () => (/* binding */ updateData)
 /* harmony export */ });
 var _wp = wp,
   apiFetch = _wp.apiFetch;
-var updateOpen = function updateOpen($, id, isChecked) {
+var getPageStatus = function getPageStatus(pageId) {
   return apiFetch({
-    path: 'poeticsoft/heart/campus/v1/page/access/update',
-    method: "POST",
-    data: {
-      postid: id,
-      isopen: isChecked
-    }
+    path: "poeticsoft/heart/campus/v1/page/access/get/".concat(pageId),
+    method: "GET"
+  })["catch"](function (error) {
+    return console.error('Heart Campus API Error:', error);
   });
 };
 var updateData = function updateData($, $pageStatuses) {
@@ -154,14 +143,13 @@ var updateData = function updateData($, $pageStatuses) {
     $pageStatuses.each(function () {
       var $this = $(this);
       var id = $this.attr('id').replace('post-', '');
-      var $toggleOpen = $this.find('.AccessTools .Access input.IsOpen');
-      var $toggleLabel = $this.find('.AccessTools .Access label');
+      var $access = $this.find('.AccessTools .Access');
       if (pages[id] === 'abierta') {
-        $toggleOpen.prop("checked", true);
-        $toggleLabel.html('Abierta');
-        $toggleLabel.addClass('Open');
+        $access.addClass('isOpen');
+        $access.html('Abierta');
       } else {
-        $toggleLabel.html('Restringida');
+        $access.removeClass('isOpen');
+        $access.html('Restringida');
       }
     });
   })["catch"](function (error) {
@@ -261,8 +249,10 @@ var __webpack_exports__ = {};
   \*****************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.scss */ "./src/ui/admin/pagestatus/main.scss");
-/* harmony import */ var _js_pagestatus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/pagestatus */ "./src/ui/admin/pagestatus/js/pagestatus.js");
-/* harmony import */ var _js_statusform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/statusform */ "./src/ui/admin/pagestatus/js/statusform.js");
+/* harmony import */ var _js_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/utils */ "./src/ui/admin/pagestatus/js/utils.js");
+/* harmony import */ var _js_quickedit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/quickedit */ "./src/ui/admin/pagestatus/js/quickedit.js");
+/* harmony import */ var _js_pagestatus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/pagestatus */ "./src/ui/admin/pagestatus/js/pagestatus.js");
+
 
 
 
@@ -275,15 +265,19 @@ __webpack_require__.r(__webpack_exports__);
       clearInterval(waitPageslist);
       if ($body.hasClass('block-editor-page')) {
         formClass = 'EditPage';
-        $pagesStatus = (0,_js_pagestatus__WEBPACK_IMPORTED_MODULE_1__.editPageStatus)($);
+        $pagesStatus = (0,_js_pagestatus__WEBPACK_IMPORTED_MODULE_3__.editPageStatus)($);
       }
       if ($body.hasClass('edit-php')) {
         formClass = 'PagesList';
-        $pagesStatus = (0,_js_pagestatus__WEBPACK_IMPORTED_MODULE_1__.normalPagesStatus)($);
+        $pagesStatus = (0,_js_pagestatus__WEBPACK_IMPORTED_MODULE_3__.normalPagesStatus)($);
       }
       if ($pagesStatus && $pagesStatus.length) {
-        (0,_js_statusform__WEBPACK_IMPORTED_MODULE_2__["default"])($, $pagesStatus, formClass);
+        window.poeticsoft_heart_campus_admin_pageslist_updatedata = function () {
+          (0,_js_utils__WEBPACK_IMPORTED_MODULE_1__.updateData)($, $pagesStatus, formClass);
+        };
+        window.poeticsoft_heart_campus_admin_pageslist_updatedata();
       }
+      (0,_js_quickedit__WEBPACK_IMPORTED_MODULE_2__["default"])($);
     }
   }, 100);
 })(jQuery);

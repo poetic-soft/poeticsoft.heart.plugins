@@ -1,4 +1,13 @@
-import { getPageStatus} from './utils'
+const { apiFetch } = wp
+
+const getPageStatus = (pageId) => {
+
+  return apiFetch({
+    path: `poeticsoft/heart/campus/v1/page/access/get/${pageId}`,
+    method: "GET"
+  })
+  .catch(error => console.error('Heart Campus API Error:', error));
+}
 
 export default $ => {
 
@@ -39,4 +48,18 @@ export default $ => {
     }
   );
 
+  $(document).ajaxSuccess(function(event, xhr, settings) {
+      
+    if (
+      settings.data 
+      && 
+      settings.data.indexOf('action=inline-save') !== -1
+    ) {
+      
+      const formData = Object.fromEntries(new URLSearchParams(settings.data));
+
+      window.poeticsoft_heart_campus_admin_pageslist_refresh && 
+      window.poeticsoft_heart_campus_admin_pageslist_refresh()
+    }
+  });
 }

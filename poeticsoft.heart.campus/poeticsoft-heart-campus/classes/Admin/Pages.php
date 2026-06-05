@@ -23,6 +23,13 @@ class Pages
         );
 
         add_action(
+            'manage_pages_custom_column',
+            [$this, 'manage_pages_custom_column'],
+            10,
+            2
+        );
+
+        add_action(
             'quick_edit_custom_box', 
             [$this, 'quick_edit'],
             10, 
@@ -43,7 +50,7 @@ class Pages
 
         add_action(
             'save_post', 
-            [$this, 'save_data']
+            [$this, 'save_post']
         );
     }
     
@@ -51,6 +58,18 @@ class Pages
         
         $columns['access'] = 'Acceso';
         return $columns;
+    }
+
+    public function manage_pages_custom_column($column_name, $post_id) {
+        
+        if (
+            Utils::post_is_in_campus($post_id) 
+            && 
+            $column_name === 'access'
+        ) {
+            
+           echo '<div class="' . (Campus::PLUGIN_SLUG . '-access-column') . '"></div>';
+        }
     }
     
     /**
@@ -99,7 +118,7 @@ class Pages
     {
         add_meta_box(
             Campus::PREFIX . 'metabox',
-            sprintf(__('%s Options', Campus::TEXT_DOMAIN), Campus::PLUGIN_NAME),
+            Campus::PLUGIN_NAME,
             [$this, 'render_metabox'],
             ['post', 'page'],
             'side',
@@ -112,71 +131,79 @@ class Pages
      */
     public function render_metabox($post)
     {
-        echo '<p>' . esc_html__('Custom options for this content.', Campus::TEXT_DOMAIN) . '</p>';
+        // 1. Crear el nonce de seguridad específico para la edición normal
+        $nonce_action = Campus::PREFIX . 'status_nonce';
+        $nonce_name = $nonce_action . '_field';
+        wp_nonce_field($nonce_action, $nonce_name);
+
+        // 2. Recuperar el valor actual del meta
+        $meta_key = Campus::PREFIX . 'access';
+        $current_value = get_post_meta($post->ID, $meta_key, true);
+        
+        // Si no hay valor guardado, puedes definir 'abierta' por defecto
+        if (empty($current_value)) {
+            $current_value = 'restringida';
+        }
+
+        $meta_class = Campus::PLUGIN_SLUG . '-access';
+
+        echo '<div class="components-base-control">
+            <label 
+                class="components-base-control__label" 
+                style="display:block; margin-bottom: 5px; font-weight:600;"
+            >
+                Acceso
+            </label>
+            <select 
+                name="' . esc_attr($meta_key) . '" 
+                class="' . esc_attr($meta_class) . '" 
+                style="width:100%; height:30px; box-sizing:border-box;"
+            >
+                <option value="abierta" ' . selected($current_value, 'abierta', false) . '>
+                    Abierta
+                </option>
+                <option value="restringida" ' . selected($current_value, 'restringida', false) . '>
+                    Restringida
+                </option>
+            </select>
+        </div>';
     }
 
     /**
      * Save quick edit and bulk edit data.
      */
-    public function save_data($post_id)
+    public function save_post($post_id)
     {
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return;
+            return $post_id;
         }
 
-        if (get_post_type($post_id) !== 'page') {
-            return;
-        }
-
-        if (!current_user_can('edit_page', $post_id)) {
-            return;
+        if (!current_user_can('edit_page', $post_id) && !current_user_can('edit_post', $post_id)) {
+            return $post_id;
         }
 
         $meta_key = Campus::PREFIX . 'access';
-        
-        if (isset($_REQUEST[$meta_key])) {
-            
-            $value = $_REQUEST[$meta_key];
+        $nonce_action = Campus::PREFIX . 'status_nonce';
+        $nonce_name = $nonce_action . '_field';
 
-            // For bulk edit, an empty string means "No Change".
-            if (
-                $value === '' 
-                && 
-                isset($_REQUEST['action']) 
-                && 
-                (
-                    $_REQUEST['action'] === 'bulk-edit' 
-                    || 
-                    isset($_REQUEST['bulk_edit'])
-                )
-            ) {
-                return;
+        if (isset($_POST[$nonce_name])) {
+            if (!wp_verify_nonce($_POST[$nonce_name], $nonce_action)) {
+                return $post_id;
             }
-            
-            // Nonce verification for quick edit.
-            if (
-                isset($_REQUEST['action']) 
-                && 
-                $_REQUEST['action'] === 'inline-save'
-            ) {
-                $nonce_action = Campus::PREFIX . 'status_nonce';
-                $nonce_name = $nonce_action . '_field';
-                if (
-                    !isset($_REQUEST[$nonce_name]) 
-                    || 
-                    !wp_verify_nonce($_REQUEST[$nonce_name], $nonce_action)
-                ) {
-                    Utils::log("Nonce verification failed for quick edit.");
-                    return;
-                }
+        } 
+        elseif (!isset($_POST['action']) || $_POST['action'] !== 'inline-save') {
+            return $post_id;
+        }
+
+        if (isset($_POST[$meta_key])) {
+            $new_value = sanitize_text_field($_POST[$meta_key]);
+
+            // Manejo del Bulk Edit (Edición en lote) por si acaso
+            if (current_filter() === 'bulk_edit_custom_box' && $new_value === '') {
+                return $post_id;
             }
 
-            // Convert to boolean for update_post_meta.
-            $bool_value = ($value === '1' || $value === 'true' || $value === true);
-            $updated = update_post_meta($post_id, $meta_key, $bool_value);
-            
-        } else {
-            Utils::log("Meta key $meta_key not found in REQUEST.");
+            update_post_meta($post_id, $meta_key, $new_value);
         }
     }
 }

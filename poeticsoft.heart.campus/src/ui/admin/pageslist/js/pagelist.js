@@ -1,4 +1,18 @@
-export default $ => {
+const { apiFetch } = wp
+
+const rowForm = ($, postId, access) => {
+
+  return `<div id="${ postId }" class="PHCAccess">
+    <div class="AccessTools">
+      <div class="PostId">${ postId }</div>
+      <div class="Access ${ access === 'abierta' ? 'IsOpen' : '' }">
+        ${ access === 'abierta' ? 'Abierta' : 'Restringida' }
+      </div>
+    </div>
+  </div>`
+}
+
+const refresh = ($, pages) => {
   
   const urlParams = new URLSearchParams(window.location.search);
   const postStatus = urlParams.get('post_status');
@@ -18,7 +32,6 @@ export default $ => {
   const statusKey = 'PoeticsoftHeartCampusPageListState'
   
   const $thelist = $('body.wp-admin.post-type-page #the-list')
-
   const $trs = $thelist.find('tr')
 
   let state = {}
@@ -91,24 +104,36 @@ export default $ => {
 
     const $tr = $(this)
     const id = $tr.attr('id')
+    const postId = id.replace('post-', '')
     const $title = $tr.find('td.column-title a.row-title')    
-    const $titlecontainer = $title.parent('strong')
+    const $titleContainer = $title.parent('strong')
     const childIds = poeticsoft_heart_campus_admin_pageslist[id]
 
     $title.html($title.html().split('— ').join(''))
-    $titlecontainer.addClass('TitleContainer')
+    $titleContainer.addClass('TitleContainer')
+
+    const hasControls = $titleContainer.find('.Control').length > 0; // In case of quick edit, controls are already there, so we don't want to add them again
     
-    if(childIds.length) {
-
-      $tr.addClass('HasChildren')
-      $titlecontainer.prepend('<span class="OpenClose"></span>')
+    if(!hasControls) {
       
-    } else {
+      if(childIds.length) {
 
-      $titlecontainer.prepend('<span class="Indent"></span>')
+        $tr.addClass('HasChildren')
+        $titleContainer.prepend('<span class="Control OpenClose"></span>')
+        
+      } else {
+
+        $titleContainer.prepend('<span class="Control Indent"></span>')
+      }
     }
 
-    const $openclose = $titlecontainer.find('.OpenClose')
+    if(poeticsoft_heart_campus_admin_campus_ids.includes(id)) {
+
+      const $columnStatus = $tr.find('> .access.column-access')      
+      $columnStatus.html(rowForm($, postId, pages[postId]))
+    }
+
+    const $openclose = $tr.find('.OpenClose')
     $openclose.on(
       'click',
       function() {
@@ -167,4 +192,19 @@ export default $ => {
   }
   
   checkState()
+}
+
+export default ($) => {
+
+  return apiFetch({
+    path: 'poeticsoft/heart/campus/v1/page/access/get',
+    method: "GET"
+  })
+  .then(response => {
+
+    const pages = response.data.pages
+
+    refresh($, pages)
+  })
+  .catch(error => console.error('Heart Campus API Error:', error));
 }

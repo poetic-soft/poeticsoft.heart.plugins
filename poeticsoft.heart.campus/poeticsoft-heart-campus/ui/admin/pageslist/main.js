@@ -12,7 +12,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
+var _wp = wp,
+  apiFetch = _wp.apiFetch;
+var rowForm = function rowForm($, postId, access) {
+  return "<div id=\"".concat(postId, "\" class=\"PHCAccess\">\n    <div class=\"AccessTools\">\n      <div class=\"PostId\">").concat(postId, "</div>\n      <div class=\"Access ").concat(access === 'abierta' ? 'IsOpen' : '', "\">\n        ").concat(access === 'abierta' ? 'Abierta' : 'Restringida', "\n      </div>\n    </div>\n  </div>");
+};
+var refresh = function refresh($, pages) {
   var urlParams = new URLSearchParams(window.location.search);
   var postStatus = urlParams.get('post_status');
   if (postStatus != 'trash' && postStatus != 'draft') {
@@ -73,18 +78,27 @@ __webpack_require__.r(__webpack_exports__);
   $trs.each(function () {
     var $tr = $(this);
     var id = $tr.attr('id');
+    var postId = id.replace('post-', '');
     var $title = $tr.find('td.column-title a.row-title');
-    var $titlecontainer = $title.parent('strong');
+    var $titleContainer = $title.parent('strong');
     var childIds = poeticsoft_heart_campus_admin_pageslist[id];
     $title.html($title.html().split('— ').join(''));
-    $titlecontainer.addClass('TitleContainer');
-    if (childIds.length) {
-      $tr.addClass('HasChildren');
-      $titlecontainer.prepend('<span class="OpenClose"></span>');
-    } else {
-      $titlecontainer.prepend('<span class="Indent"></span>');
+    $titleContainer.addClass('TitleContainer');
+    var hasControls = $titleContainer.find('.Control').length > 0; // In case of quick edit, controls are already there, so we don't want to add them again
+
+    if (!hasControls) {
+      if (childIds.length) {
+        $tr.addClass('HasChildren');
+        $titleContainer.prepend('<span class="Control OpenClose"></span>');
+      } else {
+        $titleContainer.prepend('<span class="Control Indent"></span>');
+      }
     }
-    var $openclose = $titlecontainer.find('.OpenClose');
+    if (poeticsoft_heart_campus_admin_campus_ids.includes(id)) {
+      var $columnStatus = $tr.find('> .access.column-access');
+      $columnStatus.html(rowForm($, postId, pages[postId]));
+    }
+    var $openclose = $tr.find('.OpenClose');
     $openclose.on('click', function () {
       if ($tr.hasClass('Opened')) {
         $tr.removeClass('Opened');
@@ -119,6 +133,17 @@ __webpack_require__.r(__webpack_exports__);
     updateNav();
   };
   checkState();
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
+  return apiFetch({
+    path: 'poeticsoft/heart/campus/v1/page/access/get',
+    method: "GET"
+  }).then(function (response) {
+    var pages = response.data.pages;
+    refresh($, pages);
+  })["catch"](function (error) {
+    return console.error('Heart Campus API Error:', error);
+  });
 });
 __webpack_require__.dn(__WEBPACK_DEFAULT_EXPORT__);
 
@@ -134,14 +159,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/ui/admin/pageslist/js/utils.js");
-
+var _wp = wp,
+  apiFetch = _wp.apiFetch;
+var getPageStatus = function getPageStatus(pageId) {
+  return apiFetch({
+    path: "poeticsoft/heart/campus/v1/page/access/get/".concat(pageId),
+    method: "GET"
+  })["catch"](function (error) {
+    return console.error('Heart Campus API Error:', error);
+  });
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
   $(document).on('click', '.editinline', function () {
     var _this = this;
     var $this = $(this);
     var postId = $this.closest('tr').attr('id').replace('post-', '');
-    (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getPageStatus)(postId).then(function (result) {
+    getPageStatus(postId).then(function (result) {
       if (result.success) {
         var inCampus = result.data.in_campus;
         var $inlineEditRow = $(_this).closest('tr').next();
@@ -159,31 +192,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
   });
+  $(document).ajaxSuccess(function (event, xhr, settings) {
+    if (settings.data && settings.data.indexOf('action=inline-save') !== -1) {
+      var formData = Object.fromEntries(new URLSearchParams(settings.data));
+      window.poeticsoft_heart_campus_admin_pageslist_refresh && window.poeticsoft_heart_campus_admin_pageslist_refresh();
+    }
+  });
 });
 __webpack_require__.dn(__WEBPACK_DEFAULT_EXPORT__);
-
-/***/ },
-
-/***/ "./src/ui/admin/pageslist/js/utils.js"
-/*!********************************************!*\
-  !*** ./src/ui/admin/pageslist/js/utils.js ***!
-  \********************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getPageStatus: () => (/* binding */ getPageStatus)
-/* harmony export */ });
-var _wp = wp,
-  apiFetch = _wp.apiFetch;
-var getPageStatus = function getPageStatus(pageId) {
-  return apiFetch({
-    path: "poeticsoft/heart/campus/v1/page/access/get/".concat(pageId),
-    method: "GET"
-  })["catch"](function (error) {
-    return console.error('Heart Campus API Error:', error);
-  });
-};
 
 /***/ },
 
@@ -283,14 +299,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 (function ($) {
+  var $body = $('body');
   var waitpages = setInterval(function () {
     if (poeticsoft_heart_campus_admin_pageslist) {
       clearInterval(waitpages);
-      var $body = $('body');
       if ($body.hasClass('edit-php')) {
-        (0,_js_pagelist__WEBPACK_IMPORTED_MODULE_1__["default"])($);
-        (0,_js_quickedit__WEBPACK_IMPORTED_MODULE_2__["default"])($);
+        window.poeticsoft_heart_campus_admin_pageslist_refresh = function () {
+          (0,_js_pagelist__WEBPACK_IMPORTED_MODULE_1__["default"])($);
+        };
+        window.poeticsoft_heart_campus_admin_pageslist_refresh();
         $('body').addClass('PHCVisible');
+        (0,_js_quickedit__WEBPACK_IMPORTED_MODULE_2__["default"])($);
       }
     }
   }, 100);

@@ -24,6 +24,7 @@ class Admin
         Campus::get(Assets::class)->init();
         Campus::get(Menu::class)->init();
         Campus::get(Meta::class)->init(); 
+        Campus::get(Pages::class)->init();
         
         add_action(
             'current_screen', 
@@ -52,7 +53,7 @@ class Admin
             ||
             $screen->base === 'post'
         ) {
-            Campus::get(Pages::class)->init();
+            
         }
     }
 }
