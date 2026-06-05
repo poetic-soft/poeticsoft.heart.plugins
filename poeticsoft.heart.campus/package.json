@@ -12,10 +12,10 @@
     "blocktreenav": "webpack --env=block-treenav",
     "allblocks": "npm run blockbreadcrumbs && npm run blockcolumntools && npm run blockcontainerchildren && npm run blockmytools && npm run blockrelatedcontent && npm run blocktreenav", 
 
-    "adminpagestatus": "webpack --env=ui-admin/pagestatus",
+    "adminpagesquickedit": "webpack --env=ui-admin/pagesquickedit",
     "adminpageslist": "webpack --env=ui-admin/pageslist",
     "adminaccess": "webpack --env=ui-admin/access",
-    "alladmin": "npm run adminpagestatus && npm run adminpageslist && npm run adminaccess",
+    "alladmin": "npm run adminpagesquickedit && npm run adminpageslist && npm run adminaccess",
 
     "editcoreconfigs": "webpack --env=ui-edit/coreconfigs",
     "uipostcontent": "webpack --env=ui-frontend/postcontent",

@@ -68,7 +68,16 @@ class Pages
             $column_name === 'access'
         ) {
             
-           echo '<div class="' . (Campus::PLUGIN_SLUG . '-access-column') . '"></div>';
+            $meta_key = Campus::PREFIX . 'access';
+            $current_value = get_post_meta($post_id, $meta_key, true);
+                
+            echo '<div class="' . (Campus::PLUGIN_SLUG . '-access-column') . '">' . 
+                '<strong>' . 
+                    $post_id . 
+                '</strong>' . 
+                ' - ' . 
+                ($current_value === 'abierta' ? 'Abierta' : 'Restringida') .
+            '</div>';
         }
     }
     

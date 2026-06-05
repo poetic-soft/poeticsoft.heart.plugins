@@ -71,6 +71,15 @@ class Assets
                     ];
                     
                     $this->enqueue($enqueue_data);
+                } else {
+                
+                    $enqueue_data = [
+                        'handle' => $enqueue_handle . 'pagesquickedit',
+                        'url' => $enqueue_url . 'pagesquickedit/main.',
+                        'enqueue' => $screen_id
+                    ];
+                    
+                    $this->enqueue($enqueue_data);
                 }
                 
                 break;
