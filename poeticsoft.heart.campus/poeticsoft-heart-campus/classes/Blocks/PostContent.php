@@ -129,11 +129,11 @@ class PostContent
             Campus::get(Utils::class)->get_allow_admin()
         ) {
         
-        // TODO -> VIEW
-        return '<div class="ViewAsAdmin">
-            Vista de administrador 
+            return '<div class="ViewAsAdmin">
+                Vista de administrador 
                 (<a href="/wp-login.php?action=logout">SALIR</a>) 
-            </div>' . $block_content;        
+            </div>' . 
+            $block_content;        
         }
         
         return $block_content;    
@@ -169,34 +169,7 @@ class PostContent
         $restricted_visible_text = isset($block_attrs['restrictedVisibleText']) ?
         $block_attrs['restrictedVisibleText']
         :
-        ''; 
-        $pay_visible_text = isset($block_attrs['payVisibleText']) ?
-        $block_attrs['payVisibleText']
-        :
         '';
-        $vars = [
-            '{price}'              => $price,
-            '{currency}'           => $currency,
-            '{suscriptionduration}'=> $duration
-        ];
-        $pay_visible_text_interpolated = strtr($pay_visible_text, $vars);
-        $restrictedtext = '';
-        
-        switch($campusaccessby) {
-
-        case 'gsheets':
-
-            $restrictedtext = $restricted_visible_text;
-
-            break;
-
-        case 'mailrelay':
-        default:
-
-            $restrictedtext = $pay_visible_text_interpolated;
-
-            break;
-        }
         
         $valid_user_mail = Campus::get(Access::class)->validate_email();   
         if($valid_user_mail) { 
@@ -206,18 +179,18 @@ class PostContent
                 data-email="' . esc_attr($valid_user_mail) . '"
                 data-post_id="' . esc_attr($post_id) . '"
             >
-                <div class="Forms ShouldPay">
+                <div class="Forms CantAccess">
                 <div class="AdviceText">' . 
-                    $restrictedtext . 
+                    $restricted_visible_text . 
                 '</div>
-                <div class="Dummy">SHOULD PAY</div>
+                <div class="Dummy">NO TIENES ACCESO</div>
                 </div>
             </div>';
 
         } else {
 
             return '<div class="wp-block-poeticsoft-heart-campus-postcontent">
-                <div class="Forms Identify"></div>
+                <div class="Forms Identify">IDENTIFICADOR</div>
             </div>';
         }
     }

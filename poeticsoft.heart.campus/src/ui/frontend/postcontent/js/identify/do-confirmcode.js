@@ -43,7 +43,7 @@ export default ($, $wrapper, email, code) => {
       })
       .then(data => {
 
-        if(data.result == 'ok') {          
+        if(data.success) {          
 
           message(
             $, 
@@ -65,7 +65,7 @@ export default ($, $wrapper, email, code) => {
           message(
             $, 
             $wrapper,
-            data.message, 
+            data.error.message,
             'Error'
           )
         }

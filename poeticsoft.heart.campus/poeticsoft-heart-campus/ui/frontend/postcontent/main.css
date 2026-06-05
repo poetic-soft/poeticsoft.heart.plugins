@@ -39,6 +39,8 @@
   --color-warn: var(--color-0);
   --color-error: var(--color-1);
   --color-borders: #a1a1a1;
+  --color-access-abierta: #b6dfb1;
+  --color-access-restringida: #d3b1b1;
 }
 :root :root {
   --fc-button-text-color: var(--color-5);
@@ -54,13 +56,13 @@
   --fc-event-selected-overlay-color: var(--color-0);
 }
 
-.wp-block-poeticsoft_content_payment_postcontent {
+.wp-block-poeticsoft-heart-campus-postcontent {
   text-align: center;
   border: solid 1px #ccc;
   padding: var(--s3);
 }
 
-.poeticsoft_content_payment_login_overlay {
+.poeticsoft-heart-campus-login-overlay {
   position: absolute !important;
   top: 0;
   right: 0;
@@ -71,14 +73,14 @@
   align-items: center;
   background-color: rgba(0, 0, 0, 0.3568627451);
 }
-.poeticsoft_content_payment_login_overlay .poeticsoft_content_payment_login {
+.poeticsoft-heart-campus-login-overlay .poeticsoft-heart-campus-login {
   border: solid 1px #ccc;
   padding: var(--s6) var(--s6) var(--s3);
   background-color: var(--color-light);
   position: relative;
   max-width: 300px;
 }
-.poeticsoft_content_payment_login_overlay .poeticsoft_content_payment_login .Close {
+.poeticsoft-heart-campus-login-overlay .poeticsoft-heart-campus-login .Close {
   position: absolute;
   top: var(--s);
   right: var(--s);
@@ -92,7 +94,7 @@
   margin: 0 0 0 auto;
   cursor: pointer;
 }
-.poeticsoft_content_payment_login_overlay .poeticsoft_content_payment_login .Close::before {
+.poeticsoft-heart-campus-login-overlay .poeticsoft-heart-campus-login .Close::before {
   content: "\f158";
   font-family: dashicons;
   display: inline-block;
@@ -109,101 +111,101 @@
   transition: color 0.1s ease-in;
 }
 
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .FormName,
-.poeticsoft_content_payment_login .Forms .Form .FormName {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .FormName,
+.poeticsoft-heart-campus-login .Forms .Form .FormName {
   margin-bottom: var(--s);
   font-size: 0.9em;
   font-weight: bold;
   display: none;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Explain,
-.poeticsoft_content_payment_login .Forms .Form .Explain {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Explain,
+.poeticsoft-heart-campus-login .Forms .Form .Explain {
   margin-bottom: var(--s3);
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Fields .Field,
-.poeticsoft_content_payment_login .Forms .Form .Fields .Field {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field,
+.poeticsoft-heart-campus-login .Forms .Form .Fields .Field {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: var(--s);
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Fields .Field input,
-.poeticsoft_content_payment_login .Forms .Form .Fields .Field input {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field input,
+.poeticsoft-heart-campus-login .Forms .Form .Fields .Field input {
   padding: calc(var(--s15) + 0.25px) var(--s3);
   font-family: var(--wp--preset--font-family--barlow);
   text-align: center;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Fields .Field input.Code,
-.poeticsoft_content_payment_login .Forms .Form .Fields .Field input.Code {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field input.Code,
+.poeticsoft-heart-campus-login .Forms .Form .Fields .Field input.Code {
   width: 96px;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Fields .Field.RadioButtons,
-.poeticsoft_content_payment_login .Forms .Form .Fields .Field.RadioButtons {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field.RadioButtons,
+.poeticsoft-heart-campus-login .Forms .Form .Fields .Field.RadioButtons {
   justify-content: flex-start;
   width: 200px;
   margin: 0 auto var(--s3);
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Fields .Field.RadioButtons input[type=radio],
-.poeticsoft_content_payment_login .Forms .Form .Fields .Field.RadioButtons input[type=radio] {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field.RadioButtons input[type=radio],
+.poeticsoft-heart-campus-login .Forms .Form .Fields .Field.RadioButtons input[type=radio] {
   cursor: pointer;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Fields .Field.RadioButtons label,
-.poeticsoft_content_payment_login .Forms .Form .Fields .Field.RadioButtons label {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field.RadioButtons label,
+.poeticsoft-heart-campus-login .Forms .Form .Fields .Field.RadioButtons label {
   cursor: pointer;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Tools,
-.poeticsoft_content_payment_login .Forms .Form .Tools {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Tools,
+.poeticsoft-heart-campus-login .Forms .Form .Tools {
   display: inline-block;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Tools button,
-.poeticsoft_content_payment_login .Forms .Form .Tools button {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Tools button,
+.poeticsoft-heart-campus-login .Forms .Form .Tools button {
   display: inline-block;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Tools button:disabled,
-.poeticsoft_content_payment_login .Forms .Form .Tools button:disabled {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Tools button:disabled,
+.poeticsoft-heart-campus-login .Forms .Form .Tools button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form a.Extra,
-.poeticsoft_content_payment_login .Forms .Form a.Extra {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form a.Extra,
+.poeticsoft-heart-campus-login .Forms .Form a.Extra {
   display: block;
   margin-top: var(--s2);
   text-align: center;
   font-weight: 400;
   font-size: 0.8em;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form a.Extra.Disabled,
-.poeticsoft_content_payment_login .Forms .Form a.Extra.Disabled {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form a.Extra.Disabled,
+.poeticsoft-heart-campus-login .Forms .Form a.Extra.Disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Message,
-.poeticsoft_content_payment_login .Forms .Form .Message {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Message,
+.poeticsoft-heart-campus-login .Forms .Form .Message {
   text-align: center;
   font-weight: 600;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Message:empty,
-.poeticsoft_content_payment_login .Forms .Form .Message:empty {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Message:empty,
+.poeticsoft-heart-campus-login .Forms .Form .Message:empty {
   display: none;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Message.Error,
-.poeticsoft_content_payment_login .Forms .Form .Message.Error {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Message.Error,
+.poeticsoft-heart-campus-login .Forms .Form .Message.Error {
   padding: var(--s3) var(--s3) 0;
   color: #c00;
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Message.Warn,
-.poeticsoft_content_payment_login .Forms .Form .Message.Warn {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Message.Warn,
+.poeticsoft-heart-campus-login .Forms .Form .Message.Warn {
   padding: var(--s3) var(--s3) 0;
   color: rgb(255, 178, 12);
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form .Message.Info,
-.poeticsoft_content_payment_login .Forms .Form .Message.Info {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Message.Info,
+.poeticsoft-heart-campus-login .Forms .Form .Message.Info {
   padding: var(--s3) var(--s3) 0;
   color: rgb(24, 204, 0);
 }
-.wp-block-poeticsoft_content_payment_postcontent .Forms .Form.End:not(.Stripe) .Explain,
-.poeticsoft_content_payment_login .Forms .Form.End:not(.Stripe) .Explain {
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form.End:not(.Stripe) .Explain,
+.poeticsoft-heart-campus-login .Forms .Form.End:not(.Stripe) .Explain {
   margin-bottom: 0;
 }
 

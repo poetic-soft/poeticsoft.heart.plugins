@@ -124,26 +124,7 @@ var withInspectorControls = createHigherOrderComponent(function (BlockEdit) {
           });
         },
         placeholder: "Texto contenido restringido"
-      }))), /*#__PURE__*/React.createElement("div", {
-        className: "Texts PayText"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "EditTitle"
-      }, "Texto contenido de pago"), /*#__PURE__*/React.createElement("div", {
-        className: "EditText"
-      }, /*#__PURE__*/React.createElement(RichText, {
-        __unstableOnFocus: true,
-        tagName: "div",
-        value: payVisibleText,
-        allowedFormats: ['core/bold', 'core/italic'],
-        onChange: function onChange(value) {
-          return setAttributes({
-            payVisibleText: value
-          });
-        },
-        placeholder: "Texto contenido restringido"
-      })), /*#__PURE__*/React.createElement("div", {
-        className: "Help"
-      }, 'Variables: {suscriptionduration}, {price}, {currency}')))));
+      }))))));
     }
     return /*#__PURE__*/React.createElement(BlockEdit, props);
   };

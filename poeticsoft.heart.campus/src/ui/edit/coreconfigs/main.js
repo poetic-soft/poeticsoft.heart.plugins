@@ -84,32 +84,7 @@ const withInspectorControls = createHigherOrderComponent(
                     placeholder="Texto contenido restringido"
                   />
                 </div>
-              </div>
-              <div className="Texts PayText">
-                <div className="EditTitle">
-                  Texto contenido de pago            
-                </div>
-                <div className="EditText">
-                  <RichText
-                    __unstableOnFocus
-                    tagName="div"
-                    value={ payVisibleText }
-                    allowedFormats={[ 
-                      'core/bold', 
-                      'core/italic' 
-                    ]} 
-                    onChange={
-                      value => setAttributes({
-                        payVisibleText: value
-                      })
-                    }
-                    placeholder="Texto contenido restringido"
-                  />
-                </div>                
-                <div className="Help">
-                  { 'Variables: {suscriptionduration}, {price}, {currency}' }            
-                </div>
-              </div>
+              </div>              
             </PanelBody>
           </InspectorControls>
         </>

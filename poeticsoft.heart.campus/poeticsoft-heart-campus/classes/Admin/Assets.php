@@ -38,6 +38,8 @@ class Assets
         
         $enqueue_handle = Campus::PLUGIN_SLUG . 'admin-';
         $enqueue_url = 'ui/admin/';
+
+        $enqueue_data = null;
         
         // hook_suffix based admin page location
         switch($hook_suffix) {

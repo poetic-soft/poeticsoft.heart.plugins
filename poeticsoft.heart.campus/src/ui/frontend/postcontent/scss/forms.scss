@@ -1,6 +1,6 @@
 @use 'styles/mixin' as *;
 
-.poeticsoft_content_payment_login_overlay {
+.poeticsoft-heart-campus-login-overlay {
 
   @include absolutebox();
   display: flex;
@@ -8,7 +8,7 @@
   align-items: center;
   background-color: #0000005b;
 
-  .poeticsoft_content_payment_login {
+  .poeticsoft-heart-campus-login {
     
     border: solid 1px #ccc;
     padding: var(--s6) var(--s6) var(--s3) ;
@@ -52,8 +52,8 @@
   }
 }
 
-.wp-block-poeticsoft_content_payment_postcontent,
-.poeticsoft_content_payment_login {
+.wp-block-poeticsoft-heart-campus-postcontent,
+.poeticsoft-heart-campus-login {
 
   .Forms {
     

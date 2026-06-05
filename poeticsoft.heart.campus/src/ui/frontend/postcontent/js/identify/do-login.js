@@ -9,16 +9,16 @@ export default ($, $mytools) => {
     function() {
 
       $('body').append(`
-        <div class="poeticsoft_content_payment_login_overlay">
-          <div class="poeticsoft_content_payment_login">
+        <div class="poeticsoft-heart-campus-login-overlay">
+          <div class="poeticsoft-heart-campus-login">
             <div class="Forms Identify"></div>
             <div class="Close"></div>
           </div>
         </div>
       `)
       
-      const $loginWrapper = $('body .poeticsoft_content_payment_login_overlay')
-      const $wrapper = $loginWrapper.find('.poeticsoft_content_payment_login')
+      const $loginWrapper = $('body .poeticsoft-heart-campus-login-overlay')
+      const $wrapper = $loginWrapper.find('.poeticsoft-heart-campus-login')
       const $close = $wrapper.find('.Close')
 
       identify($, $wrapper)

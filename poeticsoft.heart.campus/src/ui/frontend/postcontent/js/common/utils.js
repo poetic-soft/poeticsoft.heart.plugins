@@ -4,13 +4,13 @@ export const apiFetch = data => {
     (resolve, reject) => {
 
       fetch(
-        '/wp-json/poeticsoft/contentpayment/' + data.url,
+        '/wp-json/poeticsoft/heart/campus/v1/' + data.url,
         {
           method: "POST",
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'X-WP-Nonce': poeticsoft_content_payment_api.nonce
+            'X-WP-Nonce': poeticsoft_heart_campus_api.nonce
           },
           body: JSON.stringify(data.body)
         }

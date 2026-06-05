@@ -1,7 +1,6 @@
 import login from './js/identify/do-login'
 import identify from './js/identify/do-identify'
-import shouldPay from './js/shouldpay/do-shouldpay'
-import useTemporalCode from './js/identify/do-usetemporalcode'
+import cantAccess from './js/cantaccess/do-cantaccess'
 
 import './main.scss'
 
@@ -13,25 +12,19 @@ import './main.scss'
 
       clearInterval(waitIdentifyOrigin)
   
-      const $postContent = $('.wp-block-poeticsoft_content_payment_postcontent')
+      const $postContent = $('.wp-block-poeticsoft-heart-campus-postcontent')
       
-      const $formsUseTemporalCode = $postContent.find('.Forms.UseTemporalCode')  
       const $formsIdentify = $postContent.find('.Forms.Identify')  
-      const $formsShouldPay = $postContent.find('.Forms.ShouldPay')
+      const $formsCantAccess = $postContent.find('.Forms.CantAccess')
 
       if($formsIdentify.length) {
 
         identify($, $postContent)
       }  
 
-      if($formsShouldPay.length) {
+      if($formsCantAccess.length) {
 
-        shouldPay($, $postContent)
-      }
-
-      if($formsUseTemporalCode.length) {
-
-        useTemporalCode($, $postContent)
+        cantAccess($, $postContent)
       }
       
       const $mytools = $('.wp-block-poeticsoft-mytools')

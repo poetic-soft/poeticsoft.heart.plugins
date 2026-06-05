@@ -12,7 +12,7 @@ import registerWant from './do-register-want'
 
 export default ($, $wrapper) => {
 
-  const accessType = poeticsoft_content_payment_core_block_postcontent_accesstype_origin
+  const accessType = poeticsoft_heart_campus_access_by
   
   const $forms = $wrapper.find('.Forms.Identify')  
   $forms.find('.Form').remove()
@@ -39,8 +39,7 @@ export default ($, $wrapper) => {
 
     } else {
 
-      $identifySendEmail.prop('disabled', true)
-      
+      $identifySendEmail.prop('disabled', true)      
     }
 
     message(
@@ -95,62 +94,7 @@ export default ($, $wrapper) => {
         })
         .then(data => {
 
-          if(data.result == 'error') {
-
-            switch (accessType) {
-
-              case 'gsheets':
-
-                message(
-                  $, 
-                  $wrapper,
-                  'Email no registrado, solicita tu identificación',
-                  'Error'
-                )
-
-                break
-
-              case 'mailrelay':
-
-                message(
-                  $, 
-                  $wrapper,
-                  'Email no registrado, tienes que registrarte',
-                  'Error'
-                )
-
-                setTimeout(() => {
-                  
-                  registerShould($, $wrapper, email)
-                  
-                }, 2000)
-
-                break
-
-              case 'directus':
-
-                message(
-                  $, 
-                  $wrapper,
-                  'Email no registrado, solicita tu identificación',
-                  'Error'
-                )
-
-                break
-
-              default:
-
-                message(
-                  $, 
-                  $wrapper,
-                  'No hay método de identificación',
-                  'Error'
-                )
-
-                break
-            }
-
-          } else {
+          if(data.success) {
 
             confirmCode(
               $, 
@@ -158,12 +102,18 @@ export default ($, $wrapper) => {
               email, 
               data.code
             )
-          }
 
+          } else {
+
+            message(
+              $, 
+              $wrapper,
+              data.error.message,
+              'Error'
+            )
+          }
         })
         .catch(error => {
-
-          console.log(error)
 
           message(
             $, 

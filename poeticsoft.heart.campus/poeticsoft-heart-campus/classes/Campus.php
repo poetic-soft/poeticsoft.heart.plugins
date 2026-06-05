@@ -36,12 +36,12 @@ final class Campus
      * Plugin Identity Constants.
      * Modify these when cloning the scaffolding for a new plugin.
      */
-    const PLUGIN_ID     = 'campus'; // Unique identifier for this plugin (e.g., 'base', 'ai-agent', 'crm').
-    const PLUGIN_NAME   = 'Poeticsoft Heart Campus';
-    const PLUGIN_SLUG   = 'poeticsoft-heart-' . self::PLUGIN_ID;
-    const TEXT_DOMAIN   = 'poeticsoft-heart-' . self::PLUGIN_ID;
-    const PREFIX        = 'poeticsoft_heart_' . self::PLUGIN_ID . '_';
-    const API_NAMESPACE = 'poeticsoft/heart/' . self::PLUGIN_ID . '/v1';
+    const PLUGIN_ID      = 'campus'; // Unique identifier for this plugin (e.g., 'base', 'ai-agent', 'crm').
+    const PLUGIN_NAME    = 'Poeticsoft Heart Campus';
+    const PLUGIN_SLUG    = 'poeticsoft-heart-' . self::PLUGIN_ID;
+    const TEXT_DOMAIN    = 'poeticsoft-heart-' . self::PLUGIN_ID;
+    const PREFIX         = 'poeticsoft_heart_' . self::PLUGIN_ID . '_';
+    const API_NAMESPACE  = 'poeticsoft/heart/' . self::PLUGIN_ID . '/v1';
 
     /**
      * Plugin instance.

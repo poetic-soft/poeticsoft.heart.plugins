@@ -4,7 +4,7 @@ export default data => {
     'mailrelay'
   ]
 
-  const accessType = poeticsoft_content_payment_core_block_postcontent_accesstype_origin
+  const accessType = poeticsoft_heart_campus_access_by
   const wantRegister = needRegister.includes(accessType) ?
   `
   <a 

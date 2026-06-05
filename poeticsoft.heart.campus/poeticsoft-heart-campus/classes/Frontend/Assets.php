@@ -23,28 +23,26 @@ class Assets
         );
     }
 
-    /**
-     * Enqueue scripts based on frontend conditions.
-     */
-    public function enqueue_scripts()
-    {
-        // Global frontend assets.
-        // wp_enqueue_style(
-        //     Campus::PREFIX . 'main',
-        //     Utils::url('assets/front/style.css'),
-        //     [],
-        //     filemtime(Utils::path('assets/front/style.css')),
-        // );
+    public function enqueue_scripts() {
 
-        // // Example: Only on a specific page slug.
-        // if (is_page('contact')) {
-        //     wp_enqueue_script(
-        //         Campus::PREFIX . 'contact',
-        //         Utils::url('assets/front/contact.js'),
-        //         [],
-        //         filemtime(Utils::path('assets/front/contact.js')),
-        //         true
-        //     );
-        // }
+        wp_register_script(
+          Campus::PLUGIN_SLUG . '-api-front',
+          false,
+          [],
+          null,
+          true
+        );
+
+        wp_enqueue_script(Campus::PLUGIN_SLUG . '-api-front');
+
+        $data_json = json_encode([
+          'nonce' => wp_create_nonce('wp_rest')
+        ]);
+        $inline_js = "var " . Campus::PREFIX . "api = {$data_json};";
+        wp_add_inline_script(
+          Campus::PLUGIN_SLUG . '-api-front', 
+          $inline_js, 
+          'after'
+        );
     }
 }
