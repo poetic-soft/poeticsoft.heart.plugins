@@ -7,6 +7,7 @@ use Poeticsoft\Heart\Rest\Endpoint;
 use Poeticsoft\Heart\Rest\Endpoints\Page;
 use Poeticsoft\Heart\Rest\Endpoints\Access;
 use Poeticsoft\Heart\Rest\Endpoints\Identify;
+use Poeticsoft\Heart\Rest\Endpoints\Mail;
 use Poeticsoft\Heart\Utils\Utils;
 
 /**
@@ -30,6 +31,7 @@ class Rest
         Page::class,
         Access::class,
         Identify::class,
+        Mail::class,
     ];
 
     /**
@@ -62,7 +64,6 @@ class Rest
         $routes   = $instance->get_routes();   
 
         foreach ($routes as $route => $config) {
-            Utils::log($this->namespace . $route);
             register_rest_route($this->namespace, $route, [
                 'methods'             => $config['methods'],
                 'callback'            => [$instance, $config['callback']],

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "poeticsoft-heart-campus/lastpublished",
+  "title": "Novedades publicadas",
+  "description": "Contenidos del usuario publicados recientemente",
+  "category": "poeticsoft-heart-campus",
+  "icon": "media-archive",
+  "keywords": [],
+  "textdomain": "poeticsoft-heart-campus",
+  "version": "1.0.0",
+  "supports": {
+    "align": ["left", "center", "right"],    
+    "anchor": false,
+    "customClassName": true,
+    "className": true,
+    "html": false,
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "dimensions": {
+      "minHeight": true,
+      "width": true
+    }
+  },
+  "attributes": {
+    "blockId": {
+      "type": "string",
+      "default": ""
+    },
+    "refClientId": {
+      "type": "string",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "default": "Título"
+    },
+    "maxCount": {
+      "type": "number",
+      "default": 0
+    },
+    "sectionHeadingType": {
+      "type": "string",
+      "default": "h3"
+    },
+    "areaHeadingType": {
+      "type": "string",
+      "default": "h4"
+    },
+    "mode": {
+      "type": "string",
+      "default": "complete"
+    },
+    "visibility": {
+      "type": "string",
+      "default": "visiblealways"
+    }
+  },
+  "editorScript": "file:./build/editor.js",
+  "editorStyle": "file:./build/editor.css",
+  "viewScript": "file:./build/view.js",
+  "viewStyle": "file:./build/view.css",
+  "render": "file:./render.php"
+}

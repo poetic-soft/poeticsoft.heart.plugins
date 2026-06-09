@@ -20,6 +20,24 @@ class Smtp extends AdminPage
         $this->settings = [
             // --- Server Configuration ---
             [
+                'key'         => 'smtp_use',
+                'field_type'  => 'boolean',
+                'title'       => __('Usar configuracion de smtp', Campus::TEXT_DOMAIN),
+                'description' => __('Activar para enviar mails desde esta cuenta.', Campus::TEXT_DOMAIN),
+                'value'       => false,
+                'type'        => 'checkbox',
+                'section'     => 'server_settings',
+            ],
+            [
+                'key'         => 'smtp_test_recipient',
+                'field_type'  => 'text',
+                'title'       => __('Mail de pruebas', Campus::TEXT_DOMAIN),
+                'description' => __('Los mails de pruebas se enviarán a esta dirección.', Campus::TEXT_DOMAIN),
+                'value'       => '',
+                'type'        => 'text',
+                'section'     => 'server_settings',
+            ],
+            [
                 'key'         => 'smtp_host',
                 'field_type'  => 'text',
                 'title'       => __('Mail Host', Campus::TEXT_DOMAIN),

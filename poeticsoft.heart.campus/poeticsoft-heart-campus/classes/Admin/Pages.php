@@ -140,16 +140,9 @@ class Pages
      */
     public function render_metabox($post)
     {
-        // 1. Crear el nonce de seguridad específico para la edición normal
-        $nonce_action = Campus::PREFIX . 'status_nonce';
-        $nonce_name = $nonce_action . '_field';
-        wp_nonce_field($nonce_action, $nonce_name);
-
-        // 2. Recuperar el valor actual del meta
         $meta_key = Campus::PREFIX . 'access';
         $current_value = get_post_meta($post->ID, $meta_key, true);
         
-        // Si no hay valor guardado, puedes definir 'abierta' por defecto
         if (empty($current_value)) {
             $current_value = 'restringida';
         }
@@ -187,28 +180,19 @@ class Pages
             return $post_id;
         }
 
-        if (!current_user_can('edit_page', $post_id) && !current_user_can('edit_post', $post_id)) {
+        $post_type = get_post_type($post_id);
+        $capability = ($post_type === 'page') ? 'edit_page' : 'edit_post';
+
+        if (!current_user_can($capability, $post_id)) {
             return $post_id;
         }
 
         $meta_key = Campus::PREFIX . 'access';
-        $nonce_action = Campus::PREFIX . 'status_nonce';
-        $nonce_name = $nonce_action . '_field';
+        if (isset($_REQUEST[$meta_key])) {
 
-        if (isset($_POST[$nonce_name])) {
-            if (!wp_verify_nonce($_POST[$nonce_name], $nonce_action)) {
-                return $post_id;
-            }
-        } 
-        elseif (!isset($_POST['action']) || $_POST['action'] !== 'inline-save') {
-            return $post_id;
-        }
+            $new_value = sanitize_text_field($_REQUEST[$meta_key]);
 
-        if (isset($_POST[$meta_key])) {
-            $new_value = sanitize_text_field($_POST[$meta_key]);
-
-            // Manejo del Bulk Edit (Edición en lote) por si acaso
-            if (current_filter() === 'bulk_edit_custom_box' && $new_value === '') {
+            if ($new_value === '') {
                 return $post_id;
             }
 

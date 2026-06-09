@@ -411,6 +411,9 @@ var modeOptions = [{
   label: 'Título, Imagen & Extracto',
   value: 'complete'
 }, {
+  label: 'Título y contenidos',
+  value: 'contents'
+}, {
   label: 'Sólo título',
   value: 'compact'
 }];

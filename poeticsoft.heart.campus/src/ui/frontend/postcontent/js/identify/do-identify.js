@@ -6,13 +6,9 @@ import {
   apiFetch
 } from '../common/utils'
 import form from './forms'
-import confirmCode from './do-confirmcode'
-import registerShould from './do-register-should'
-import registerWant from './do-register-want'
+import confirmLink from './do-confirmlink'
 
 export default ($, $wrapper) => {
-
-  const accessType = poeticsoft_heart_campus_access_by
   
   const $forms = $wrapper.find('.Forms.Identify')  
   $forms.find('.Form').remove()
@@ -22,7 +18,6 @@ export default ($, $wrapper) => {
   const $identify = $forms.find('.Form.Identify')
   const $identifyEmail = $identify.find('input.Email')
   const $identifySendEmail = $identify.find('button.SendEmail')
-  const $identifyNotRegistered = $identify.find('a.NotRegistered')
 
   function checkEmail () {
 
@@ -54,16 +49,6 @@ export default ($, $wrapper) => {
   $identifyEmail.on('keydown', checkEmail)
   $identifyEmail.on('keyup', checkEmail)
 
-  $identifyNotRegistered.on(
-    'click',
-    function() {
-
-      registerWant($, $wrapper)
-
-      return false
-    }
-  )
-
   $identifySendEmail.on(
     'click',
     function() {
@@ -86,21 +71,24 @@ export default ($, $wrapper) => {
         $identifyEmail.prop('disabled', true)  
         $identifySendEmail.prop('disabled', true)
 
+        const location = window.location.href
+
         apiFetch({
-          url: 'identify/subscriber/identify',
+          url: 'identify',
           body: {
-            email: email
+            email: email,
+            url: location
           }
         })
         .then(data => {
 
           if(data.success) {
 
-            confirmCode(
+            confirmLink(
               $, 
               $wrapper,
               email, 
-              data.code
+              location
             )
 
           } else {
@@ -111,6 +99,9 @@ export default ($, $wrapper) => {
               data.error.message,
               'Error'
             )
+
+            $identifyEmail.prop('disabled', false)  
+            $identifySendEmail.prop('disabled', false)
           }
         })
         .catch(error => {

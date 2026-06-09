@@ -1,39 +1,38 @@
 import login from './js/identify/do-login'
 import identify from './js/identify/do-identify'
+import ask from './js/identify/do-ask'
 import cantAccess from './js/cantaccess/do-cantaccess'
 
 import './main.scss'
 
 (function($) {
-
-  const waitIdentifyOrigin = setInterval(() => {
-
-    if(poeticsoft_heart_campus_access_by) {
-
-      clearInterval(waitIdentifyOrigin)
   
-      const $postContent = $('.wp-block-poeticsoft-heart-campus-postcontent')
-      
-      const $formsIdentify = $postContent.find('.Forms.Identify')  
-      const $formsCantAccess = $postContent.find('.Forms.CantAccess')
+  const $postContent = $('.wp-block-poeticsoft-heart-campus-postcontent')
+  
+  const $mytools = $('.wp-block-poeticsoft-heart-campus-mytools')
+  if($mytools.length) {
 
-      if($formsIdentify.length) {
+    login($, $mytools)
+  
+    const $formsIdentify = $postContent.find('.Forms.Identify')
+    if($formsIdentify.length) {
 
-        identify($, $postContent)
-      }  
+      ask($, $postContent)
+    }    
 
-      if($formsCantAccess.length) {
+  } else {
+  
+    const $formsIdentify = $postContent.find('.Forms.Identify')
+    if($formsIdentify.length) {
 
-        cantAccess($, $postContent)
-      }
-      
-      const $mytools = $('.wp-block-poeticsoft-mytools')
+      identify($, $postContent)
+    }    
+  }
+ 
+  const $formsCantAccess = $postContent.find('.Forms.CantAccess')
+  if($formsCantAccess.length) {
 
-      if($mytools.length) {
-
-        login($, $mytools)
-      }
-    }
-  }, 100)
+    cantAccess($, $postContent)
+  }
 
 })(jQuery)

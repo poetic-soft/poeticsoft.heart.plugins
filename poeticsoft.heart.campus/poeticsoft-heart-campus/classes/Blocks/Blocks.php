@@ -28,6 +28,7 @@ class Blocks
             'containerchildren',
             'mytools',
             'relatedcontent',
+            'lastpublished',
             'treenav'
         ];
         
@@ -60,8 +61,7 @@ class Blocks
         );
     }
     
-    private function register_blocks() {        
-         
+    private function register_blocks() {    
 
         add_filter(
             'enqueue_block_editor_assets',
@@ -85,6 +85,23 @@ class Blocks
                 );   
             }
         );
+
+        add_filter(
+            'register_block_type_args', 
+            function( $args, $block_type ) {
+
+                if ( $block_type === 'core/post-content' ) {
+
+                    if ( ! isset( $args['attributes'] ) ) { $args['attributes'] = array(); }
+                    
+                    $args['attributes']['showRestrictedText'] = array('type' => 'string', 'default' => 'hiddenalways');
+                    $args['attributes']['restrictedText'] = array('type' => 'string', 'default' => '');
+                }
+                return $args;
+            }, 
+            10, 
+            2
+        );
         
         add_action(
             'init',
@@ -96,7 +113,7 @@ class Blocks
                 
                 foreach($block_names as $block_name) {
 
-                    if(!in_array($block_name, $this->available_blocks)) { continue; } 
+                    if(!in_array($block_name, $this->available_blocks)) { continue; }
                     
                     $block_json_dir = $blocks_path . '/' . $block_name;
                     

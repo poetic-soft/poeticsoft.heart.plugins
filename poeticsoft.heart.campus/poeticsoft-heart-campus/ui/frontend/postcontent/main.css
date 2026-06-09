@@ -118,17 +118,13 @@
   font-weight: bold;
   display: none;
 }
-.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Explain,
-.poeticsoft-heart-campus-login .Forms .Form .Explain {
-  margin-bottom: var(--s3);
-}
 .wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field,
 .poeticsoft-heart-campus-login .Forms .Form .Fields .Field {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--s);
+  gap: var(--s2);
 }
 .wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field input,
 .poeticsoft-heart-campus-login .Forms .Form .Fields .Field input {
@@ -140,19 +136,9 @@
 .poeticsoft-heart-campus-login .Forms .Form .Fields .Field input.Code {
   width: 96px;
 }
-.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field.RadioButtons,
-.poeticsoft-heart-campus-login .Forms .Form .Fields .Field.RadioButtons {
-  justify-content: flex-start;
-  width: 200px;
-  margin: 0 auto var(--s3);
-}
-.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field.RadioButtons input[type=radio],
-.poeticsoft-heart-campus-login .Forms .Form .Fields .Field.RadioButtons input[type=radio] {
-  cursor: pointer;
-}
-.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Fields .Field.RadioButtons label,
-.poeticsoft-heart-campus-login .Forms .Form .Fields .Field.RadioButtons label {
-  cursor: pointer;
+.wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Explain + .Fields,
+.poeticsoft-heart-campus-login .Forms .Form .Explain + .Fields {
+  margin-top: var(--s3);
 }
 .wp-block-poeticsoft-heart-campus-postcontent .Forms .Form .Tools,
 .poeticsoft-heart-campus-login .Forms .Form .Tools {

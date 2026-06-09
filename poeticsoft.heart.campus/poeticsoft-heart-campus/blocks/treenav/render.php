@@ -11,6 +11,7 @@ defined('ABSPATH') || exit;
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\Validation\Access;
 use Poeticsoft\Heart\Validation\Validation;
+use Poeticsoft\Heart\Utils\Utils;
 
 (function ($attributes, $content, $block) {
 
@@ -24,10 +25,12 @@ use Poeticsoft\Heart\Validation\Validation;
     // 1. Validar y Sanitizar Atributos
     $validator = Campus::get(Validation::class);
     $schema = [
-        'blockId'           => ['type' => 'text', 'required' => false],
-        'refClientId'       => ['type' => 'text', 'required' => false],
-        'onlySubscriptions' => ['type' => 'bool', 'required' => false],
-        'showLegend'        => ['type' => 'bool', 'required' => false],
+        'blockId'           => ['type' => 'text',   'required' => false],
+        'refClientId'       => ['type' => 'text',   'required' => false],
+        'ignoreRoot'        => ['type' => 'bool',   'required' => false],
+        'onlySubscriptions' => ['type' => 'bool',   'required' => false],
+        'maxDeep'           => ['type' => 'number', 'required' => false],
+        'showLegend'        => ['type' => 'bool',   'required' => false],
     ];
 
     $attrs = $validator->validate_schema($attributes, $schema);
@@ -45,6 +48,11 @@ use Poeticsoft\Heart\Validation\Validation;
 
     $only_subscriptions = $attrs['onlySubscriptions'] ?? true;
     $show_legend = $attrs['showLegend'] ?? true;
+    $ignore_root = (bool) ($attrs['ignoreRoot'] ?? false);
+    $max_deep = intval($attrs['maxDeep'] ?? 0);
+
+    $first_visible_level = $ignore_root ? 1 : 0;
+    $max_allowed_level = $first_visible_level + $max_deep - 1;
 
     $campus_pages = get_pages([
         'sort_column' => 'menu_order',
@@ -83,7 +91,13 @@ use Poeticsoft\Heart\Validation\Validation;
         }
 
         $build_page_tree = function ($parent = 0, $level = -1)
-        use ($campus_root_id, $user_contents, $post, $campus_pages, &$build_page_tree) {
+        use (
+            $campus_root_id, 
+            $user_contents, 
+            $post, 
+            $campus_pages, 
+            &$build_page_tree
+        ) {
 
             $list = [];
 
@@ -97,36 +111,35 @@ use Poeticsoft\Heart\Validation\Validation;
                 $type = get_post_meta($campus_root_id, Campus::PREFIX . 'access', true);
                 $type = is_string($type) ? trim($type) : '';
 
-                $level++;
+                $root_level = $level + 1;
 
                 $list[] = [
                     'id'               => $campus_root_id,
-                    'level'            => $level,
+                    'level'            => $root_level,
                     'type'             => $type,
                     'current'          => $campus_root_id == $post->ID,
                     'is_user_contents' => $is_user_contents,
                     'is_free'          => $type == '1',
                     'title'            => $page->post_title,
-                    'pages'            => $build_page_tree($campus_root_id, $level)
+                    'pages'            => $build_page_tree($campus_root_id, $root_level)
                 ];
             } else {
+                $child_level = $level + 1;
                 foreach ($campus_pages as $page) {
                     if ($page->post_parent == $parent) {
                         $is_user_contents = in_array($page->ID, $user_contents);
                         $type = get_post_meta($page->ID, Campus::PREFIX . 'access', true);
                         $type = is_string($type) ? trim($type) : '';
 
-                        $level++;
-
                         $list[] = [
                             'id'               => $page->ID,
                             'type'             => $type,
-                            'level'            => $level,
+                            'level'            => $child_level,
                             'title'            => $page->post_title,
                             'current'          => $page->ID == $post->ID,
                             'is_user_contents' => $is_user_contents,
                             'is_free'          => $type == '1',
-                            'pages'            => $build_page_tree($page->ID, $level)
+                            'pages'            => $build_page_tree($page->ID, $child_level)
                         ];
                     }
                 }
@@ -190,7 +203,7 @@ use Poeticsoft\Heart\Validation\Validation;
             ];
         };
 
-        $build_dom_tree = function ($pages) use (&$build_dom_tree, $only_subscriptions) {
+        $build_dom_tree = function ($pages) use (&$build_dom_tree, $only_subscriptions, $max_deep, $max_allowed_level) {
             $dom = '';
 
             foreach ($pages as $page) {
@@ -198,7 +211,12 @@ use Poeticsoft\Heart\Validation\Validation;
                     continue;
                 }
 
-                $inner_dom = $page['has_children'] ? $build_dom_tree($page['pages']) : '';
+                $has_children = $page['has_children'];
+                if ($max_deep > 0 && $page['level'] >= $max_allowed_level) {
+                    $has_children = false;
+                }
+
+                $inner_dom = $has_children ? $build_dom_tree($page['pages']) : '';
 
                 $dom .= sprintf(
                     '<div id="%d" class="Page Level_%d%s%s%s">
@@ -214,15 +232,15 @@ use Poeticsoft\Heart\Validation\Validation;
                     $page['page_id'],
                     $page['level'],
                     $page['is_user_contents'] ? ' IsUserContents' : '',
-                    $page['has_children'] ? ' HasChildren' : '',
+                    $has_children ? ' HasChildren' : '',
                     $page['is_free'] ? ' IsFree' : '',
                     $page['current'] ? ' Current' : '',
-                    $page['has_children'] ? '<div class="OpenClose"></div>' : '<div class="Indent"></div>',
+                    $has_children ? '<div class="OpenClose"></div>' : '<div class="Indent"></div>',
                     esc_url($page['page_path']),
                     esc_html($page['title']),
                     $page['is_user_contents'] ? ' Paid' : '',
                     $page['is_free'] ? ' Free' : '',
-                    $page['has_children'] ? '<div class="Pages">' . $inner_dom . '</div>' : ''
+                    $has_children ? '<div class="Pages">' . $inner_dom . '</div>' : ''
                 );
             }
 
@@ -231,7 +249,13 @@ use Poeticsoft\Heart\Validation\Validation;
 
         $pages_tree = $build_page_tree();
         $object_tree = $build_object_tree($pages_tree, false, false);
-        $dom_tree_html = $build_dom_tree($object_tree['children']);
+
+        $root_children = [];
+        if ($ignore_root && !empty($object_tree['children'])) {
+            $root_children = $object_tree['children'][0]['pages'] ?? [];
+        }
+
+        $dom_tree_html = $build_dom_tree($ignore_root ? $root_children : $object_tree['children']);
 
         $legend = $show_legend ?
             '<div class="Legend">

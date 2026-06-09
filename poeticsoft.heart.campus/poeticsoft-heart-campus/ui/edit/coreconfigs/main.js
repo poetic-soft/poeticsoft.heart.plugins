@@ -92,8 +92,7 @@ var withInspectorControls = createHigherOrderComponent(function (BlockEdit) {
       var attributes = props.attributes,
         setAttributes = props.setAttributes;
       var showRestrictedText = attributes.showRestrictedText,
-        restrictedVisibleText = attributes.restrictedVisibleText,
-        payVisibleText = attributes.payVisibleText;
+        restrictedText = attributes.restrictedText;
       return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(BlockEdit, props), /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
         title: "Advertencia contenido restringido",
         initialOpen: true,
@@ -116,11 +115,11 @@ var withInspectorControls = createHigherOrderComponent(function (BlockEdit) {
       }, /*#__PURE__*/React.createElement(RichText, {
         __unstableOnFocus: true,
         tagName: "div",
-        value: restrictedVisibleText,
+        value: restrictedText,
         allowedFormats: ['core/bold', 'core/italic'],
         onChange: function onChange(value) {
           return setAttributes({
-            restrictedVisibleText: value
+            restrictedText: value
           });
         },
         placeholder: "Texto contenido restringido"

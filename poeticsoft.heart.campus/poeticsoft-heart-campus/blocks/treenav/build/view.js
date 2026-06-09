@@ -69,8 +69,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _view_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./view.scss */ "./src/block/treenav/view.scss");
 
 (function ($) {
-  var statusKey = 'PoeticsoftHeartCampusCampusTreeNavState';
-  var $treenav = $('.wp-block-poeticsoft-treenav');
+  var statusKey = 'PoeticsoftHeartCampusTreeNavState';
+  var $treenav = $('.wp-block-poeticsoft-heart-campus-treenav');
   if ($treenav.length) {
     var $nav = $treenav.find('.Nav');
     var $pages = $nav.find('.Page');

@@ -49,7 +49,7 @@ const Edit = props => {
         />
       </PanelBody>
     </InspectorControls>
-    <div 
+    <div
       { ...blockProps }
       onClick={ 
         () => setAttributes({ 

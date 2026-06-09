@@ -2,9 +2,9 @@ import './view.scss'
 
 (function($) {
 
-  const statusKey = 'PoeticsoftHeartCampusCampusTreeNavState'
+  const statusKey = 'PoeticsoftHeartCampusTreeNavState'
   
-  const $treenav = $('.wp-block-poeticsoft-treenav')
+  const $treenav = $('.wp-block-poeticsoft-heart-campus-treenav')
   if($treenav.length) {
 
     const $nav = $treenav.find('.Nav')

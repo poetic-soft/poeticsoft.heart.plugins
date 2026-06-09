@@ -41,8 +41,7 @@ const withInspectorControls = createHigherOrderComponent(
         } = props;
         const {
           showRestrictedText,
-          restrictedVisibleText,
-          payVisibleText
+          restrictedText
         } = attributes
 
         return <>
@@ -71,14 +70,14 @@ const withInspectorControls = createHigherOrderComponent(
                   <RichText
                     __unstableOnFocus
                     tagName="div"
-                    value={ restrictedVisibleText }
+                    value={ restrictedText }
                     allowedFormats={[ 
                       'core/bold', 
                       'core/italic' 
                     ]} 
                     onChange={
                       value => setAttributes({
-                        restrictedVisibleText: value
+                        restrictedText: value
                       })
                     }
                     placeholder="Texto contenido restringido"

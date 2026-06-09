@@ -119,16 +119,46 @@ if (false === $dom || empty($cache_key)) {
                     esc_html(get_the_title($child_post->ID))
                 );
 
-                if ($mode === 'complete') {
-                    $thumb_url = get_the_post_thumbnail_url($child_post->ID, 'full');
-                    $thumb_dom = $thumb_url ? sprintf('<img src="%s" alt="%s">', esc_url($thumb_url), esc_attr(get_the_title($child_post->ID))) : '';
+                switch ($mode) {
+                    
+                    case 'complete':
 
-                    $page_dom .= sprintf(
-                        '<div class="Image"><a href="%1$s">%2$s</a></div><div class="Excerpt">%3$s</div>',
-                        esc_url($permalink),
-                        $thumb_dom,
-                        esc_html(get_the_excerpt($child_post->ID))
-                    );
+                        $thumb_url = get_the_post_thumbnail_url($child_post->ID, 'full');
+                        $thumb_dom = $thumb_url ? sprintf('<img src="%s" alt="%s">', esc_url($thumb_url), esc_attr(get_the_title($child_post->ID))) : '';
+
+                        $page_dom .= sprintf(
+                            '<div class="Image"><a href="%1$s">%2$s</a></div><div class="Excerpt">%3$s</div>',
+                            esc_url($permalink),
+                            $thumb_dom,
+                            esc_html(get_the_excerpt($child_post->ID))
+                        );
+
+                        break;
+
+                    case 'contents':
+
+                        $child_children_pages = get_pages([
+                            'parent'     => $child_post->ID,
+                            'post_type'  => 'page',
+                            'sort_column'=> 'menu_order'
+                        ]);
+                        
+                        $page_dom .= implode(
+                            '',
+                            array_map(
+                                function($page) {
+
+                                    return '<div class="ChildChildPage">
+                                        <a href="' . get_permalink($page->ID) . '">
+                                            ' . $page->post_title . '
+                                        </a>
+                                    </div>';
+                                },
+                                $child_children_pages
+                            )
+                        );
+
+                        break;
                 }
 
                 $page_dom .= '</div>';

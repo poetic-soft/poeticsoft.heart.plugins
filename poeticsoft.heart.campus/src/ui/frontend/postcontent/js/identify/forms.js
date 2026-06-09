@@ -1,15 +1,11 @@
 import formIdentify from './form-identify'
-import formConfirmCode from './form-confirmcode'
-import formRegisterShould from './form-register-should'
-import formRegisterWant from './form-register-want'
-import formRegisterConfirm from './form-register-confirm'
+import formConfirmLink from './form-confirmlink'
+import formAsk from './form-ask'
 
 const forms = {
   identify: formIdentify,
-  registerShould: formRegisterShould,
-  registerWant: formRegisterWant,
-  registerConfirm: formRegisterConfirm,
-  confirmCode: formConfirmCode
+  confirmLink: formConfirmLink,
+  ask: formAsk
 }
 
 export default data => forms[data.form](data)

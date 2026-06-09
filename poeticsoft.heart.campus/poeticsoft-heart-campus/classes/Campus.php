@@ -4,6 +4,7 @@ namespace Poeticsoft\Heart;
 
 use Poeticsoft\Heart\Updater;
 use Poeticsoft\Heart\Admin\Admin;
+use Poeticsoft\Heart\Admin\Mail;
 use Poeticsoft\Heart\Frontend\Frontend;
 use Poeticsoft\Heart\Rest\Rest;
 use Poeticsoft\Heart\Database\Database;
@@ -146,5 +147,16 @@ final class Campus
         
         // Initialize Blocls .
         self::get(Blocks::class)->init();
+
+        // Initialize Mail Service.
+        self::get(Mail::class)->init();  
+        
+        add_action(
+            'init', 
+            function () {
+                
+                register_taxonomy_for_object_type('post_tag', 'page');
+            }
+        );
     }
 }

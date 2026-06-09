@@ -16,10 +16,13 @@ class Access {
 	 */
 	public function __construct() {
         
-		add_action('template_redirect', [$this, 'check_logout']);
+		add_action(
+            'template_redirect', 
+            [$this, 'check_access']
+        );
 	}
     
-    public function check_logout() {
+    public function check_access() {
 
         global $post;
 
@@ -31,13 +34,12 @@ class Access {
             $_GET['action'] == 'logout'
         ) {
 
-            unset($_COOKIE['useremail']);
-            unset($_COOKIE['codeconfirmed']);
-            setcookie('useremail', '', time() - 3600, '/');
-            setcookie('codeconfirmed', '', time() - 3600, '/');
+            $is_wp_logged_in = is_user_logged_in();
+
+            unset($_COOKIE['campus_user_useremail']);
+            setcookie('campus_user_useremail', '', time() - 3600, '/', COOKIE_DOMAIN, is_ssl(), true);
             
-            if($this->logged_user_mail()) {
-                
+            if ($is_wp_logged_in) {
                 wp_logout();
             }
             
@@ -45,6 +47,139 @@ class Access {
             
             exit;
         }
+
+        if(isset($_GET['access'])) {
+
+            $token = $_GET['access'];
+            $trasient_key = Campus::PREFIX . 'access_link_' . $token;
+            $transient = get_transient($trasient_key);
+
+            if(!$transient) {
+
+                wp_safe_redirect(home_url('/'));
+
+            } else {
+
+                $access_data = json_decode($transient);
+                $email = $access_data->email;
+                $url = $access_data->url;                 
+
+                unset($_COOKIE['campus_user_useremail']);
+                setcookie('campus_user_useremail', '', time() - 3600, '/', COOKIE_DOMAIN, is_ssl(), true);
+                
+                setcookie(
+                    'campus_user_useremail',
+                    $email, 
+                    0,
+                    '/',
+                    COOKIE_DOMAIN,
+                    is_ssl(),
+                    true
+                );
+
+                wp_safe_redirect($url);
+            }
+        }
+    }    
+
+    public static function send_magick_link($email, $url) { 
+
+        $magick_link_duration_option_name = Campus::PREFIX . 'magick_link_duration'; 
+        $magick_link_duration = get_option($magick_link_duration_option_name);
+        $expire_time = $magick_link_duration * DAY_IN_SECONDS;
+        $link_data = [
+            'email' => $email,
+            'url' => $url,
+            'expire_time' => $expire_time
+        ];
+        $encoded_link_data = json_encode($link_data);
+        $token = wp_generate_password(32, false);
+        $trasient_key = Campus::PREFIX . 'access_link_' . $token;
+
+        set_transient(
+          $trasient_key, 
+          $encoded_link_data,
+          $expire_time
+        );
+
+        $link = add_query_arg('access', $token, home_url('/'));
+        
+        $sitename = get_bloginfo( 'name' );
+        $sitedescription = get_bloginfo( 'description' );
+        $siteurl = get_bloginfo( 'url' );
+
+        $sent = wp_mail(
+            $email,
+            '[' . $sitename . '] Link de acceso',
+            '<p>usa este link para acceder: <a href="' . $link . '">' . $link . '</a></p>' .
+            '<p>Algunos programas de correo no permiten links directos, si te da problemas copia el link y pegalo en tu navegador.</p>' . 
+            '<p><a href="' . $siteurl . '">' . $sitename . '</a></p>' . 
+            '<p>' . $sitedescription . '</p>'
+        );
+        
+        return $link;
+    }
+
+    public function all_user_access_posts(
+        $max_count,
+        $order_by_date = 'ASC',
+        $status = 'publish',
+    ) {             
+    
+        $email = $this->validate_email();
+
+        if(!$email) {
+            return [];
+        }
+
+        global $wpdb;
+        $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
+        $user_page_ids = $wpdb->get_col(
+            $wpdb->prepare(
+                "SELECT post_id FROM {$table_name} WHERE user_mail = %s",
+                $email
+            )
+        );
+
+        if(!empty($user_page_ids)) {
+
+            $campus_root_id = $this->get_campus_root_id();
+
+            $all_pages = get_pages( 
+                [
+                    'post_type'   => 'page', 
+                    'post_status' => $status,
+                    'child_of'    => $campus_root_id
+                ]
+            );
+
+            $filtered_pages = array();
+
+            foreach ($all_pages as $page) {
+                
+                if(
+                    in_array($page->ID, $user_page_ids) 
+                    || 
+                    array_intersect($page->ancestors, $user_page_ids) 
+                ) {
+                    $filtered_pages[] = $page;
+                }
+            }
+
+            usort( 
+                $filtered_pages, 
+                function( $a, $b ) {
+                    return strtotime($b->post_date) - strtotime($a->post_date);
+                } 
+            );
+
+            $limit = ($max_count > 0) ? $max_count : null;
+            $posts_ordered = array_slice($filtered_pages, 0, $limit);
+
+            return $posts_ordered;
+        }
+        
+        return [];
     }
     
     public function get_campus_root_id() {
@@ -70,13 +205,11 @@ class Access {
                 
                 $email = $user_info->user_email; 
 
-                unset($_COOKIE['useremail']);
-                unset($_COOKIE['codeconfirmed']);
-                setcookie('useremail', '', time() - 3600, '/');
-                setcookie('codeconfirmed', '', time() - 3600, '/');
+                unset($_COOKIE['campus_user_useremail']);
+                setcookie('campus_user_useremail', '', time() - 3600, '/', COOKIE_DOMAIN, is_ssl(), true);
                 
                 setcookie(
-                    'useremail',
+                    'campus_user_useremail',
                     $email, 
                     0,
                     '/',
@@ -84,16 +217,6 @@ class Access {
                     is_ssl(),
                     true
                 );
-
-                setcookie(
-                    'codeconfirmed',
-                    'no',
-                    0,
-                    '/',
-                    COOKIE_DOMAIN,
-                    is_ssl(),
-                    true
-                );    
                 
                 return $email;
                 
@@ -118,15 +241,9 @@ class Access {
         
         } else {
         
-            if(
-                isset($_COOKIE['useremail'])
-                &&
-                isset($_COOKIE['codeconfirmed'])
-                &&
-                $_COOKIE['codeconfirmed'] == 'yes'
-            ) { 
-
-                return $_COOKIE['useremail'];
+            if(isset($_COOKIE['campus_user_useremail']))
+            {      
+                return $_COOKIE['campus_user_useremail'];
 
             } else {
 
@@ -135,8 +252,8 @@ class Access {
         }
     } 
 
-    public function can_access_cause_not_in_campus($post_id) { 
-
+    public function can_access_cause_not_in_campus($post_id) {
+        
         return !$this->post_is_in_campus($post_id);
     } 
   

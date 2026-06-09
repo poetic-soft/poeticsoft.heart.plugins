@@ -32,6 +32,20 @@ class Hall extends AdminPage
                 'type'        => 'checkbox',
                 'description' => __('When enabled, complex blocks like Related Content will cache their results indefinitely to improve loading speed.', Campus::TEXT_DOMAIN),
             ],
+            
+            // --- Magick Link Duration ---
+
+            [
+                'key'         => 'magick_link_duration',
+                'title'       => __('Validez', Campus::TEXT_DOMAIN),
+                'field_type'  => 'number',
+                'section'     => 'magick_link',
+                'section_title' => __('Link acceso', Campus::TEXT_DOMAIN),
+                'value'       => 7,
+                'type'        => 'number',
+                'description' => __('Duración en días de la validez del link de acceso al campus', Campus::TEXT_DOMAIN),
+                'width'       => 80
+            ],
 
             // --- Campus ---
             

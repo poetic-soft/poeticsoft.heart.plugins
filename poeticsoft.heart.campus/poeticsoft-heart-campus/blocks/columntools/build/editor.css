@@ -39,6 +39,8 @@
   --color-warn: var(--color-0);
   --color-error: var(--color-1);
   --color-borders: #a1a1a1;
+  --color-access-abierta: #b6dfb1;
+  --color-access-restringida: #d3b1b1;
 }
 :root :root {
   --fc-button-text-color: var(--color-5);
@@ -54,10 +56,12 @@
   --fc-event-selected-overlay-color: var(--color-0);
 }
 
-.wp-block-poeticsoft-columntools {
+.wp-block-poeticsoft-heart-campus-columntools {
   padding: var(--s);
   border: solid 1px var(--color-borders);
   width: fit-content;
+  display: flex;
+  align-items: center;
 }
 
 /*# sourceMappingURL=editor.css.map*/

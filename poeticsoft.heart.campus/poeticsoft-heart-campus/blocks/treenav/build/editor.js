@@ -249,7 +249,7 @@ function validate(uuid) {
   \***********************************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"poeticsoft-heart-campus/treenav","title":"Navigation","category":"poeticsoft-heart-campus","icon":"media-archive","description":"Tree navigation","keywords":[],"textdomain":"poeticsoft-heart-campus","version":"1.0.0","supports":{"align":["left","center","right"],"anchor":false,"customClassName":true,"className":true,"html":false,"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true},"border":{"color":true,"radius":true,"style":true,"width":true},"spacing":{"margin":true,"padding":true},"dimensions":{"minHeight":true,"width":true}},"attributes":{"blockId":{"type":"string","default":""},"refClientId":{"type":"string","default":""},"onlySubscriptions":{"type":"boolean","default":true},"showLegend":{"type":"boolean","default":true}},"editorScript":"file:./build/editor.js","editorStyle":"file:./build/editor.css","viewScript":"file:./build/view.js","viewStyle":"file:./build/view.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"poeticsoft-heart-campus/treenav","title":"Navigation","category":"poeticsoft-heart-campus","icon":"media-archive","description":"Tree navigation","keywords":[],"textdomain":"poeticsoft-heart-campus","version":"1.0.0","supports":{"align":["left","center","right"],"anchor":false,"customClassName":true,"className":true,"html":false,"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true},"border":{"color":true,"radius":true,"style":true,"width":true},"spacing":{"margin":true,"padding":true},"dimensions":{"minHeight":true,"width":true}},"attributes":{"blockId":{"type":"string","default":""},"refClientId":{"type":"string","default":""},"ignoreRoot":{"type":"boolean","default":false},"onlySubscriptions":{"type":"boolean","default":true},"maxDeep":{"type":"number","default":0},"showLegend":{"type":"boolean","default":true}},"editorScript":"file:./build/editor.js","editorStyle":"file:./build/editor.css","viewScript":"file:./build/view.js","viewStyle":"file:./build/view.css","render":"file:./render.php"}');
 
 /***/ }
 
@@ -332,7 +332,8 @@ var _wp$blockEditor = wp.blockEditor,
   InspectorControls = _wp$blockEditor.InspectorControls;
 var _wp$components = wp.components,
   PanelBody = _wp$components.PanelBody,
-  ToggleControl = _wp$components.ToggleControl;
+  ToggleControl = _wp$components.ToggleControl,
+  NumberControl = _wp$components.__experimentalNumberControl;
 
 
 
@@ -342,14 +343,25 @@ var Edit = function Edit(props) {
     setAttributes = props.setAttributes;
   var blockId = attributes.blockId,
     refClientId = attributes.refClientId,
+    ignoreRoot = attributes.ignoreRoot,
     onlySubscriptions = attributes.onlySubscriptions,
+    maxDeep = attributes.maxDeep,
     showLegend = attributes.showLegend;
   var blockProps = useBlockProps();
   (0,blockscommon_uniqueid__WEBPACK_IMPORTED_MODULE_2__.useUniqueId)(clientId, attributes, setAttributes);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
     title: 'Opciones del Bloque',
-    initialOpen: true
+    initialOpen: true,
+    className: "TreeNavControls"
   }, /*#__PURE__*/React.createElement(ToggleControl, {
+    label: "\n            Ignorar ra\xEDz \n            (".concat(ignoreRoot ? 'SI' : 'NO', ")\n          "),
+    checked: ignoreRoot,
+    onChange: function onChange(value) {
+      return setAttributes({
+        ignoreRoot: value
+      });
+    }
+  }), /*#__PURE__*/React.createElement(ToggleControl, {
     label: "\n            Ver s\xF3lo suscripciones \n            (".concat(onlySubscriptions ? 'SI' : 'NO', ")\n          "),
     checked: onlySubscriptions,
     onChange: function onChange(value) {
@@ -357,6 +369,19 @@ var Edit = function Edit(props) {
         onlySubscriptions: value
       });
     }
+  }), /*#__PURE__*/React.createElement(NumberControl, {
+    className: "MaxDeep",
+    label: "M\xE1ximo nivel (0 para todos)",
+    value: maxDeep,
+    min: 0,
+    onChange: function onChange(value) {
+      return setAttributes({
+        maxDeep: value
+      });
+    },
+    isDragEnabled: true,
+    isShiftStepEnabled: true,
+    shiftStep: 5
   }), /*#__PURE__*/React.createElement(ToggleControl, {
     label: "\n            Ver leyenda \n            (".concat(showLegend ? 'SI' : 'NO', ")\n          "),
     checked: showLegend,

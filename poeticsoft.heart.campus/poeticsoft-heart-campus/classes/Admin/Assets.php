@@ -20,6 +20,11 @@ class Assets
         add_action(
             'admin_enqueue_scripts', 
             [$this, 'enqueue_scripts']
+        );       
+
+        add_action(
+            'enqueue_block_assets', 
+            [$this, 'enqueue_block_assets']
         );
     }
 
@@ -90,7 +95,7 @@ class Assets
         if($enqueue_data) {
             
             $this->add_inline_script($enqueue_data);
-        }
+        } 
     }
     
     private function enqueue($enqueue_data) {
@@ -198,5 +203,11 @@ class Assets
                 break;           
                  
         }
+    }
+
+    public function enqueue_block_assets()
+    {
+
+        wp_enqueue_style('dashicons');
     }
 }

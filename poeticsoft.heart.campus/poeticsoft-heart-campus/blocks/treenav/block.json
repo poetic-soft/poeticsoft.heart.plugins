@@ -45,9 +45,17 @@
       "type": "string",
       "default": ""
     },
+    "ignoreRoot": {
+      "type": "boolean",
+      "default": false
+    },
     "onlySubscriptions": {
       "type": "boolean",
       "default": true
+    },
+    "maxDeep": {
+      "type": "number",
+      "default": 0
     },
     "showLegend": {
       "type": "boolean",

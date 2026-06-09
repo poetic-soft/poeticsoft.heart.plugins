@@ -4,6 +4,7 @@ namespace Poeticsoft\Heart\Rest\Endpoints;
 
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\Rest\Endpoint;
+use Poeticsoft\Heart\Validation\Access;
 use Poeticsoft\Heart\Utils\Utils
 ;
 
@@ -20,23 +21,19 @@ class Identify extends Endpoint
     public function get_routes()
     {
         return [
-            '/identify/subscriber/identify' => [
+            '/identify' => [
                 'methods'  => 'POST',
-                'callback' => 'identify_subscriber_identify',
-                'auth'     => self::AUTH_USER,
-            ],
-            '/identify/subscriber/confirmcode' => [
-                'methods'  => 'POST',
-                'callback' => 'identify_subscriber_confirmcode',
+                'callback' => 'identify',
                 'auth'     => self::AUTH_USER,
             ]
         ];
     }
 
-    public function identify_subscriber_identify($request)
+    public function identify($request)
     {   
         
       $email = $request->get_param('email');
+      $url = $request->get_param('url');
 
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
@@ -61,12 +58,12 @@ class Identify extends Endpoint
           )
         );
 
-        if(count($access)) {          
-
-          $identify_code = Utils::get_identify_code($email);
+        if(count($access)) {      
+          
+          $link = Campus::get(Access::class)->send_magick_link($email, $url);
             
           return $this->send_success([
-            'code' => $identify_code,
+            // 'link' => $link,
             'time'   => current_time('mysql'),
           ]);
 
@@ -79,54 +76,5 @@ class Identify extends Endpoint
           );
         }
       }
-    }
-
-    public function identify_subscriber_confirmcode($request)
-    {   
-
-      $email = $request->get_param('email');
-      $code = $request->get_param('code');    
-      $cookieemail = isset($_COOKIE['useremail']) ? $_COOKIE['useremail'] : null;
-      $cookiecode = isset($_COOKIE['usercode']) ? $_COOKIE['usercode'] : null;
-
-      if(
-        $cookieemail
-        &&
-        $cookiecode
-        &&
-        $email == $cookieemail
-        &&
-        $code == $cookiecode
-      ) { 
-
-        setcookie(
-          'codeconfirmed',
-          'yes',
-          0,
-          '/',
-          COOKIE_DOMAIN,
-          is_ssl(),
-          true
-        );      
-
-        return $this->send_success([
-          'time'   => current_time('mysql'),
-        ]);
-
-      } else {
-
-        unset($_COOKIE['useremail']);
-        unset($_COOKIE['usercode']);
-        unset($_COOKIE['codeconfirmed']);
-        setcookie('useremail', '', time() - 3600, '/');
-        setcookie('usercode', '', time() - 3600, '/');
-        setcookie('codeconfirmed', '', time() - 3600, '/');
-
-        return $this->send_error( 
-            'IDENTIFY_USER_CODE_INVALID', 
-            __('El código no es correcto'), 
-            $status = 406
-          );
-      }
-    }
+    } 
 }

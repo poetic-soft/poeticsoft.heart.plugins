@@ -19,13 +19,20 @@ class PostContent
         
         add_action(
             'wp_enqueue_scripts',
-            [$this, 'init']
+            [$this, 'enqueue_scripts']
+        );
+        
+        add_filter(
+            'block_type_metadata_settings',
+            [$this, 'post_content_metadata_settings'],
+            10,
+            2
         );
         
         add_filter(
             'render_block_core/post-content',
-            [$this, 'render_post_content'],
-            10,
+            [$this, 'post_content_render'],
+            9999,
             2
         );
     }
@@ -33,19 +40,14 @@ class PostContent
 	/**
 	 * Inicio.
 	 */
-	public function init() {
-        
+	public function enqueue_scripts() {
+
         global $post;
-        
-        if(!$post) {            
-            return;
-        }  
-        
-        $post_is_in_campus = Campus::get(Access::class)->post_is_in_campus($post->ID);
-        
-        if(!$post_is_in_campus) {            
-            return;
-        }  
+        if(
+            !$post
+            ||
+            !Campus::get(Access::class)->post_is_in_campus($post->ID)
+        ) { return; }
 
         wp_enqueue_script(
           Campus::PLUGIN_SLUG . '-postcontent',
@@ -63,19 +65,7 @@ class PostContent
           [],
           filemtime(Utils::path('ui/frontend/postcontent/main.css')),
           'all'
-        );  
-        
-        $access_by_option_name = Campus::PREFIX . 'access_by';
-        $access_by = get_option($access_by_option_name);
-        $data_json = json_encode($access_by);
-        $prefix = Campus::PREFIX;
-        $inline_js = "var {$prefix}access_by = {$data_json};";
-
-        wp_add_inline_script(
-            Campus::PLUGIN_SLUG . '-postcontent',
-            $inline_js, 
-            'after'
-        );
+        ); 
         
         wp_enqueue_script(          
           Campus::PLUGIN_SLUG . '-register-access',
@@ -87,32 +77,62 @@ class PostContent
           true
         ); 
         
-        $post_id = get_the_ID();
         $validate_email = Campus::get(Access::class)->validate_email();
         $email = $validate_email ? $validate_email : 'anonymous';
         $ip = Utils::get_request_ip();
-        $accessdata = $post_id . '||' . $email . '||' . $ip;
+        $accessdata = $post->ID . '||' . $email . '||' . $ip;
         $campus_access_data_key = Campus::PREFIX . 'register_access_data';
         $inline_js = "var {$campus_access_data_key} = '{$accessdata}';";
         wp_add_inline_script(
           Campus::PLUGIN_SLUG . '-register-access', 
           $inline_js, 
           'before'
-        );        
+        );  
+    }
+
+    public function post_content_metadata_settings($settings, $metadata)
+    {        
+        global $post;
+        if(
+            !$post
+            ||
+            !Campus::get(Access::class)->post_is_in_campus($post->ID)
+        ) { return $settings; }
+
+        if ( 
+            isset( $metadata['name'] ) 
+            && 
+            $metadata['name'] === 'core/post-content' 
+        ) {
+        
+            if (!isset($settings['style'])) 
+            {
+                $settings['style'] = [];
+            }
+
+            $settings['style'][] = 'wp-block-button';
+            $settings['style'][] = 'wp-block-buttons';
+            
+            $settings['style'] = array_unique( $settings['style'] );
+        }
+
+        return $settings;
     }
     
-    public function render_post_content($block_content, $block) {
-
+    public function post_content_render($block_content, $block) { 
+        
         global $post;
 
-        if(!$post) {
+        if(!$post) { return; }
+        
+        if(!Campus::get(Access::class)->post_is_in_campus($post->ID)) {
 
-          return '';
+            return $block_content;
         }
 
         if(Campus::get(Access::class)->can_access($post->ID)) {
 
-          return $this->render_access_messages($block_content);          
+          return $this->render_access_messages($block_content, $post->ID);          
         }    
 
         return $this->render_access_form(
@@ -121,7 +141,7 @@ class PostContent
         );  
     }
   
-    private function render_access_messages($block_content) {
+    private function render_access_messages($block_content, $post_id) {
         
         if ( 
             current_user_can('manage_options')
@@ -134,6 +154,27 @@ class PostContent
                 (<a href="/wp-login.php?action=logout">SALIR</a>) 
             </div>' . 
             $block_content;        
+        }
+
+        // Access user, register last access
+        $valid_user_mail = Campus::get(Access::class)->validate_email();
+        if ($valid_user_mail) {
+            global $wpdb;
+            $table_name = $wpdb->prefix . Campus::PREFIX . 'last_access';
+            
+            $wpdb->insert(
+                $table_name,
+                [
+                    'user_mail'        => $valid_user_mail,
+                    'post_id'          => $post_id,
+                    'last_access_date' => current_time('mysql'),
+                ],
+                [
+                    '%s',
+                    '%d',
+                    '%s'
+                ]
+            );
         }
         
         return $block_content;    
@@ -162,9 +203,6 @@ class PostContent
 
             return '';
         }
-
-        $access_by_option_name = Campus::PREFIX . 'access_by';
-        $access_by = get_option($access_by_option_name);
         
         $restricted_visible_text = isset($block_attrs['restrictedVisibleText']) ?
         $block_attrs['restrictedVisibleText']
@@ -180,17 +218,20 @@ class PostContent
                 data-post_id="' . esc_attr($post_id) . '"
             >
                 <div class="Forms CantAccess">
-                <div class="AdviceText">' . 
-                    $restricted_visible_text . 
-                '</div>
-                <div class="Dummy">NO TIENES ACCESO</div>
+                    <div class="AdviceText">' . 
+                        $restricted_visible_text . 
+                    '</div>
                 </div>
             </div>';
 
         } else {
 
             return '<div class="wp-block-poeticsoft-heart-campus-postcontent">
-                <div class="Forms Identify">IDENTIFICADOR</div>
+                <div class="Forms Identify">
+                    <div class="AdviceText">' . 
+                        $restricted_visible_text . 
+                    '</div>
+                </div>
             </div>';
         }
     }

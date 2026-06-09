@@ -2,7 +2,7 @@ import './view.scss'
 
 (function($) {
 
-  const $columntools = $('.wp-block-poeticsoft-columntools')
+  const $columntools = $('.wp-block-poeticsoft-heart-campus-columntools')
   if($columntools.length) {
 
     $columntools

@@ -1,7 +1,18 @@
 @use './styles';
 
-.wp-block-poeticsoft-treenav {
+.wp-block-poeticsoft-heart-campus-treenav {
 
   border: solid 1px #ccc;
   padding: var(--s) var(--s2);
+}
+
+.components-panel__body.TreeNavControls {
+
+  .MaxDeep  {
+
+    .components-input-control__container {
+
+      width: var(--s8);
+    }
+  }
 }

@@ -69,7 +69,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _view_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./view.scss */ "./src/block/columntools/view.scss");
 
 (function ($) {
-  var $columntools = $('.wp-block-poeticsoft-columntools');
+  var $columntools = $('.wp-block-poeticsoft-heart-campus-columntools');
   if ($columntools.length) {
     $columntools.each(function () {
       var $this = $(this);

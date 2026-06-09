@@ -39,6 +39,8 @@
   --color-warn: var(--color-0);
   --color-error: var(--color-1);
   --color-borders: #a1a1a1;
+  --color-access-abierta: #b6dfb1;
+  --color-access-restringida: #d3b1b1;
 }
 :root :root {
   --fc-button-text-color: var(--color-5);
@@ -54,17 +56,17 @@
   --fc-event-selected-overlay-color: var(--color-0);
 }
 
-.wp-block-poeticsoft-relatedcontent > .Title {
+.wp-block-poeticsoft-heart-campus-relatedcontent > .Title {
   margin: 0 0 var(--s2);
   text-align: center;
   font-weight: bold;
 }
-.wp-block-poeticsoft-relatedcontent .Areas {
+.wp-block-poeticsoft-heart-campus-relatedcontent .Areas {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var(--s3);
 }
-.wp-block-poeticsoft-relatedcontent .Areas .Area {
+.wp-block-poeticsoft-heart-campus-relatedcontent .Areas .Area {
   width: 100%;
   border-color: #E2E8F0;
   border-width: 1px;
@@ -76,27 +78,27 @@
   transition-property: transform, box-shadow;
   transition-duration: 0.5s;
 }
-.wp-block-poeticsoft-relatedcontent .Areas .Area:hover {
+.wp-block-poeticsoft-heart-campus-relatedcontent .Areas .Area:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
   border-color: #E2E8F0;
 }
-.wp-block-poeticsoft-relatedcontent .Areas .Area .Title {
+.wp-block-poeticsoft-heart-campus-relatedcontent .Areas .Area .Title {
   margin-top: 0;
   cursor: pointer;
 }
-.wp-block-poeticsoft-relatedcontent .Areas .Area .Image {
+.wp-block-poeticsoft-heart-campus-relatedcontent .Areas .Area .Image {
   cursor: pointer;
 }
-.wp-block-poeticsoft-relatedcontent .Areas .Area .Image a {
+.wp-block-poeticsoft-heart-campus-relatedcontent .Areas .Area .Image a {
   width: 100%;
 }
-.wp-block-poeticsoft-relatedcontent .Areas .Area .Image a img {
+.wp-block-poeticsoft-heart-campus-relatedcontent .Areas .Area .Image a img {
   width: 100%;
   display: block;
   border-radius: 8px;
 }
-.wp-block-poeticsoft-relatedcontent .Areas .Area .Excerpt {
+.wp-block-poeticsoft-heart-campus-relatedcontent .Areas .Area .Excerpt {
   margin-top: var(--s2);
 }
 

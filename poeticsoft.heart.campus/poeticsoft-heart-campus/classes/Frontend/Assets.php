@@ -44,5 +44,7 @@ class Assets
           $inline_js, 
           'after'
         );
+
+        wp_enqueue_style('dashicons');
     }
 }

@@ -9,6 +9,7 @@
     "blockcontainerchildren": "webpack --env=block-containerchildren",
     "blockmytools": "webpack --env=block-mytools",  
     "blockrelatedcontent": "webpack --env=block-relatedcontent",
+    "blocklastpublished": "webpack --env=block-lastpublished",
     "blocktreenav": "webpack --env=block-treenav",
     "allblocks": "npm run blockbreadcrumbs && npm run blockcolumntools && npm run blockcontainerchildren && npm run blockmytools && npm run blockrelatedcontent && npm run blocktreenav", 
 

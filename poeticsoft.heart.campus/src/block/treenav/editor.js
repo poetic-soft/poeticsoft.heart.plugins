@@ -9,7 +9,8 @@ const {
 } = wp.blockEditor
 const {
   PanelBody,
-  ToggleControl 
+  ToggleControl,
+  __experimentalNumberControl: NumberControl
 } = wp.components
 
 import metadata from 'blocks/treenav/block.json'
@@ -26,7 +27,9 @@ const Edit = props => {
   const { 
     blockId,
     refClientId,
+    ignoreRoot,
     onlySubscriptions,
+    maxDeep,
     showLegend
   } = attributes  
   const blockProps = useBlockProps()
@@ -38,7 +41,20 @@ const Edit = props => {
       <PanelBody 
         title={ 'Opciones del Bloque' } 
         initialOpen={ true }
-      >        
+        className="TreeNavControls"
+      >             
+        <ToggleControl        
+          label={ `
+            Ignorar raíz 
+            (${ ignoreRoot ? 'SI' : 'NO' })
+          `}
+          checked={ ignoreRoot }
+          onChange={ 
+            value => setAttributes({ 
+              ignoreRoot: value
+            })
+          }
+        />     
         <ToggleControl        
           label={ `
             Ver sólo suscripciones 
@@ -50,7 +66,21 @@ const Edit = props => {
               onlySubscriptions: value
             })
           }
-        />        
+        />   
+        <NumberControl
+            className="MaxDeep"
+            label="Máximo nivel (0 para todos)"
+            value={ maxDeep }
+            min={ 0 }
+            onChange={ 
+              value => setAttributes({ 
+                maxDeep: value
+              })
+            }
+            isDragEnabled={ true }
+            isShiftStepEnabled={ true }
+            shiftStep={ 5 }
+        />     
         <ToggleControl        
           label={ `
             Ver leyenda 

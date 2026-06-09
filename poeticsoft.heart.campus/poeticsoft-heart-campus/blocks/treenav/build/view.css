@@ -40,6 +40,8 @@
   --color-warn: var(--color-0);
   --color-error: var(--color-1);
   --color-borders: #a1a1a1;
+  --color-access-abierta: #b6dfb1;
+  --color-access-restringida: #d3b1b1;
 }
 :root :root {
   --fc-button-text-color: var(--color-5);
@@ -55,15 +57,15 @@
   --fc-event-selected-overlay-color: var(--color-0);
 }
 
-.wp-block-poeticsoft-treenav {
+.wp-block-poeticsoft-heart-campus-treenav {
   border: solid 1px #ccc;
   padding: var(--s);
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title {
   display: flex;
   justify-content: flex-start;
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title .OpenClose {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose {
   display: inline-block;
   vertical-align: middle;
   width: var(--s3);
@@ -71,7 +73,7 @@
   position: relative;
   cursor: pointer;
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title .OpenClose:after, .wp-block-poeticsoft-treenav .Nav .Page .Title .OpenClose:before {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose:after, .wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose:before {
   content: "";
   display: block;
   width: var(--s15);
@@ -80,15 +82,15 @@
   position: absolute;
   left: 6px;
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title .OpenClose:after {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose:after {
   transform: rotate(45deg);
   top: var(--s);
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title .OpenClose:before {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose:before {
   transform: rotate(-45deg);
   top: var(--s2);
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title .Indent {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .Indent {
   display: inline-block;
   vertical-align: middle;
   width: var(--s3);
@@ -96,7 +98,7 @@
   margin-right: var(--s05);
   position: relative;
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title .Indent:before {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .Indent:before {
   content: "";
   display: block;
   width: var(--s);
@@ -107,61 +109,61 @@
   left: 12px;
   border-radius: 50%;
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title a.TitleLink {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink {
   flex: 1;
   display: inline-block;
   vertical-align: middle;
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title a.TitleLink .Icon {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon {
   display: inline-block;
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title a.TitleLink .Icon:after {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon:after {
   content: "🗝️​";
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title a.TitleLink .Icon.Paid:after {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon.Paid:after {
   content: "✅​";
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title a.TitleLink .Icon.Free:after {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon.Free:after {
   content: "✔️​";
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Title.Current a.TitleLink .Text {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title.Current a.TitleLink .Text {
   font-weight: bold;
 }
-.wp-block-poeticsoft-treenav .Nav .Page .Pages {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Pages {
   margin-left: var(--s15);
   display: none;
 }
-.wp-block-poeticsoft-treenav .Nav .Page.Visible > .Title > .OpenClose:after, .wp-block-poeticsoft-treenav .Nav .Page.Visible > .Title > .OpenClose:before {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose:after, .wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose:before {
   top: 14px;
 }
-.wp-block-poeticsoft-treenav .Nav .Page.Visible > .Title > .OpenClose:after {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose:after {
   left: 2px;
 }
-.wp-block-poeticsoft-treenav .Nav .Page.Visible > .Title > .OpenClose:before {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose:before {
   left: 10px;
 }
-.wp-block-poeticsoft-treenav .Nav .Page.Visible > .Pages {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Pages {
   display: inherit;
 }
-.wp-block-poeticsoft-treenav .Legend {
+.wp-block-poeticsoft-heart-campus-treenav .Legend {
   border: solid 1px #ccc;
   padding: var(--s);
   margin-top: var(--s2);
 }
-.wp-block-poeticsoft-treenav .Legend .Type {
+.wp-block-poeticsoft-heart-campus-treenav .Legend .Type {
   padding: var(--s025) 0;
   margin: 0 var(--s);
 }
-.wp-block-poeticsoft-treenav .Legend .Type .Icon {
+.wp-block-poeticsoft-heart-campus-treenav .Legend .Type .Icon {
   display: inline-block;
 }
-.wp-block-poeticsoft-treenav .Legend .Type.ShouldPay .Icon:after {
+.wp-block-poeticsoft-heart-campus-treenav .Legend .Type.ShouldPay .Icon:after {
   content: "🗝️​";
 }
-.wp-block-poeticsoft-treenav .Legend .Type.Free .Icon:after {
+.wp-block-poeticsoft-heart-campus-treenav .Legend .Type.Free .Icon:after {
   content: "✔️​";
 }
-.wp-block-poeticsoft-treenav .Legend .Type.Paid .Icon:after {
+.wp-block-poeticsoft-heart-campus-treenav .Legend .Type.Paid .Icon:after {
   content: "✅​";
 }
 

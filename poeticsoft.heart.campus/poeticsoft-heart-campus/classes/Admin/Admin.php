@@ -8,6 +8,7 @@ use Poeticsoft\Heart\Admin\Menu;
 use Poeticsoft\Heart\Admin\Assets;
 use Poeticsoft\Heart\Admin\PageEditor;
 use Poeticsoft\Heart\Admin\PagesList;
+use Poeticsoft\Heart\Utils\Utils;
 
 /**
  * Admin Controller.
