@@ -47,7 +47,6 @@ if ($cache_key) {
 }
 
 if (false === $related_dom || empty($cache_key)) {
-
     $includes_mode = $attrs['includesMode'] ?? 'related';
     $mode = $attrs['mode'] ?? 'compact';
     $tags_raw = $attrs['tags'] ?? '[]';
@@ -143,7 +142,7 @@ if (false === $related_dom || empty($cache_key)) {
     }
 
     if ($cache_key) {
-        set_transient($cache_key, $related_dom, 0); 
+        set_transient($cache_key, $related_dom, 0);
     }
 }
 

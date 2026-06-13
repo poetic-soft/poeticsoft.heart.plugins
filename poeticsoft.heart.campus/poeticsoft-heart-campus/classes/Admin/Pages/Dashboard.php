@@ -7,34 +7,23 @@ use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\View\View;
 use Poeticsoft\Heart\Utils\Utils;
 
-/**
- * Dashboard Page.
- */
 class Dashboard extends AdminPage
 {
-
     protected function define_page_props()
     {
         $this->slug       = Campus::PLUGIN_SLUG;
-        $this->menu_title = __('Dashboard', Campus::TEXT_DOMAIN);
-        $this->page_title = sprintf(__('%s Dashboard', Campus::TEXT_DOMAIN), Campus::PLUGIN_NAME);
+        $this->menu_title = __('Escritorio', Campus::TEXT_DOMAIN);
+        $this->page_title = sprintf(__('Panel de control de %s', Campus::TEXT_DOMAIN), Campus::PLUGIN_NAME);
     }
 
-    /**
-     * Handle custom actions securely.
-     */
+
     protected function handle_action($action)
     {
         if ('refresh_status' === $action) {
-            
-            // Logic to refresh access...
-            // Utils::log('System access refreshed by user.', 'info');
-
-            // Add a notice using the View engine.
             add_action('admin_notices', function () {
                 Campus::get(View::class)->render('admin/notice', [
                     'type'    => 'success',
-                    'message' => __('System access refreshed successfully.', Campus::TEXT_DOMAIN),
+                    'message' => __('Accesos del sistema actualizados correctamente.', Campus::TEXT_DOMAIN),
                 ]);
             });
         }
@@ -43,9 +32,9 @@ class Dashboard extends AdminPage
     protected function render_content()
     {
         $data = [
-            'welcome_message' => sprintf(__('Welcome to the main dashboard of %s.', Campus::TEXT_DOMAIN), Campus::PLUGIN_NAME),
+            'welcome_message' => sprintf(__('Te damos la bienvenida al panel principal de %s.', Campus::TEXT_DOMAIN), Campus::PLUGIN_NAME),
             'status_data'     => [
-                'message' => __('All systems operational.', Campus::TEXT_DOMAIN),
+                'message' => __('Todos los sistemas están operativos.', Campus::TEXT_DOMAIN),
             ],
         ];
 

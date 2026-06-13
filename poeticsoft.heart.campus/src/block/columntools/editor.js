@@ -1,80 +1,60 @@
-const { 
-  registerBlockType 
-} = wp.blocks
-const { 
-  useBlockProps,
-  InspectorControls 
-} = wp.blockEditor
-const {
-  PanelBody,
-  ToggleControl,
-  Dashicon
-} = wp.components
+const { registerBlockType } = wp.blocks;
+const { useBlockProps, InspectorControls } = wp.blockEditor;
+const { PanelBody, ToggleControl, Dashicon } = wp.components;
+const { __, sprintf } = wp.i18n;
 
-import { useUniqueId } from 'blockscommon/uniqueid'
-import metadata from 'blocks/columntools/block.json'
+import { useUniqueId } from 'blockscommon/uniqueid';
+import metadata from 'blocks/columntools/block.json';
 import './editor.scss';
 
-const Edit = props => {
-  
-  const {
-    clientId,
-    attributes, 
-    setAttributes 
-  } = props  
-  const { 
-    blockId,
-    refClientId,
-    defaultOpen
-  } = attributes;
-  const blockProps = useBlockProps()
+const Edit = (props) => {
+    const { clientId, attributes, setAttributes } = props;
+    const { blockId, refClientId, defaultOpen } = attributes;
+    const blockProps = useBlockProps();
 
-  useUniqueId(clientId, attributes, setAttributes)
-   
-  return <>
-    <InspectorControls>
-      <PanelBody 
-        className="Tools"
-        title={ 'Opciones del Bloque' } 
-        initialOpen={ true }
-      >
-        <ToggleControl        
-          label={ `Abierto ${ defaultOpen ? 'SI' : 'NO' }` }
-          checked={ defaultOpen }
-          onChange={ 
-            value => setAttributes({ 
-              defaultOpen: value
-            })
-          }
-        />
-      </PanelBody>
-    </InspectorControls>
-    <div
-      { ...blockProps }
-      onClick={ 
-        () => setAttributes({ 
-          defaultOpen: !defaultOpen
-        })
-      }
-    >
-      <Dashicon 
-        icon={ 
-          defaultOpen ? 
-          'arrow-left-alt2'
-          :  
-          'arrow-right-alt2' 
-        } 
-      />
-    </div>
-  </>
-}
+    useUniqueId(clientId, attributes, setAttributes);
 
-const Save = () => null
+    return (
+        <>
+            <InspectorControls>
+                <PanelBody
+                    className="Tools"
+                    title={__('Opciones del Bloque', 'poeticsoft-heart-campus')}
+                    initialOpen={true}
+                >
+                    <ToggleControl
+                        label={sprintf(
+                            __('Abierto: %s', 'poeticsoft-heart-campus'),
+                            defaultOpen
+                                ? __('SÍ', 'poeticsoft-heart-campus')
+                                : __('NO', 'poeticsoft-heart-campus')
+                        )}
+                        checked={defaultOpen}
+                        onChange={(value) =>
+                            setAttributes({
+                                defaultOpen: value
+                            })
+                        }
+                    />
+                </PanelBody>
+            </InspectorControls>
+            <div
+                {...blockProps}
+                onClick={() =>
+                    setAttributes({
+                        defaultOpen: !defaultOpen
+                    })
+                }
+            >
+                <Dashicon icon={defaultOpen ? 'arrow-left-alt2' : 'arrow-right-alt2'} />
+            </div>
+        </>
+    );
+};
 
-registerBlockType(
-  metadata.name,
-  {
+const Save = () => null;
+
+registerBlockType(metadata.name, {
     edit: Edit,
     save: Save
-  }
-)
+});

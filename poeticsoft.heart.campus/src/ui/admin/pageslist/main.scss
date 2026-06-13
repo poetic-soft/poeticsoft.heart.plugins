@@ -3,21 +3,16 @@
 @use './scss/pageaccess';
 @use './scss/pagestatusform';
 
-
 body.edit-php.post-type-page {
-  
-  #the-list {
-
-    opacity: 0;
-    transition-property: opacity;
-    transition-duration: 0.5s;
-  }
-
-  &.PHCVisible {
-    
     #the-list {
-      
-      opacity: 1;
+        opacity: 0;
+        transition-property: opacity;
+        transition-duration: 0.5s;
     }
-  }
+
+    &.PHCVisible {
+        #the-list {
+            opacity: 1;
+        }
+    }
 }

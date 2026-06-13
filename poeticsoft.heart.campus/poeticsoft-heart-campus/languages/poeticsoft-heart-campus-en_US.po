@@ -1,0 +1,445 @@
+# Copyright (C) 2026 Poeticsoft
+# This file is distributed under the same license as the Poeticsoft Heart Campus package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Poeticsoft Heart Campus 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/poeticsoft-heart-campus\n"
+"Last-Translator: Poeticsoft <partners@poeticsoft.com>\n"
+"Language-Team: English (US) <partners@poeticsoft.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-11T23:09:33+00:00\n"
+"PO-Revision-Date: 2026-06-11 23:15+0000\n"
+"Language: en_US\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: poeticsoft-heart-campus\n"
+
+#. Plugin Name of the plugin
+#: poeticsoft-heart-campus.php
+msgid "Poeticsoft Heart Campus"
+msgstr "Poeticsoft Heart Campus"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: poeticsoft-heart-campus.php
+msgid "https://poeticsoft.com"
+msgstr "https://poeticsoft.com"
+
+#. Description of the plugin
+#: poeticsoft-heart-campus.php
+msgid "High-performance Wordpress Page Based Campus."
+msgstr "High-performance Wordpress Page Based Campus."
+
+#. Author of the plugin
+#: poeticsoft-heart-campus.php
+msgid "Poeticsoft"
+msgstr "Poeticsoft"
+
+#: blocks/breadcrumbs/render.php:55
+msgid "Campus"
+msgstr "Campus"
+
+#: blocks/mytools/render.php:49
+#: blocks/mytools/render.php:64
+#: blocks/mytools/render.php:73
+#: views/frontend/admin-view-banner.php:16
+msgid "SALIR"
+msgstr "LOGOUT"
+
+#: blocks/mytools/render.php:113
+#: blocks/mytools/render.php:126
+msgid "ENTRAR"
+msgstr "LOGIN"
+
+#: blocks/treenav/render.php:267
+msgid "Privado"
+msgstr "Private"
+
+#: blocks/treenav/render.php:268
+msgid "Abierto"
+msgstr "Open"
+
+#: blocks/treenav/render.php:269
+msgid "Tu contenido"
+msgstr "Your content"
+
+#: classes/Admin/AdminPage.php:161
+#: classes/Admin/AdminPage.php:215
+msgid "No tienes suficientes permisos para acceder a esta página."
+msgstr "You do not have sufficient permissions to access this page."
+
+#: classes/Admin/Pages/Access.php:19
+#: classes/Admin/Pages/Access.php:20
+msgid "Accesos"
+msgstr "Accesses"
+
+#: classes/Admin/Pages/Access.php:36
+msgid "Accesos actualizados."
+msgstr "Accesses updated."
+
+#: classes/Admin/Pages/Dashboard.php:19
+msgid "Escritorio"
+msgstr "Dashboard"
+
+#: classes/Admin/Pages/Dashboard.php:20
+#, php-format
+msgid "Panel de control de %s"
+msgstr "%s Dashboard"
+
+#: classes/Admin/Pages/Dashboard.php:37
+msgid "Accesos del sistema actualizados correctamente."
+msgstr "System access refreshed successfully."
+
+#: classes/Admin/Pages/Dashboard.php:46
+#, php-format
+msgid "Te damos la bienvenida al panel principal de %s."
+msgstr "Welcome to the main dashboard of %s."
+
+#: classes/Admin/Pages/Dashboard.php:48
+msgid "Todos los sistemas están operativos."
+msgstr "All systems operational."
+
+#: classes/Admin/Pages/Hall.php:18
+msgid "Hall del Campus"
+msgstr "Campus Hall"
+
+#: classes/Admin/Pages/Hall.php:19
+msgid "Configuración del Hall del Campus"
+msgstr "Campus Hall Configuration"
+
+#: classes/Admin/Pages/Hall.php:27
+msgid "Activar caché de bloques"
+msgstr "Enable Block Caching"
+
+#: classes/Admin/Pages/Hall.php:30
+msgid "Ajustes de rendimiento"
+msgstr "Performance Settings"
+
+#: classes/Admin/Pages/Hall.php:33
+msgid "Cuando está activado, los bloques complejos como Contenido Relacionado guardarán en caché sus resultados indefinidamente para mejorar la velocidad de carga."
+msgstr "When enabled, complex blocks like Related Content will cache their results indefinitely to improve loading speed."
+
+#: classes/Admin/Pages/Hall.php:40
+msgid "Validez"
+msgstr "Validity"
+
+#: classes/Admin/Pages/Hall.php:43
+msgid "Enlace de acceso"
+msgstr "Access Link"
+
+#: classes/Admin/Pages/Hall.php:46
+msgid "Duración en días de la validez del link de acceso al campus"
+msgstr "Duration in days of the validity of the access link to the campus"
+
+#: classes/Admin/Pages/Hall.php:55
+msgid "Origen accesos de alumnos"
+msgstr "Student Access Source"
+
+#: classes/Admin/Pages/Hall.php:56
+msgid "Fuente de validación del acceso a páginas del campus"
+msgstr "Validation source of page access for the campus"
+
+#: classes/Admin/Pages/Hall.php:60
+msgid "Mail Relay Suscriptors"
+msgstr "Mail Relay Subscribers"
+
+#: classes/Admin/Pages/Hall.php:61
+msgid "Directus Access"
+msgstr "Directus Access"
+
+#: classes/Admin/Pages/Hall.php:68
+msgid "ID de página de inicio del campus"
+msgstr "Campus Root Post ID"
+
+#: classes/Admin/Pages/Hall.php:69
+msgid "Página Principal del Campus"
+msgstr "Campus Home Page"
+
+#: classes/Admin/Pages/Hall.php:77
+msgid "Acceso administradores"
+msgstr "Admin Access"
+
+#: classes/Admin/Pages/Hall.php:78
+msgid "Permitir acceso total a administradores"
+msgstr "Allow full access to administrators"
+
+#: classes/Admin/Pages/Hall.php:86
+msgid "Listado de páginas"
+msgstr "Pages List"
+
+#: classes/Admin/Pages/Hall.php:87
+msgid "Activar páginas desplegables"
+msgstr "Enable Dropdown Pages"
+
+#: classes/Admin/Pages/Hall.php:98
+#: classes/Admin/Pages/Hall.php:99
+msgid "Sincronizacion de Humanos/Páginas"
+msgstr "Human/Page Synchronization"
+
+#: classes/Admin/Pages/Hall.php:107
+#: classes/Admin/Pages/Hall.php:108
+msgid "Token para Sincronizacion de Humanos/Páginas"
+msgstr "Token for Human/Page Synchronization"
+
+#: classes/Admin/Pages/Hall.php:116
+#: classes/Admin/Pages/Hall.php:117
+msgid "Url registro en log de accesos"
+msgstr "Access Log Registration URL"
+
+#: classes/Admin/Pages/Hall.php:125
+#: classes/Admin/Pages/Hall.php:126
+msgid "Token registro en log de accesos"
+msgstr "Access Log Registration Token"
+
+#: classes/Admin/Pages/Hall.php:136
+#: classes/Admin/Pages/Hall.php:137
+#: classes/Admin/Pages/Hall.php:146
+msgid "URL de la API"
+msgstr "API URL"
+
+#: classes/Admin/Pages/Hall.php:145
+msgid "Clave de la API (KEY)"
+msgstr "API KEY"
+
+#: classes/Admin/Pages/Hall.php:173
+msgid "Todas las cachés de bloques han sido borradas correctamente."
+msgstr "All block caches have been cleared successfully."
+
+#: classes/Admin/Pages/Smtp.php:17
+msgid "Correo y SMTP"
+msgstr "Mail & SMTP"
+
+#: classes/Admin/Pages/Smtp.php:18
+msgid "Configuración de Correo y SMTP"
+msgstr "Mail & SMTP Configuration"
+
+#: classes/Admin/Pages/Smtp.php:25
+msgid "Usar configuracion de smtp"
+msgstr "Use SMTP Configuration"
+
+#: classes/Admin/Pages/Smtp.php:26
+msgid "Activar para enviar mails desde esta cuenta."
+msgstr "Activate to send emails from this account."
+
+#: classes/Admin/Pages/Smtp.php:29
+msgid "Servidor de SMTP"
+msgstr "SMTP Server"
+
+#: classes/Admin/Pages/Smtp.php:35
+msgid "Mail de pruebas"
+msgstr "Test Mail"
+
+#: classes/Admin/Pages/Smtp.php:36
+msgid "Los mails de pruebas se enviarán a esta dirección."
+msgstr "Test emails will be sent to this address."
+
+#: classes/Admin/Pages/Smtp.php:44
+msgid "Servidor de Correo (Host)"
+msgstr "Mail Host"
+
+#: classes/Admin/Pages/Smtp.php:45
+msgid "Dirección del host del servidor SMTP."
+msgstr "SMTP server host address."
+
+#: classes/Admin/Pages/Smtp.php:53
+msgid "Puerto de Correo"
+msgstr "Mail Port"
+
+#: classes/Admin/Pages/Smtp.php:54
+msgid "Puertos comunes: 25, 465, 587."
+msgstr "Common ports: 25, 465, 587."
+
+#: classes/Admin/Pages/Smtp.php:62
+msgid "Seguridad SMTP"
+msgstr "SMTP Security"
+
+#: classes/Admin/Pages/Smtp.php:67
+msgid "Ninguna"
+msgstr "None"
+
+#: classes/Admin/Pages/Smtp.php:77
+msgid "Usuario de Correo"
+msgstr "Mail Username"
+
+#: classes/Admin/Pages/Smtp.php:81
+msgid "Autenticación"
+msgstr "Authentication"
+
+#: classes/Admin/Pages/Smtp.php:86
+msgid "Contraseña de Correo"
+msgstr "Mail Password"
+
+#: classes/Admin/Pages/Smtp.php:96
+msgid "Correo Remitente (From)"
+msgstr "Mail From"
+
+#: classes/Admin/Pages/Smtp.php:100
+msgid "Configuración del Remitente"
+msgstr "Sender Configuration"
+
+#: classes/Admin/Pages/Smtp.php:105
+msgid "Nombre del Remitente"
+msgstr "Mail From Name"
+
+#: classes/Rest/Endpoints/Identify.php:42
+#: classes/Rest/Endpoints/Identify.php:74
+msgid "El correo no está registrado"
+msgstr "The email is not registered"
+
+#: classes/Rest/Endpoints/Mail.php:38
+msgid "La opción SMTP no está activada en la configuración."
+msgstr "The SMTP option is not enabled in settings."
+
+#: classes/Rest/Endpoints/Mail.php:49
+msgid "No se ha configurado un destinatario de pruebas (smtp_test_recipient)."
+msgstr "No test recipient has been configured (smtp_test_recipient)."
+
+#: classes/Rest/Endpoints/Mail.php:58
+#, php-format
+msgid "%1$s - Prueba del servicio SMTP"
+msgstr "%1$s - SMTP Service test"
+
+#: classes/Rest/Endpoints/Mail.php:59
+#, php-format
+msgid "Correo electrónico de %1$s enviado el %2$s"
+msgstr "Email from %1$s sent on %2$s"
+
+#: classes/Rest/Endpoints/Mail.php:64
+msgid "Mensaje enviado correctamente"
+msgstr "Message sent successfully"
+
+#: classes/Rest/Endpoints/Mail.php:71
+msgid "El mail no se ha podido enviar. Revisa el archivo debug.log para ver los detalles del error SMTP."
+msgstr "The mail could not be sent. Check the debug.log file for SMTP error details."
+
+#: views/admin/access.php:43
+msgid "Recargar accesos"
+msgstr "Refresh Accesses"
+
+#: views/admin/access.php:49
+msgid "Humanos"
+msgstr "Humans"
+
+#: views/admin/cache-management-card.php:15
+msgid "Gestión de Caché"
+msgstr "Cache Management"
+
+#: views/admin/cache-management-card.php:16
+msgid "Usa este botón para borrar manualmente todo el contenido de bloques guardado en caché."
+msgstr "Use this button to manually clear all cached block content."
+
+#: views/admin/cache-management-card.php:19
+msgid "Borrar todas las cachés de bloques"
+msgstr "Clear All Block Caches"
+
+#: views/admin/dashboard.php:14
+msgid "Estado del Sistema"
+msgstr "System Status"
+
+#: views/admin/dashboard.php:22
+msgid "Actualizar estado del sistema"
+msgstr "Refresh System Status"
+
+#: views/admin/pages-column.php:17
+#: views/admin/pages-metabox.php:20
+#: views/admin/pages-quick-edit.php:22
+msgid "Abierta"
+msgstr "Open"
+
+#: views/admin/pages-column.php:17
+#: views/admin/pages-metabox.php:23
+#: views/admin/pages-quick-edit.php:23
+msgid "Restringida"
+msgstr "Restricted"
+
+#: views/admin/pages-metabox.php:16
+#: views/admin/pages-quick-edit.php:17
+msgid "Acceso"
+msgstr "Access"
+
+#: views/admin/pages-quick-edit.php:20
+msgid "— Sin cambios —"
+msgstr "— No changes —"
+
+#: views/emails/magick-link.php:14
+msgid "usa este link para acceder:"
+msgstr "use this link to access:"
+
+#: views/emails/magick-link.php:15
+msgid "Algunos programas de correo no permiten links directos, si te da problemas copia el link y pegalo en tu navegador."
+msgstr "Some mail programs do not allow direct links, if it gives you trouble copy the link and paste it in your browser."
+
+#: views/frontend/admin-view-banner.php:15
+msgid "Vista de administrador"
+msgstr "Admin view"
+
+#: blocks/breadcrumbs/block.json
+msgctxt "block title"
+msgid "Breadcrumbs"
+msgstr "Breadcrumbs"
+
+#: blocks/breadcrumbs/block.json
+msgctxt "block description"
+msgid "Campus path"
+msgstr "Campus path"
+
+#: blocks/columntools/block.json
+msgctxt "block title"
+msgid "Column Tools"
+msgstr "Column Tools"
+
+#: blocks/columntools/block.json
+msgctxt "block description"
+msgid "Column tools"
+msgstr "Column tools"
+
+#: blocks/containerchildren/block.json
+msgctxt "block title"
+msgid "Container Children"
+msgstr "Container Children"
+
+#: blocks/containerchildren/block.json
+msgctxt "block description"
+msgid "Accesos del contenedor, sugerencias y relacionados."
+msgstr "Container accesses, suggestions and related."
+
+#: blocks/lastpublished/block.json
+msgctxt "block title"
+msgid "Novedades publicadas"
+msgstr "Latest published"
+
+#: blocks/lastpublished/block.json
+msgctxt "block description"
+msgid "Contenidos del usuario publicados recientemente"
+msgstr "Recently published user content"
+
+#: blocks/mytools/block.json
+msgctxt "block title"
+msgid "My tools"
+msgstr "My tools"
+
+#: blocks/mytools/block.json
+msgctxt "block description"
+msgid "Mis herramientas"
+msgstr "My tools"
+
+#: blocks/relatedcontent/block.json
+msgctxt "block title"
+msgid "Contenido Relacionado"
+msgstr "Related Content"
+
+#: blocks/relatedcontent/block.json
+msgctxt "block description"
+msgid "Contenidos relacionados con la página actual"
+msgstr "Content related to the current page"
+
+#: blocks/treenav/block.json
+msgctxt "block title"
+msgid "Navigation"
+msgstr "Navigation"
+
+#: blocks/treenav/block.json
+msgctxt "block description"
+msgid "Tree navigation"
+msgstr "Tree navigation"

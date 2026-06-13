@@ -4,21 +4,15 @@ namespace Poeticsoft\Heart\Admin;
 
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\Utils\Utils;
+use Poeticsoft\Heart\View\View;
 
-/**
- * Page list & edit
- */
 class Pages
 {
-
-    /**
-     * Initialize editor hooks.
-     */
     public function init()
     {
-        
+
         add_filter(
-            'manage_pages_columns', 
+            'manage_pages_columns',
             [$this, 'manage_pages_columns']
         );
 
@@ -30,99 +24,82 @@ class Pages
         );
 
         add_action(
-            'quick_edit_custom_box', 
+            'quick_edit_custom_box',
             [$this, 'quick_edit'],
-            10, 
+            10,
             2
         );
 
         add_action(
-            'bulk_edit_custom_box', 
+            'bulk_edit_custom_box',
             [$this, 'quick_edit'],
-            10, 
+            10,
             2
         );
 
         add_action(
-            'add_meta_boxes', 
+            'add_meta_boxes',
             [$this, 'add_metaboxes']
         );
 
         add_action(
-            'save_post', 
+            'save_post',
             [$this, 'save_post']
         );
     }
-    
-    public function manage_pages_columns($columns) {
-        
+
+    public function manage_pages_columns($columns)
+    {
+
         $columns['access'] = 'Acceso';
         return $columns;
     }
 
-    public function manage_pages_custom_column($column_name, $post_id) {
-        
+    public function manage_pages_custom_column($column_name, $post_id)
+    {
+
         if (
-            Utils::post_is_in_campus($post_id) 
-            && 
+            Utils::post_is_in_campus($post_id)
+            &&
             $column_name === 'access'
         ) {
-            
             $meta_key = Campus::PREFIX . 'access';
             $current_value = get_post_meta($post_id, $meta_key, true);
-                
-            echo '<div class="' . (Campus::PLUGIN_SLUG . '-access-column') . '">' . 
-                '<strong>' . 
-                    $post_id . 
-                '</strong>' . 
-                ' - ' . 
-                ($current_value === 'abierta' ? 'Abierta' : 'Restringida') .
-            '</div>';
+
+            Campus::get(View::class)->render('admin/pages-column', [
+                'post_id'       => $post_id,
+                'current_value' => $current_value,
+            ]);
         }
     }
-    
-    /**
-     * Quick edit.
-     */
+
+
     public function quick_edit($column_name, $post_type)
     {
         if ($post_type !== 'page' || $column_name !== 'access') {
             return;
         }
-        
+
         $is_bulk = current_filter() === 'bulk_edit_custom_box';
-        
+
         if (!$is_bulk) {
-            
             $nonce_action = Campus::PREFIX . 'status_nonce';
             $nonce_name = $nonce_action . '_field';
-            
+
             wp_nonce_field($nonce_action, $nonce_name);
         }
-        
+
         $meta_key = Campus::PREFIX . 'access';
         $meta_class = Campus::PLUGIN_SLUG . '-access';
-        
-        echo '<fieldset class="inline-edit-col-right ' .  $meta_class . '">
-            <div class="inline-edit-col">
-                <label class="inline-edit-group">
-                    <span class="title">Acceso</span>
-                    <select 
-                        name="' . $meta_key . '" 
-                        class="' .  $meta_class . '"
-                    >' .
-                        ( $is_bulk ? '<option value="">— Sin cambios —</option>' : '' ) .
-                        '<option value="abierta">Abierta</option>
-                         <option value="restringida">Restringida</option>
-                    </select>
-                </label>
-            </div>
-        </fieldset>';
+
+        Campus::get(View::class)->render('admin/pages-quick-edit', [
+            'meta_key'   => $meta_key,
+            'meta_class' => $meta_class,
+            'is_bulk'    => $is_bulk,
+        ]);
     }
 
-    /**
-     * Add custom metabox.
-     */
+
     public function add_metaboxes()
     {
         add_meta_box(
@@ -135,45 +112,26 @@ class Pages
         );
     }
 
-    /**
-     * Render metabox content.
-     */
+
     public function render_metabox($post)
     {
         $meta_key = Campus::PREFIX . 'access';
         $current_value = get_post_meta($post->ID, $meta_key, true);
-        
+
         if (empty($current_value)) {
             $current_value = 'restringida';
         }
 
         $meta_class = Campus::PLUGIN_SLUG . '-access';
 
-        echo '<div class="components-base-control">
-            <label 
-                class="components-base-control__label" 
-                style="display:block; margin-bottom: 5px; font-weight:600;"
-            >
-                Acceso
-            </label>
-            <select 
-                name="' . esc_attr($meta_key) . '" 
-                class="' . esc_attr($meta_class) . '" 
-                style="width:100%; height:30px; box-sizing:border-box;"
-            >
-                <option value="abierta" ' . selected($current_value, 'abierta', false) . '>
-                    Abierta
-                </option>
-                <option value="restringida" ' . selected($current_value, 'restringida', false) . '>
-                    Restringida
-                </option>
-            </select>
-        </div>';
+        Campus::get(View::class)->render('admin/pages-metabox', [
+            'meta_key'      => $meta_key,
+            'meta_class'    => $meta_class,
+            'current_value' => $current_value,
+        ]);
     }
 
-    /**
-     * Save quick edit and bulk edit data.
-     */
+
     public function save_post($post_id)
     {
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
@@ -189,7 +147,6 @@ class Pages
 
         $meta_key = Campus::PREFIX . 'access';
         if (isset($_REQUEST[$meta_key])) {
-
             $new_value = sanitize_text_field($_REQUEST[$meta_key]);
 
             if ($new_value === '') {
@@ -200,4 +157,3 @@ class Pages
         }
     }
 }
-

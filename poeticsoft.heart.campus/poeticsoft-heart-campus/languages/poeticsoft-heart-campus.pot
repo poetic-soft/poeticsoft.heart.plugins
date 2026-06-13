@@ -1,0 +1,481 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-11T23:35:49+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+
+#: poeticsoft-heart-campus/blocks/breadcrumbs/render.php:55
+msgid "Campus"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/mytools/render.php:49
+#: poeticsoft-heart-campus/blocks/mytools/render.php:64
+#: poeticsoft-heart-campus/blocks/mytools/render.php:73
+#: poeticsoft-heart-campus/views/frontend/admin-view-banner.php:16
+msgid "SALIR"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/mytools/render.php:113
+#: poeticsoft-heart-campus/blocks/mytools/render.php:126
+msgid "ENTRAR"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/treenav/render.php:267
+msgid "Privado"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/treenav/render.php:268
+msgid "Abierto"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/treenav/render.php:269
+msgid "Tu contenido"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/AdminPage.php:161
+#: poeticsoft-heart-campus/classes/Admin/AdminPage.php:215
+msgid "No tienes suficientes permisos para acceder a esta página."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Access.php:19
+#: poeticsoft-heart-campus/classes/Admin/Pages/Access.php:20
+msgid "Accesos"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Access.php:36
+msgid "Accesos actualizados."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Dashboard.php:19
+msgid "Escritorio"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Dashboard.php:20
+#, php-format
+msgid "Panel de control de %s"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Dashboard.php:37
+msgid "Accesos del sistema actualizados correctamente."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Dashboard.php:46
+#, php-format
+msgid "Te damos la bienvenida al panel principal de %s."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Dashboard.php:48
+msgid "Todos los sistemas están operativos."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:18
+msgid "Hall del Campus"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:19
+msgid "Configuración del Hall del Campus"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:27
+msgid "Activar caché de bloques"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:30
+msgid "Ajustes de rendimiento"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:33
+msgid "Cuando está activado, los bloques complejos como Contenido Relacionado guardarán en caché sus resultados indefinidamente para mejorar la velocidad de carga."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:40
+msgid "Validez"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:43
+msgid "Enlace de acceso"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:46
+msgid "Duración en días de la validez del link de acceso al campus"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:55
+msgid "Origen accesos de alumnos"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:56
+msgid "Fuente de validación del acceso a páginas del campus"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:60
+msgid "Mail Relay Suscriptors"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:61
+msgid "Directus Access"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:68
+msgid "ID de página de inicio del campus"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:69
+msgid "Página Principal del Campus"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:77
+msgid "Acceso administradores"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:78
+msgid "Permitir acceso total a administradores"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:86
+msgid "Listado de páginas"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:87
+msgid "Activar páginas desplegables"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:98
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:99
+msgid "Sincronizacion de Humanos/Páginas"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:107
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:108
+msgid "Token para Sincronizacion de Humanos/Páginas"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:116
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:117
+msgid "Url registro en log de accesos"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:125
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:126
+msgid "Token registro en log de accesos"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:136
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:137
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:146
+msgid "URL de la API"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:145
+msgid "Clave de la API (KEY)"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Hall.php:173
+msgid "Todas las cachés de bloques han sido borradas correctamente."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:17
+msgid "Correo y SMTP"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:18
+msgid "Configuración de Correo y SMTP"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:25
+msgid "Usar configuracion de smtp"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:26
+msgid "Activar para enviar mails desde esta cuenta."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:29
+msgid "Servidor de SMTP"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:35
+msgid "Mail de pruebas"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:36
+msgid "Los mails de pruebas se enviarán a esta dirección."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:44
+msgid "Servidor de Correo (Host)"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:45
+msgid "Dirección del host del servidor SMTP."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:53
+msgid "Puerto de Correo"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:54
+msgid "Puertos comunes: 25, 465, 587."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:62
+msgid "Seguridad SMTP"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:67
+msgid "Ninguna"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:77
+msgid "Usuario de Correo"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:81
+msgid "Autenticación"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:86
+msgid "Contraseña de Correo"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:96
+msgid "Correo Remitente (From)"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:100
+msgid "Configuración del Remitente"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Admin/Pages/Smtp.php:105
+msgid "Nombre del Remitente"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Rest/Endpoints/Identify.php:42
+#: poeticsoft-heart-campus/classes/Rest/Endpoints/Identify.php:74
+msgid "El correo no está registrado"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Rest/Endpoints/Mail.php:38
+msgid "La opción SMTP no está activada en la configuración."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Rest/Endpoints/Mail.php:49
+msgid "No se ha configurado un destinatario de pruebas (smtp_test_recipient)."
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Rest/Endpoints/Mail.php:58
+#, php-format
+msgid "%1$s - Prueba del servicio SMTP"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Rest/Endpoints/Mail.php:59
+#, php-format
+msgid "Correo electrónico de %1$s enviado el %2$s"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Rest/Endpoints/Mail.php:64
+msgid "Mensaje enviado correctamente"
+msgstr ""
+
+#: poeticsoft-heart-campus/classes/Rest/Endpoints/Mail.php:71
+msgid "El mail no se ha podido enviar. Revisa el archivo debug.log para ver los detalles del error SMTP."
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/access.php:43
+msgid "Recargar accesos"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/access.php:49
+msgid "Humanos"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/cache-management-card.php:15
+msgid "Gestión de Caché"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/cache-management-card.php:16
+msgid "Usa este botón para borrar manualmente todo el contenido de bloques guardado en caché."
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/cache-management-card.php:19
+msgid "Borrar todas las cachés de bloques"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/dashboard.php:14
+msgid "Estado del Sistema"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/dashboard.php:22
+msgid "Actualizar estado del sistema"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/pages-column.php:17
+#: poeticsoft-heart-campus/views/admin/pages-metabox.php:20
+#: poeticsoft-heart-campus/views/admin/pages-quick-edit.php:22
+msgid "Abierta"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/pages-column.php:17
+#: poeticsoft-heart-campus/views/admin/pages-metabox.php:23
+#: poeticsoft-heart-campus/views/admin/pages-quick-edit.php:23
+msgid "Restringida"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/pages-metabox.php:16
+#: poeticsoft-heart-campus/views/admin/pages-quick-edit.php:17
+msgid "Acceso"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/admin/pages-quick-edit.php:20
+msgid "— Sin cambios —"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/emails/magick-link.php:14
+msgid "usa este link para acceder:"
+msgstr ""
+
+#: poeticsoft-heart-campus/views/emails/magick-link.php:15
+msgid "Algunos programas de correo no permiten links directos, si te da problemas copia el link y pegalo en tu navegador."
+msgstr ""
+
+#: poeticsoft-heart-campus/views/frontend/admin-view-banner.php:15
+msgid "Vista de administrador"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/breadcrumbs/build/editor.js:342
+#: src/block/breadcrumbs/editor.js:30
+#: poeticsoft-heart-campus/blocks/breadcrumbs/build/editor.js:219
+msgid "Breadcrumbs"
+msgstr ""
+
+#: src/block/columntools/editor.js:39
+#: src/block/treenav/editor.js:43
+msgid "Opciones del Bloque"
+msgstr ""
+
+#: src/block/columntools/editor.js:43
+#, js-format
+msgid "Abierto: %s"
+msgstr ""
+
+#: src/block/columntools/editor.js:43
+#: src/block/treenav/editor.js:48
+#: src/block/treenav/editor.js:57
+#: src/block/treenav/editor.js:80
+msgid "SÍ"
+msgstr ""
+
+#: src/block/columntools/editor.js:43
+#: src/block/treenav/editor.js:48
+#: src/block/treenav/editor.js:57
+#: src/block/treenav/editor.js:80
+msgid "NO"
+msgstr ""
+
+#: src/block/treenav/editor.js:48
+#, js-format
+msgid "Ignorar raíz (%s)"
+msgstr ""
+
+#: src/block/treenav/editor.js:57
+#, js-format
+msgid "Ver sólo suscripciones (%s)"
+msgstr ""
+
+#: src/block/treenav/editor.js:67
+msgid "Máximo nivel (0 para todos)"
+msgstr ""
+
+#: src/block/treenav/editor.js:80
+#, js-format
+msgid "Ver leyenda (%s)"
+msgstr ""
+
+#: src/block/treenav/editor.js:91
+msgid "Navegación del "
+msgstr ""
+
+#: src/block/treenav/editor.js:92
+msgid " (Sólo suscripciones & Libre)"
+msgstr ""
+
+#: src/block/treenav/editor.js:93
+msgid " (Con leyenda)"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/breadcrumbs/block.json
+msgctxt "block title"
+msgid "Breadcrumbs"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/breadcrumbs/block.json
+msgctxt "block description"
+msgid "Campus path"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/columntools/block.json
+msgctxt "block title"
+msgid "Column Tools"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/columntools/block.json
+msgctxt "block description"
+msgid "Column tools"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/containerchildren/block.json
+msgctxt "block title"
+msgid "Container Children"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/containerchildren/block.json
+msgctxt "block description"
+msgid "Accesos del contenedor, sugerencias y relacionados."
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/lastpublished/block.json
+msgctxt "block title"
+msgid "Novedades publicadas"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/lastpublished/block.json
+msgctxt "block description"
+msgid "Contenidos del usuario publicados recientemente"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/mytools/block.json
+msgctxt "block title"
+msgid "My tools"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/mytools/block.json
+msgctxt "block description"
+msgid "Mis herramientas"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/relatedcontent/block.json
+msgctxt "block title"
+msgid "Contenido Relacionado"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/relatedcontent/block.json
+msgctxt "block description"
+msgid "Contenidos relacionados con la página actual"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/treenav/block.json
+msgctxt "block title"
+msgid "Navigation"
+msgstr ""
+
+#: poeticsoft-heart-campus/blocks/treenav/block.json
+msgctxt "block description"
+msgid "Tree navigation"
+msgstr ""

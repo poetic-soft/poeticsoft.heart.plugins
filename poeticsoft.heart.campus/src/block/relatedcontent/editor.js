@@ -1,244 +1,210 @@
-const { 
-  registerBlockType 
-} = wp.blocks
-const { 
-  useBlockProps,
-  InspectorControls,
-  RichText 
-} = wp.blockEditor
-const {
-  PanelBody,
-  SelectControl
-} = wp.components
-const {
-  useEffect,
-  useState
-} = wp.element
-const {
-  apiFetch
-} = wp
-import {
-  HeadingSelector
- } from 'blockscommon/elementselector'
-import { useUniqueId } from 'blockscommon/uniqueid'
+const { registerBlockType } = wp.blocks;
+const { useBlockProps, InspectorControls, RichText } = wp.blockEditor;
+const { PanelBody, SelectControl } = wp.components;
+const { useEffect, useState } = wp.element;
+const { apiFetch } = wp;
+const { __ } = wp.i18n;
 
-import metadata from 'blocks/relatedcontent/block.json'
+import { HeadingSelector } from 'blockscommon/elementselector';
+import { useUniqueId } from 'blockscommon/uniqueid';
+
+import metadata from 'blocks/relatedcontent/block.json';
 import './editor.scss';
 
 const includesOptions = [
-  {
-    label: 'Sólo relacionados',
-    value: 'related'
-  },
-  {
-    label: 'Sólo tags',
-    value: 'tags'
-  },
-  {
-    label: 'Relacionados y tags',
-    value: 'relatedandtags'
-  },
-]
+    {
+        label: __('Sólo relacionados', 'poeticsoft-heart-campus'),
+        value: 'related'
+    },
+    {
+        label: __('Sólo tags', 'poeticsoft-heart-campus'),
+        value: 'tags'
+    },
+    {
+        label: __('Relacionados y tags', 'poeticsoft-heart-campus'),
+        value: 'relatedandtags'
+    }
+];
 
 const modeOptions = [
-  {
-    label: 'Título, Imagen & Extracto',
-    value: 'complete'
-  },
-  {
-    label: 'Sólo título',
-    value: 'compact'
-  }
-] 
+    {
+        label: __('Título, Imagen & Extracto', 'poeticsoft-heart-campus'),
+        value: 'complete'
+    },
+    {
+        label: __('Sólo título', 'poeticsoft-heart-campus'),
+        value: 'compact'
+    }
+];
 
 const visibilityOptions = [
-  {
-    label: 'Visible siempre',
-    value: 'visiblealways'
-  },
-  {
-    label: 'Sólo en contenedores',
-    value: 'onlyincontainers'
-  }
-]
+    {
+        label: __('Visible siempre', 'poeticsoft-heart-campus'),
+        value: 'visiblealways'
+    },
+    {
+        label: __('Sólo en contenedores', 'poeticsoft-heart-campus'),
+        value: 'onlyincontainers'
+    }
+];
 
 const hs = {
-  h1: title => <h1 className="Title">{ title }</h1>,
-  h2: title => <h2 className="Title">{ title }</h2>,
-  h3: title => <h3 className="Title">{ title }</h3>,
-  h4: title => <h4 className="Title">{ title }</h4>,
-  h5: title => <h5 className="Title">{ title }</h5>,
-  h6: title => <h6 className="Title">{ title }</h6>
-}
+    h1: (title) => <h1 className="Title">{title}</h1>,
+    h2: (title) => <h2 className="Title">{title}</h2>,
+    h3: (title) => <h3 className="Title">{title}</h3>,
+    h4: (title) => <h4 className="Title">{title}</h4>,
+    h5: (title) => <h5 className="Title">{title}</h5>,
+    h6: (title) => <h6 className="Title">{title}</h6>
+};
 
-const Edit = props => {
-  
-  const {
-    clientId,
-    attributes, 
-    setAttributes 
-  } = props  
-  const { 
-    blockId,
-    refClientId,
-    title,
-    sectionHeadingType,
-    areaHeadingType,
-    includesMode,
-    tags,
-    mode,
-    visibility
-  } = attributes;
+const Edit = (props) => {
+    const { clientId, attributes, setAttributes } = props;
+    const {
+        blockId,
+        refClientId,
+        title,
+        sectionHeadingType,
+        areaHeadingType,
+        includesMode,
+        tags,
+        mode,
+        visibility
+    } = attributes;
 
-  const blockProps = useBlockProps()
+    const blockProps = useBlockProps();
 
-  useUniqueId(clientId, attributes, setAttributes)
+    useUniqueId(clientId, attributes, setAttributes);
 
-  const [ availableTags, setAvailableTags ] = useState()
-  const [ selectedTags, setSelectedTags ] = useState()
+    const [availableTags, setAvailableTags] = useState();
+    const [selectedTags, setSelectedTags] = useState();
 
-  const selectTags = values => {
+    const selectTags = (values) => {
+        setSelectedTags(values);
 
-    setSelectedTags(values)
+        setAttributes({
+            tags: JSON.stringify(values)
+        });
+    };
 
-    setAttributes({ 
-      tags: JSON.stringify(values)
-    })
-  }
+    useEffect(() => {
+        apiFetch({
+            path: '/wp/v2/tags?per_page=-1'
+        }).then((availabletags) => {
+            setAvailableTags(
+                availabletags.map((tag) => ({
+                    label: tag.name,
+                    value: tag.id.toString()
+                }))
+            );
+        });
 
-  useEffect(() => {
+        const savedTags = tags ? tags : '[]';
 
-    apiFetch({ 
-      path: '/wp/v2/tags?per_page=-1' 
-    })
-    .then(availabletags => {
-      
-      setAvailableTags(
-        availabletags.map(
-          tag => ({
-            label: tag.name,
-            value: tag.id.toString()
-          })
-        )
-      )
-    })
+        setSelectedTags(JSON.parse(savedTags));
+    }, []);
 
-    const savedTags = tags ? tags : '[]';
-    
-    setSelectedTags(JSON.parse(savedTags))
-
-  }, [])
-   
-  return <>
-    <InspectorControls>
-      <PanelBody
-        title="Opciones del Bloque"
-        initialOpen={ true }
-      > 
-        <div className="
+    return (
+        <>
+            <InspectorControls>
+                <PanelBody
+                    title={__('Opciones del Bloque', 'poeticsoft-heart-campus')}
+                    initialOpen={true}
+                >
+                    <div
+                        className="
           containerchildren
           SeccionTitle
-        ">
-          <div className="EditTitle">
-            Titulo de sección            
-          </div>
-          <div className="EditText">
-            <RichText
-              tagName="div"
-              value={ title }
-              allowedFormats={[ 
-                'core/bold', 
-                'core/italic' 
-              ]} 
-              onChange={
-                value => setAttributes({
-                  title: value
-                })
-              }
-              placeholder="Título"
-            />
-          </div>
-        </div>      
-        <SelectControl
-          label="Visualizar"
-          value={ includesMode }
-          options={ includesOptions }
-          onChange={ 
-            value => setAttributes({ 
-              includesMode: value
-            })
-          }
-        />
-        <SelectControl
-          label="Tags"
-          multiple={ true }
-          value={ selectedTags }
-          options={ availableTags }
-          onChange={ selectTags }
-          disabled={ includesMode == 'related' } 
-        />  
-        <HeadingSelector
-          title="Elemento de título de sección"
-          value={ sectionHeadingType }
-          onChange={
-            value => setAttributes({
-              sectionHeadingType: value
-            })
-          }
-        />
-        <HeadingSelector
-          title="Elemento de título de área"
-          value={ areaHeadingType }
-          onChange={
-            value => setAttributes({
-              areaHeadingType: value
-            })
-          }
-        />
-        <SelectControl
-          label="Modo"
-          value={ mode }
-          options={ modeOptions }
-          onChange={ 
-            value => setAttributes({ 
-              mode: value
-            })
-          }
-        />
-        <SelectControl
-          label="Visibilidad"
-          value={ visibility }
-          options={ visibilityOptions }
-          onChange={ 
-            value => setAttributes({ 
-              visibility: value 
-            }) 
-          }
-        />
-      </PanelBody>
-    </InspectorControls>
-    <div { ...blockProps}>
-      {
-        hs[sectionHeadingType](title)
-      }
-      <div className="Content">
-        {
-          hs[areaHeadingType]('Contenidos')
-        } 
-        { 
-          modeOptions.find(o => o.value == mode).label
-        }
-      </div>
-    </div>
-  </>
-}
+        "
+                    >
+                        <div className="EditTitle">
+                            {__('Título de sección', 'poeticsoft-heart-campus')}
+                        </div>
+                        <div className="EditText">
+                            <RichText
+                                tagName="div"
+                                value={title}
+                                allowedFormats={['core/bold', 'core/italic']}
+                                onChange={(value) =>
+                                    setAttributes({
+                                        title: value
+                                    })
+                                }
+                                placeholder={__('Título', 'poeticsoft-heart-campus')}
+                            />
+                        </div>
+                    </div>
+                    <SelectControl
+                        label={__('Visualizar', 'poeticsoft-heart-campus')}
+                        value={includesMode}
+                        options={includesOptions}
+                        onChange={(value) =>
+                            setAttributes({
+                                includesMode: value
+                            })
+                        }
+                    />
+                    <SelectControl
+                        label={__('Tags', 'poeticsoft-heart-campus')}
+                        multiple={true}
+                        value={selectedTags}
+                        options={availableTags}
+                        onChange={selectTags}
+                        disabled={includesMode == 'related'}
+                    />
+                    <HeadingSelector
+                        title={__('Elemento de título de sección', 'poeticsoft-heart-campus')}
+                        value={sectionHeadingType}
+                        onChange={(value) =>
+                            setAttributes({
+                                sectionHeadingType: value
+                            })
+                        }
+                    />
+                    <HeadingSelector
+                        title={__('Elemento de título de área', 'poeticsoft-heart-campus')}
+                        value={areaHeadingType}
+                        onChange={(value) =>
+                            setAttributes({
+                                areaHeadingType: value
+                            })
+                        }
+                    />
+                    <SelectControl
+                        label={__('Modo', 'poeticsoft-heart-campus')}
+                        value={mode}
+                        options={modeOptions}
+                        onChange={(value) =>
+                            setAttributes({
+                                mode: value
+                            })
+                        }
+                    />
+                    <SelectControl
+                        label={__('Visibilidad', 'poeticsoft-heart-campus')}
+                        value={visibility}
+                        options={visibilityOptions}
+                        onChange={(value) =>
+                            setAttributes({
+                                visibility: value
+                            })
+                        }
+                    />
+                </PanelBody>
+            </InspectorControls>
+            <div {...blockProps}>
+                {hs[sectionHeadingType](title)}
+                <div className="Content">
+                    {hs[areaHeadingType](__('Contenidos', 'poeticsoft-heart-campus'))}
+                    {modeOptions.find((o) => o.value == mode).label}
+                </div>
+            </div>
+        </>
+    );
+};
 
-const Save = () => null
+const Save = () => null;
 
-registerBlockType(
-  metadata.name,
-  {
+registerBlockType(metadata.name, {
     edit: Edit,
     save: Save
-  }
-)
+});

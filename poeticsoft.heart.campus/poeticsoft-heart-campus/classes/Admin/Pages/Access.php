@@ -7,12 +7,8 @@ use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\View\View;
 use Poeticsoft\Heart\Database\Updater;
 
-/**
- * Dashboard Page.
- */
 class Access extends AdminPage
 {
-
     protected function define_page_props()
     {
         $this->slug       = Campus::PREFIX . 'access';
@@ -23,11 +19,10 @@ class Access extends AdminPage
     protected function handle_action($action)
     {
         if ('refresh_access' === $action) {
-            
-            Campus::get(Updater::class)->refresh_access_data(); 
+            Campus::get(Updater::class)->refresh_access_data();
 
             add_action(
-                'admin_notices', 
+                'admin_notices',
                 function () {
                     $this->render_view(
                         'admin/notice',
@@ -43,12 +38,12 @@ class Access extends AdminPage
 
     protected function render_content()
     {
-        
-        $updated_data = Campus::get(Updater::class)->get_formatted_access_data();        
+
+        $updated_data = Campus::get(Updater::class)->get_formatted_access_data();
         $sorted_list = new \ArrayObject($updated_data);
         $sorted_list->ksort();
         $this->render_view(
-            'admin/access', 
+            'admin/access',
             [
                 'sorted_list' => $sorted_list
             ]

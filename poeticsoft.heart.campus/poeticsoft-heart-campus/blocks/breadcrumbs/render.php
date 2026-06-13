@@ -27,7 +27,6 @@ if (is_wp_error($attrs)) {
 $breadcrumbs = '';
 
 if (is_single() || is_page()) {
-
     global $post;
 
     if (!$post) {
@@ -52,7 +51,7 @@ if (is_single() || is_page()) {
                     }
 
                     return $id == $campus_root_id ?
-                        sprintf('<a class="Root" aria-label="Campus" href="%s"></a>', esc_url($permalink)) :
+                        sprintf('<a class="Root" aria-label="%s" href="%s"></a>', esc_attr(__('Campus', Campus::TEXT_DOMAIN)), esc_url($permalink)) :
                         sprintf(
                             '<a class="Page" href="%s">%s</a>',
                             esc_url($permalink),

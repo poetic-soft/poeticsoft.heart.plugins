@@ -2,7 +2,7 @@
 
 /**
  * Master Admin Page Layout.
- * 
+ *
  * @var \Poeticsoft\Heart\Admin\AbstractPage $page
  */
 ?>

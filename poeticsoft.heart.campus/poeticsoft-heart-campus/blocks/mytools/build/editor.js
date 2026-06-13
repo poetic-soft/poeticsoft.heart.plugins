@@ -308,7 +308,7 @@ function validate(uuid) {
   \***********************************************************/
 (module) {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"poeticsoft-heart-campus/mytools","title":"My tools","category":"poeticsoft-heart-campus","icon":"media-archive","description":"Mis herramientas","keywords":[],"textdomain":"poeticsoft-heart-campus","version":"1.0.0","supports":{"align":["left","center","right"],"anchor":false,"customClassName":true,"className":true,"html":false,"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true},"border":{"color":true,"radius":true,"style":true,"width":true},"spacing":{"margin":true,"padding":true},"dimensions":{"minHeight":true,"width":true}},"attributes":{"blockId":{"type":"string","default":""},"refClientId":{"type":"string","default":""},"linkType":{"type":"string","default":"link"},"idVisible":{"type":"boolean","default":true}},"editorScript":"file:./build/editor.js","editorStyle":"file:./build/editor.css","viewScript":"file:./build/view.js","viewStyle":"file:./build/view.css","render":"file:./render.php"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"poeticsoft-heart-campus/mytools","title":"My tools","category":"poeticsoft-heart-campus","icon":"media-archive","description":"Mis herramientas","keywords":[],"textdomain":"poeticsoft-heart-campus","version":"1.0.0","style":["wp-block-button","wp-block-buttons"],"supports":{"align":["left","center","right"],"anchor":false,"customClassName":true,"className":true,"html":false,"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true},"border":{"color":true,"radius":true,"style":true,"width":true},"spacing":{"margin":true,"padding":true},"dimensions":{"minHeight":true,"width":true}},"attributes":{"blockId":{"type":"string","default":""},"refClientId":{"type":"string","default":""},"linkType":{"type":"string","default":"link"},"idVisible":{"type":"boolean","default":true}},"editorScript":"file:./build/editor.js","editorStyle":"file:./build/editor.css","viewScript":"file:./build/view.js","viewStyle":"file:./build/view.css","render":"file:./render.php"}');
 
 /***/ }
 
@@ -392,6 +392,9 @@ var _wp$blockEditor = wp.blockEditor,
 var _wp$components = wp.components,
   PanelBody = _wp$components.PanelBody,
   ToggleControl = _wp$components.ToggleControl;
+var _wp$i18n = wp.i18n,
+  __ = _wp$i18n.__,
+  sprintf = _wp$i18n.sprintf;
 
 
 
@@ -403,19 +406,19 @@ var Link = function Link(props) {
         "class": "\r wp-block-button__link \r wp-element-button\r "
       }, /*#__PURE__*/React.createElement("a", {
         href: "#"
-      }, "SALIR"));
+      }, __('SALIR', 'poeticsoft-heart-campus')));
       // removed by dead control flow
 
     case 'link':
       return /*#__PURE__*/React.createElement("a", {
         href: "#"
-      }, "SALIR");
+      }, __('SALIR', 'poeticsoft-heart-campus'));
       // removed by dead control flow
 
     default:
       return /*#__PURE__*/React.createElement("a", {
         href: "#"
-      }, "SALIR");
+      }, __('SALIR', 'poeticsoft-heart-campus'));
       // removed by dead control flow
 
   }
@@ -437,10 +440,10 @@ var Edit = function Edit(props) {
   (0,blockscommon_uniqueid__WEBPACK_IMPORTED_MODULE_1__.useUniqueId)(clientId, attributes, setAttributes);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
     className: "MyTools",
-    title: 'Opciones del Bloque',
+    title: __('Opciones del Bloque', 'poeticsoft-heart-campus'),
     initialOpen: true
   }, /*#__PURE__*/React.createElement(ToggleControl, {
-    label: "Identificaci\xF3n visible? ".concat(idVisible ? 'SI' : 'NO'),
+    label: sprintf(__('Identificación visible?: %s', 'poeticsoft-heart-campus'), idVisible ? __('SÍ', 'poeticsoft-heart-campus') : __('NO', 'poeticsoft-heart-campus')),
     checked: idVisible,
     onChange: function onChange(value) {
       return setAttributes({
@@ -452,7 +455,7 @@ var Edit = function Edit(props) {
     onChange: selectLinkType
   }))), /*#__PURE__*/React.createElement("div", blockProps, idVisible ? /*#__PURE__*/React.createElement("span", {
     "class": "Identify"
-  }, "identificaci\xF3n") : '', /*#__PURE__*/React.createElement(Link, {
+  }, __('identificación', 'poeticsoft-heart-campus')) : '', /*#__PURE__*/React.createElement(Link, {
     linkType: linkType
   })));
 };

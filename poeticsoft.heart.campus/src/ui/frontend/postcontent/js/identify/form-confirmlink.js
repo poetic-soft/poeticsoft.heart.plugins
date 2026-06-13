@@ -1,6 +1,5 @@
-export default data => {
-
-  return `
+export default (data) => {
+    return `
     <div class="Form ConfirmLink">
       <div class="FormName">ConfirmLink</div>
       <div class="Explain">
@@ -14,5 +13,5 @@ export default data => {
       </a>
       <div class="Message"></div>          
     </div>
-  `
-}
+  `;
+};

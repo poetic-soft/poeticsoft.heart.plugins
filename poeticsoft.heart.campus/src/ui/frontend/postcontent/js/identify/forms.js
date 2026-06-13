@@ -1,11 +1,11 @@
-import formIdentify from './form-identify'
-import formConfirmLink from './form-confirmlink'
-import formAsk from './form-ask'
+import formIdentify from './form-identify';
+import formConfirmLink from './form-confirmlink';
+import formAsk from './form-ask';
 
 const forms = {
-  identify: formIdentify,
-  confirmLink: formConfirmLink,
-  ask: formAsk
-}
+    identify: formIdentify,
+    confirmLink: formConfirmLink,
+    ask: formAsk
+};
 
-export default data => forms[data.form](data)
+export default (data) => forms[data.form](data);

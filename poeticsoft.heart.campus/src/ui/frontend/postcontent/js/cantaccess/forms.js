@@ -1,7 +1,7 @@
-import formCantAccess from './form-cantaccess'
+import formCantAccess from './form-cantaccess';
 
 const forms = {
-  cantAccess: formCantAccess
-}
+    cantAccess: formCantAccess
+};
 
-export default data => forms[data.form](data)
+export default (data) => forms[data.form](data);

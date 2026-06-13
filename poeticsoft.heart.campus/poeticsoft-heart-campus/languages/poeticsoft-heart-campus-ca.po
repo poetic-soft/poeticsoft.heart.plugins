@@ -1,0 +1,445 @@
+# Copyright (C) 2026 Poeticsoft
+# This file is distributed under the same license as the Poeticsoft Heart Campus package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Poeticsoft Heart Campus 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/poeticsoft-heart-campus\n"
+"Last-Translator: Poeticsoft <partners@poeticsoft.com>\n"
+"Language-Team: Catalan <partners@poeticsoft.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-11T23:09:33+00:00\n"
+"PO-Revision-Date: 2026-06-11 23:30+0000\n"
+"Language: ca\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: poeticsoft-heart-campus\n"
+
+#. Plugin Name of the plugin
+#: poeticsoft-heart-campus.php
+msgid "Poeticsoft Heart Campus"
+msgstr "Poeticsoft Heart Campus"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: poeticsoft-heart-campus.php
+msgid "https://poeticsoft.com"
+msgstr "https://poeticsoft.com"
+
+#. Description of the plugin
+#: poeticsoft-heart-campus.php
+msgid "High-performance Wordpress Page Based Campus."
+msgstr "High-performance Wordpress Page Based Campus."
+
+#. Author of the plugin
+#: poeticsoft-heart-campus.php
+msgid "Poeticsoft"
+msgstr "Poeticsoft"
+
+#: blocks/breadcrumbs/render.php:55
+msgid "Campus"
+msgstr "Campus"
+
+#: blocks/mytools/render.php:49
+#: blocks/mytools/render.php:64
+#: blocks/mytools/render.php:73
+#: views/frontend/admin-view-banner.php:16
+msgid "SALIR"
+msgstr "SORTIR"
+
+#: blocks/mytools/render.php:113
+#: blocks/mytools/render.php:126
+msgid "ENTRAR"
+msgstr "ENTRAR"
+
+#: blocks/treenav/render.php:267
+msgid "Privado"
+msgstr "Privat"
+
+#: blocks/treenav/render.php:268
+msgid "Abierto"
+msgstr "Obert"
+
+#: blocks/treenav/render.php:269
+msgid "Tu contenido"
+msgstr "El teu contingut"
+
+#: classes/Admin/AdminPage.php:161
+#: classes/Admin/AdminPage.php:215
+msgid "No tienes suficientes permisos para acceder a esta página."
+msgstr "No teniu suficients permisos per accedir a aquesta pàgina."
+
+#: classes/Admin/Pages/Access.php:19
+#: classes/Admin/Pages/Access.php:20
+msgid "Accesos"
+msgstr "Accessos"
+
+#: classes/Admin/Pages/Access.php:36
+msgid "Accesos actualizados."
+msgstr "Accessos actualitzats."
+
+#: classes/Admin/Pages/Dashboard.php:19
+msgid "Escritorio"
+msgstr "Escriptori"
+
+#: classes/Admin/Pages/Dashboard.php:20
+#, php-format
+msgid "Panel de control de %s"
+msgstr "Taulell de control de %s"
+
+#: classes/Admin/Pages/Dashboard.php:37
+msgid "Accesos del sistema actualizados correctamente."
+msgstr "Accessos del sistema actualitzats correctament."
+
+#: classes/Admin/Pages/Dashboard.php:46
+#, php-format
+msgid "Te damos la bienvenida al panel principal de %s."
+msgstr "Us donem la benvinguda al taulell principal de %s."
+
+#: classes/Admin/Pages/Dashboard.php:48
+msgid "Todos los sistemas están operativos."
+msgstr "Tots els sistemes estan operatius."
+
+#: classes/Admin/Pages/Hall.php:18
+msgid "Hall del Campus"
+msgstr "Hall del Campus"
+
+#: classes/Admin/Pages/Hall.php:19
+msgid "Configuración del Hall del Campus"
+msgstr "Configuració del Hall del Campus"
+
+#: classes/Admin/Pages/Hall.php:27
+msgid "Activar caché de bloques"
+msgstr "Activar memòria cau de blocs"
+
+#: classes/Admin/Pages/Hall.php:30
+msgid "Ajustes de rendimiento"
+msgstr "Ajustos de rendiment"
+
+#: classes/Admin/Pages/Hall.php:33
+msgid "Cuando está activado, los bloques complejos como Contenido Relacionado guardarán en caché sus resultados indefinidamente para mejorar la velocidad de carga."
+msgstr "Quan està activat, els blocs complexos com Contingut Relacionado guardaran a la memòria cau els seus resultats indefinidament per millorar la velocitat de càrrega."
+
+#: classes/Admin/Pages/Hall.php:40
+msgid "Validez"
+msgstr "Validesa"
+
+#: classes/Admin/Pages/Hall.php:43
+msgid "Enlace de acceso"
+msgstr "Enllaç d'accés"
+
+#: classes/Admin/Pages/Hall.php:46
+msgid "Duración en días de la validez del link de acceso al campus"
+msgstr "Durada en dies de la validesa de l'enllaç d'accés al campus"
+
+#: classes/Admin/Pages/Hall.php:55
+msgid "Origen accesos de alumnos"
+msgstr "Origen d'accessos d'alumnes"
+
+#: classes/Admin/Pages/Hall.php:56
+msgid "Fuente de validación del acceso a páginas del campus"
+msgstr "Font de validació de l'accés a pàgines del campus"
+
+#: classes/Admin/Pages/Hall.php:60
+msgid "Mail Relay Suscriptors"
+msgstr "Mail Relay Suscriptors"
+
+#: classes/Admin/Pages/Hall.php:61
+msgid "Directus Access"
+msgstr "Directus Access"
+
+#: classes/Admin/Pages/Hall.php:68
+msgid "ID de página de inicio del campus"
+msgstr "ID de la pàgina d'inici del campus"
+
+#: classes/Admin/Pages/Hall.php:69
+msgid "Página Principal del Campus"
+msgstr "Pàgina Principal del Campus"
+
+#: classes/Admin/Pages/Hall.php:77
+msgid "Acceso administradores"
+msgstr "Accés d'administradors"
+
+#: classes/Admin/Pages/Hall.php:78
+msgid "Permitir acceso total a administradores"
+msgstr "Permetre accés total a administradors"
+
+#: classes/Admin/Pages/Hall.php:86
+msgid "Listado de páginas"
+msgstr "Llistat de pàgines"
+
+#: classes/Admin/Pages/Hall.php:87
+msgid "Activar páginas desplegables"
+msgstr "Activar pàgines desplegables"
+
+#: classes/Admin/Pages/Hall.php:98
+#: classes/Admin/Pages/Hall.php:99
+msgid "Sincronizacion de Humanos/Páginas"
+msgstr "Sincronització d'Humans/Pàgines"
+
+#: classes/Admin/Pages/Hall.php:107
+#: classes/Admin/Pages/Hall.php:108
+msgid "Token para Sincronizacion de Humanos/Páginas"
+msgstr "Token per a la Sincronització d'Humans/Pàgines"
+
+#: classes/Admin/Pages/Hall.php:116
+#: classes/Admin/Pages/Hall.php:117
+msgid "Url registro en log de accesos"
+msgstr "URL de registre al registre d'accessos"
+
+#: classes/Admin/Pages/Hall.php:125
+#: classes/Admin/Pages/Hall.php:126
+msgid "Token registro en log de accesos"
+msgstr "Token de registre al registre d'accessos"
+
+#: classes/Admin/Pages/Hall.php:136
+#: classes/Admin/Pages/Hall.php:137
+#: classes/Admin/Pages/Hall.php:146
+msgid "URL de la API"
+msgstr "URL de l'API"
+
+#: classes/Admin/Pages/Hall.php:145
+msgid "Clave de la API (KEY)"
+msgstr "Clau de l'API (KEY)"
+
+#: classes/Admin/Pages/Hall.php:173
+msgid "Todas las cachés de bloques han sido borradas correctamente."
+msgstr "Totes les memòries cau de blocs s'han esborrat correctament."
+
+#: classes/Admin/Pages/Smtp.php:17
+msgid "Correo y SMTP"
+msgstr "Correu i SMTP"
+
+#: classes/Admin/Pages/Smtp.php:18
+msgid "Configuración de Correo y SMTP"
+msgstr "Configuració de Correu i SMTP"
+
+#: classes/Admin/Pages/Smtp.php:25
+msgid "Usar configuracion de smtp"
+msgstr "Utilitzar configuració de SMTP"
+
+#: classes/Admin/Pages/Smtp.php:26
+msgid "Activar para enviar mails desde esta cuenta."
+msgstr "Activar per enviar correus des d'aquest compte."
+
+#: classes/Admin/Pages/Smtp.php:29
+msgid "Servidor de SMTP"
+msgstr "Servidor de SMTP"
+
+#: classes/Admin/Pages/Smtp.php:35
+msgid "Mail de pruebas"
+msgstr "Correu de proves"
+
+#: classes/Admin/Pages/Smtp.php:36
+msgid "Los mails de pruebas se enviarán a esta dirección."
+msgstr "Els correus de proves s'enviaran a aquesta adreça."
+
+#: classes/Admin/Pages/Smtp.php:44
+msgid "Servidor de Correo (Host)"
+msgstr "Servidor de Correu (Host)"
+
+#: classes/Admin/Pages/Smtp.php:45
+msgid "Dirección del host del servidor SMTP."
+msgstr "Adreça del host del servidor SMTP."
+
+#: classes/Admin/Pages/Smtp.php:53
+msgid "Puerto de Correo"
+msgstr "Port de Correu"
+
+#: classes/Admin/Pages/Smtp.php:54
+msgid "Puertos comunes: 25, 465, 587."
+msgstr "Ports comuns: 25, 465, 587."
+
+#: classes/Admin/Pages/Smtp.php:62
+msgid "Seguridad SMTP"
+msgstr "Seguretat SMTP"
+
+#: classes/Admin/Pages/Smtp.php:67
+msgid "Ninguna"
+msgstr "Cap"
+
+#: classes/Admin/Pages/Smtp.php:77
+msgid "Usuario de Correo"
+msgstr "Usuari de Correu"
+
+#: classes/Admin/Pages/Smtp.php:81
+msgid "Autenticación"
+msgstr "Autenticació"
+
+#: classes/Admin/Pages/Smtp.php:86
+msgid "Contraseña de Correo"
+msgstr "Contrasenya de Correu"
+
+#: classes/Admin/Pages/Smtp.php:96
+msgid "Correo Remitente (From)"
+msgstr "Correu Remitent (From)"
+
+#: classes/Admin/Pages/Smtp.php:100
+msgid "Configuración del Remitente"
+msgstr "Configuració del Remitent"
+
+#: classes/Admin/Pages/Smtp.php:105
+msgid "Nombre del Remitente"
+msgstr "Nom del Remitent"
+
+#: classes/Rest/Endpoints/Identify.php:42
+#: classes/Rest/Endpoints/Identify.php:74
+msgid "El correo no está registrado"
+msgstr "El correu no està registrat"
+
+#: classes/Rest/Endpoints/Mail.php:38
+msgid "La opción SMTP no está activada en la configuración."
+msgstr "L'opció SMTP no està activada a la configuració."
+
+#: classes/Rest/Endpoints/Mail.php:49
+msgid "No se ha configurado un destinatario de pruebas (smtp_test_recipient)."
+msgstr "No s'ha configurat cap destinatari de proves (smtp_test_recipient)."
+
+#: classes/Rest/Endpoints/Mail.php:58
+#, php-format
+msgid "%1$s - Prueba del servicio SMTP"
+msgstr "%1$s - Prova del servei SMTP"
+
+#: classes/Rest/Endpoints/Mail.php:59
+#, php-format
+msgid "Correo electrónico de %1$s enviado el %2$s"
+msgstr "Correu electrònic de %1$s enviat el %2$s"
+
+#: classes/Rest/Endpoints/Mail.php:64
+msgid "Mensaje enviado correctamente"
+msgstr "Missatge enviat correctament"
+
+#: classes/Rest/Endpoints/Mail.php:71
+msgid "El mail no se ha podido enviar. Revisa el archivo debug.log para ver los detalles del error SMTP."
+msgstr "No s'ha pogut enviar el correu. Reviseu el fitxer debug.log per veure els detalls de l'error de l'SMTP."
+
+#: views/admin/access.php:43
+msgid "Recargar accesos"
+msgstr "Recarregar accessos"
+
+#: views/admin/access.php:49
+msgid "Humanos"
+msgstr "Humans"
+
+#: views/admin/cache-management-card.php:15
+msgid "Gestión de Caché"
+msgstr "Gestió de Memòria Cau"
+
+#: views/admin/cache-management-card.php:16
+msgid "Usa este botón para borrar manualmente todo el contenido de bloques guardado en caché."
+msgstr "Utilitzeu aquest botó per esborrar manualment tot el contingut de blocs guardat a la memòria cau."
+
+#: views/admin/cache-management-card.php:19
+msgid "Borrar todas las cachés de bloques"
+msgstr "Esborrar totes les memòries cau de blocs"
+
+#: views/admin/dashboard.php:14
+msgid "Estado del Sistema"
+msgstr "Estat del Sistema"
+
+#: views/admin/dashboard.php:22
+msgid "Actualizar estado del sistema"
+msgstr "Actualitzar estat del sistema"
+
+#: views/admin/pages-column.php:17
+#: views/admin/pages-metabox.php:20
+#: views/admin/pages-quick-edit.php:22
+msgid "Abierta"
+msgstr "Oberta"
+
+#: views/admin/pages-column.php:17
+#: views/admin/pages-metabox.php:23
+#: views/admin/pages-quick-edit.php:23
+msgid "Restringida"
+msgstr "Restringida"
+
+#: views/admin/pages-metabox.php:16
+#: views/admin/pages-quick-edit.php:17
+msgid "Acceso"
+msgstr "Accés"
+
+#: views/admin/pages-quick-edit.php:20
+msgid "— Sin cambios —"
+msgstr "— Sense canvis —"
+
+#: views/emails/magick-link.php:14
+msgid "usa este link para acceder:"
+msgstr "utilitzeu aquest enllaç per accedir:"
+
+#: views/emails/magick-link.php:15
+msgid "Algunos programas de correo no permiten links directos, si te da problemas copia el link y pegalo en tu navegador."
+msgstr "Alguns programes de correu no permeten enllaços directes; si us dona problemes, copieu l'enllaç i enganxeu-lo al vostre navegador."
+
+#: views/frontend/admin-view-banner.php:15
+msgid "Vista de administrador"
+msgstr "Vista d'administrador"
+
+#: blocks/breadcrumbs/block.json
+msgctxt "block title"
+msgid "Breadcrumbs"
+msgstr "Breadcrumbs"
+
+#: blocks/breadcrumbs/block.json
+msgctxt "block description"
+msgid "Campus path"
+msgstr "Ruta del campus"
+
+#: blocks/columntools/block.json
+msgctxt "block title"
+msgid "Column Tools"
+msgstr "Eines de columna"
+
+#: blocks/columntools/block.json
+msgctxt "block description"
+msgid "Column tools"
+msgstr "Eines de columna"
+
+#: blocks/containerchildren/block.json
+msgctxt "block title"
+msgid "Container Children"
+msgstr "Fills del contenidor"
+
+#: blocks/containerchildren/block.json
+msgctxt "block description"
+msgid "Accesos del contenedor, sugerencias y relacionados."
+msgstr "Accessos del contenidor, suggeriments i relacionats."
+
+#: blocks/lastpublished/block.json
+msgctxt "block title"
+msgid "Novedades publicadas"
+msgstr "Novetats publicadas"
+
+#: blocks/lastpublished/block.json
+msgctxt "block description"
+msgid "Contenidos del usuario publicados recientemente"
+msgstr "Continguts de l'usuari publicats recentment"
+
+#: blocks/mytools/block.json
+msgctxt "block title"
+msgid "My tools"
+msgstr "Les meves eines"
+
+#: blocks/mytools/block.json
+msgctxt "block description"
+msgid "Mis herramientas"
+msgstr "Les meves eines"
+
+#: blocks/relatedcontent/block.json
+msgctxt "block title"
+msgid "Contenido Relacionado"
+msgstr "Contingut Relacionat"
+
+#: blocks/relatedcontent/block.json
+msgctxt "block description"
+msgid "Contenidos relacionados con la página actual"
+msgstr "Continguts relacionats amb la pàgina actual"
+
+#: blocks/treenav/block.json
+msgctxt "block title"
+msgid "Navigation"
+msgstr "Navegació"
+
+#: blocks/treenav/block.json
+msgctxt "block description"
+msgid "Tree navigation"
+msgstr "Navegació en arbre"

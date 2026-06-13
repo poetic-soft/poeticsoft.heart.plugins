@@ -334,6 +334,9 @@ var _wp$components = wp.components,
   PanelBody = _wp$components.PanelBody,
   ToggleControl = _wp$components.ToggleControl,
   Dashicon = _wp$components.Dashicon;
+var _wp$i18n = wp.i18n,
+  __ = _wp$i18n.__,
+  sprintf = _wp$i18n.sprintf;
 
 
 
@@ -348,10 +351,10 @@ var Edit = function Edit(props) {
   (0,blockscommon_uniqueid__WEBPACK_IMPORTED_MODULE_0__.useUniqueId)(clientId, attributes, setAttributes);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
     className: "Tools",
-    title: 'Opciones del Bloque',
+    title: __('Opciones del Bloque', 'poeticsoft-heart-campus'),
     initialOpen: true
   }, /*#__PURE__*/React.createElement(ToggleControl, {
-    label: "Abierto ".concat(defaultOpen ? 'SI' : 'NO'),
+    label: sprintf(__('Abierto: %s', 'poeticsoft-heart-campus'), defaultOpen ? __('SÍ', 'poeticsoft-heart-campus') : __('NO', 'poeticsoft-heart-campus')),
     checked: defaultOpen,
     onChange: function onChange(value) {
       return setAttributes({

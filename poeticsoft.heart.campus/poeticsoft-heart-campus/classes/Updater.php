@@ -2,30 +2,18 @@
 
 namespace Poeticsoft\Heart;
 
-/**
- * Remote Updater Class.
- * Handles self-hosted updates via native WordPress filters.
- */
 class Updater
 {
-
-    /**
-     * Remote API URL.
-     */
     private $remote_url = 'https://poeticsoft.com/plugins/poeticsoft-heart-campus/poeticsoft-heart-campus.json';
 
-    /**
-     * Initialize the updater hooks.
-     */
+
     public function init()
     {
         add_filter('site_transient_update_plugins', [$this, 'check_update']);
         add_filter('plugins_api', [$this, 'plugin_info'], 20, 3);
     }
 
-    /**
-     * Check for updates against the remote JSON.
-     */
+
     public function check_update($transient)
     {
         if (empty($transient->checked)) {
@@ -48,9 +36,7 @@ class Updater
         return $transient;
     }
 
-    /**
-     * Provide plugin information for the "View details" modal.
-     */
+
     public function plugin_info($res, $action, $args)
     {
         if ('plugin_information' !== $action) {
@@ -82,9 +68,7 @@ class Updater
         return $res;
     }
 
-    /**
-     * Fetch remote data with caching via transients.
-     */
+
     private function get_remote_data()
     {
         $remote = get_transient(Campus::PREFIX . 'update');
@@ -100,7 +84,7 @@ class Updater
             }
 
             $remote = json_decode(wp_remote_retrieve_body($response));
-            
+
             if (null === $remote) {
                 return false;
             }

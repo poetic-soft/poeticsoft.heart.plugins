@@ -48,7 +48,6 @@ if ($cache_key) {
 }
 
 if (false === $dom || empty($cache_key)) {
-
     $mode = $attrs['mode'] ?? 'compact';
     $contents = $attrs['contents'] ?? 'subscriptionsandfree';
     $section_heading_tag = tag_escape($attrs['sectionHeadingType'] ?? 'h3');
@@ -65,7 +64,6 @@ if (false === $dom || empty($cache_key)) {
     $dom = '';
 
     if (count($child_ids)) {
-
         switch ($contents) {
             case 'allidentified':
                 if (!$valid_user_email) {
@@ -87,7 +85,6 @@ if (false === $dom || empty($cache_key)) {
         }
 
         if (count($child_ids)) {
-
             $posts_data = get_posts([
                 'post__in'       => $child_ids,
                 'post_type'      => 'page',
@@ -120,9 +117,7 @@ if (false === $dom || empty($cache_key)) {
                 );
 
                 switch ($mode) {
-                    
                     case 'complete':
-
                         $thumb_url = get_the_post_thumbnail_url($child_post->ID, 'full');
                         $thumb_dom = $thumb_url ? sprintf('<img src="%s" alt="%s">', esc_url($thumb_url), esc_attr(get_the_title($child_post->ID))) : '';
 
@@ -136,17 +131,16 @@ if (false === $dom || empty($cache_key)) {
                         break;
 
                     case 'contents':
-
                         $child_children_pages = get_pages([
                             'parent'     => $child_post->ID,
                             'post_type'  => 'page',
-                            'sort_column'=> 'menu_order'
+                            'sort_column' => 'menu_order'
                         ]);
-                        
+
                         $page_dom .= implode(
                             '',
                             array_map(
-                                function($page) {
+                                function ($page) {
 
                                     return '<div class="ChildChildPage">
                                         <a href="' . get_permalink($page->ID) . '">

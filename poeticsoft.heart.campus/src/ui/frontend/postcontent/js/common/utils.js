@@ -1,39 +1,26 @@
-export const apiFetch = data => {
+export const apiFetch = (data) => {
+    return new Promise((resolve, reject) => {
+        fetch('/wp-json/poeticsoft/heart/campus/v1/' + data.url, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'X-WP-Nonce': poeticsoft_heart_campus_api.nonce
+            },
+            body: JSON.stringify(data.body)
+        })
+            .then((result) => {
+                result.json().then((data) => resolve(data));
+            })
+            .catch((error) => {
+                console.log(error);
 
-  return new Promise(
-    (resolve, reject) => {
+                reject(error);
+            });
+    });
+};
 
-      fetch(
-        '/wp-json/poeticsoft/heart/campus/v1/' + data.url,
-        {
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-WP-Nonce': poeticsoft_heart_campus_api.nonce
-          },
-          body: JSON.stringify(data.body)
-        }
-      )
-      .then(
-        result => {
-
-          result.json()
-          .then(data => resolve(data))
-        }
-      )
-      .catch(error => {
-
-        console.log(error)
-        
-        reject(error)
-      }) 
-    }
-  )
-}
-
-export const validateEmail = email => {
-
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
-}
+export const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+};

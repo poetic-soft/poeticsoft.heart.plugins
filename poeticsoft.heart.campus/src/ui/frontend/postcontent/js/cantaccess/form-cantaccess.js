@@ -1,14 +1,13 @@
-export default data => { 
-
-  const adviceText = `
+export default (data) => {
+    const adviceText = `
     No tienes acceso a este contenido, solicítalo a la administración del campus.  
-  `
-  return `
+  `;
+    return `
     <div class="Form CantAccess">
       <div class="FormName">Cant Access</div>
       <div class="Explain">
-        ${ data.adviceText || adviceText }  
+        ${data.adviceText || adviceText}  
       </div>         
     </div>
-  `
-}
+  `;
+};

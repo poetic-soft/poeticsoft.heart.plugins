@@ -3,27 +3,26 @@
   "version": "0.0.0",
   "license": "GPL-2.0-or-later",
   "scripts": {
-
+    "lint:js": "eslint \"src/**/*.js\"",
+    "lint:scss": "stylelint \"src/**/*.scss\"",
+    "format:js": "eslint \"src/**/*.js\" --fix",
+    "format:scss": "stylelint \"src/**/*.scss\" --fix",
     "blockbreadcrumbs": "webpack --env=block-breadcrumbs",
     "blockcolumntools": "webpack --env=block-columntools",
     "blockcontainerchildren": "webpack --env=block-containerchildren",
-    "blockmytools": "webpack --env=block-mytools",  
+    "blockmytools": "webpack --env=block-mytools",
     "blockrelatedcontent": "webpack --env=block-relatedcontent",
     "blocklastpublished": "webpack --env=block-lastpublished",
     "blocktreenav": "webpack --env=block-treenav",
-    "allblocks": "npm run blockbreadcrumbs && npm run blockcolumntools && npm run blockcontainerchildren && npm run blockmytools && npm run blockrelatedcontent && npm run blocktreenav", 
-
+    "allblocks": "npm run blockbreadcrumbs && npm run blockcolumntools && npm run blockcontainerchildren && npm run blockmytools && npm run blockrelatedcontent && npm run blocklastpublished && npm run blocktreenav",
     "adminpagesquickedit": "webpack --env=ui-admin/pagesquickedit",
     "adminpageslist": "webpack --env=ui-admin/pageslist",
     "adminaccess": "webpack --env=ui-admin/access",
     "alladmin": "npm run adminpagesquickedit && npm run adminpageslist && npm run adminaccess",
-
     "editcoreconfigs": "webpack --env=ui-edit/coreconfigs",
     "uipostcontent": "webpack --env=ui-frontend/postcontent",
     "allcontent": "npm run editcoreconfigs && npm run uipostcontent",
-
     "uiregisteraccess": "webpack --env=ui-frontend/registeraccess",
-
     "all": "npm run allblocks && npm run alladmin && npm run allcontent && npm run uiregisteraccess"
   },
   "dependencies": {
@@ -48,14 +47,21 @@
     ]
   },
   "devDependencies": {
-    "webpack": "^5.100.2",
-    "webpack-cli": "^6.0.1",
-    "baseline-browser-mapping": "^2.9.14",
+    "@babel/eslint-parser": "^7.29.7",
     "babel-loader": "^8.2.5",
+    "baseline-browser-mapping": "^2.9.14",
     "css-loader": "^6.7.1",
-    "style-loader": "^3.3.1",
-    "sass-loader": "^13.0.2",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "file-loader": "^6.2.0",
-    "mini-css-extract-plugin": "^2.6.1"
+    "mini-css-extract-plugin": "^2.6.1",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.1",
+    "stylelint": "^17.13.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "webpack": "^5.100.2",
+    "webpack-cli": "^6.0.1"
   }
 }

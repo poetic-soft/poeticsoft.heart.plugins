@@ -18,5 +18,18 @@
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true
+    },
+	"scripts": {
+		"format": "vendor/bin/phpcbf",
+		"lint": "vendor/bin/phpcs",
+		"phpstan": "phpstan analyse classes/ --memory-limit=2048M",
+		"test": "vendor/bin/phpunit",
+		"test:multisite": "vendor/bin/phpunit -c phpunit-multisite.xml.dist"
+	},
+    "require-dev": {
+        "phpstan/phpstan": "^2.2",
+        "phpunit/phpunit": "^13.2",
+        "squizlabs/php_codesniffer": "^3.10",
+        "szepeviktor/phpstan-wordpress": "^2.0"
     }
 }

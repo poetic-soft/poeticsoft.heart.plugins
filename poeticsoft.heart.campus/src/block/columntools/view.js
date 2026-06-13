@@ -1,63 +1,38 @@
-import './view.scss'
+import './view.scss';
 
-(function($) {
+(function ($) {
+    const $columntools = $('.wp-block-poeticsoft-heart-campus-columntools');
+    if ($columntools.length) {
+        $columntools.each(function () {
+            const $this = $(this);
+            const $column = $this.parent('.wp-block-column');
 
-  const $columntools = $('.wp-block-poeticsoft-heart-campus-columntools')
-  if($columntools.length) {
+            $this.on('click', function () {
+                if ($column.hasClass('Open')) {
+                    $column.removeClass('Open');
+                    $column.addClass('Closed');
 
-    $columntools
-    .each(function() {
+                    localStorage.setItem(statusKey, 'Closed');
+                } else {
+                    $column.removeClass('Closed');
+                    $column.addClass('Open');
 
-      const $this = $(this)
-      const $column = $this.parent('.wp-block-column')
+                    localStorage.setItem(statusKey, 'Open');
+                }
+            });
 
-      $this.on(
-        'click',
-        function() {
-    
-          if($column.hasClass('Open'))  {
+            const statusKey = 'PoeticsoftHeartCampusColumnTools';
+            const state = localStorage.getItem(statusKey);
 
-            $column.removeClass('Open')
-            $column.addClass('Closed')
-
-            localStorage.setItem(
-              statusKey,
-              'Closed'
-            )
-
-          } else {
-
-            $column.removeClass('Closed')
-            $column.addClass('Open')
-
-            localStorage.setItem(
-              statusKey,
-              'Open'
-            )
-          }
-        }
-      )
-
-      const statusKey = 'PoeticsoftHeartCampusColumnTools'
-      const state = localStorage.getItem(statusKey)
-
-      if(state) {
-
-        $column.addClass(state)
-
-      } else {
-
-        if($this.data('defaultopen')) {
-
-          $column.addClass('Open')
-          
-        } else {
-
-          $column.addClass('Closed')
-        }
-      }
-    })
-  }  
-
-})(jQuery)
-
+            if (state) {
+                $column.addClass(state);
+            } else {
+                if ($this.data('defaultopen')) {
+                    $column.addClass('Open');
+                } else {
+                    $column.addClass('Closed');
+                }
+            }
+        });
+    }
+})(jQuery);

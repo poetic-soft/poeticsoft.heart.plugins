@@ -327,6 +327,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editor.scss */ "./src/block/breadcrumbs/editor.scss");
 var registerBlockType = wp.blocks.registerBlockType;
 var useBlockProps = wp.blockEditor.useBlockProps;
+var __ = wp.i18n.__;
 
 
 
@@ -338,7 +339,7 @@ var Edit = function Edit(props) {
     refClientId = attributes.refClientId;
   var blockProps = useBlockProps();
   (0,blockscommon_uniqueid__WEBPACK_IMPORTED_MODULE_0__.useUniqueId)(clientId, attributes, setAttributes);
-  return /*#__PURE__*/React.createElement("div", blockProps, "BREADCRUMBS");
+  return /*#__PURE__*/React.createElement("div", blockProps, __('Breadcrumbs', 'poeticsoft-heart-campus'));
 };
 var Save = function Save() {
   return null;

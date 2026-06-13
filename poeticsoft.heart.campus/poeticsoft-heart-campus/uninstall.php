@@ -2,7 +2,7 @@
 
 /**
  * Uninstall Plugin.
- * 
+ *
  * This file is called when the user clicks "Delete" in the WordPress plugins panel.
  * It cleans up all data stored by the plugin.
  */

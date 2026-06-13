@@ -74,7 +74,6 @@ use Poeticsoft\Heart\Utils\Utils;
     }
 
     if (false === $dom || empty($cache_key)) {
-
         $admin_access_option_name = Campus::PREFIX . 'admin_access';
         $admin_access = get_option($admin_access_option_name);
 
@@ -90,15 +89,7 @@ use Poeticsoft\Heart\Utils\Utils;
             );
         }
 
-        $build_page_tree = function ($parent = 0, $level = -1)
-        use (
-            $campus_root_id, 
-            $user_contents, 
-            $post, 
-            $campus_pages, 
-            &$build_page_tree
-        ) {
-
+        $build_page_tree = function ($parent = 0, $level = -1) use ($campus_root_id, $user_contents, $post, $campus_pages, &$build_page_tree) {
             $list = [];
 
             if ($parent == 0) {
@@ -148,9 +139,7 @@ use Poeticsoft\Heart\Utils\Utils;
             return $list;
         };
 
-        $build_object_tree = function ($pages, $parent_is_user = false, $parent_is_free = false)
-        use ($is_admin_and_can_view_all, &$build_object_tree) {
-
+        $build_object_tree = function ($pages, $parent_is_user = false, $parent_is_free = false) use ($is_admin_and_can_view_all, &$build_object_tree) {
             $page_data = [];
             $branch_has_user_content = false;
             $branch_has_free = false;
@@ -167,8 +156,12 @@ use Poeticsoft\Heart\Utils\Utils;
                 $has_within_user = $is_this_node_user || $children_pages['has_user_content'];
                 $has_within_free = $is_this_node_free || $children_pages['has_free'];
 
-                if ($has_within_user) $branch_has_user_content = true;
-                if ($has_within_free) $branch_has_free = true;
+                if ($has_within_user) {
+                    $branch_has_user_content = true;
+                }
+                if ($has_within_free) {
+                    $branch_has_free = true;
+                }
 
                 $page_path = get_permalink($page['id']);
                 if (!$page_path) {
@@ -258,11 +251,16 @@ use Poeticsoft\Heart\Utils\Utils;
         $dom_tree_html = $build_dom_tree($ignore_root ? $root_children : $object_tree['children']);
 
         $legend = $show_legend ?
-            '<div class="Legend">
-                <div class="Type ShouldPay"><span class="Icon ShouldPay"></span><span class="Text">Privado</span></div>
-                <div class="Type Free"><span class="Icon Free"></span><span class="Text">Abierto</span></div>
-                <div class="Type Paid"><span class="Icon Paid"></span><span class="Text">Tu contenido</span></div>
-            </div>' : '';
+            sprintf(
+                '<div class="Legend">
+                    <div class="Type ShouldPay"><span class="Icon ShouldPay"></span><span class="Text">%s</span></div>
+                    <div class="Type Free"><span class="Icon Free"></span><span class="Text">%s</span></div>
+                    <div class="Type Paid"><span class="Icon Paid"></span><span class="Text">%s</span></div>
+                </div>',
+                esc_html(__('Privado', Campus::TEXT_DOMAIN)),
+                esc_html(__('Abierto', Campus::TEXT_DOMAIN)),
+                esc_html(__('Tu contenido', Campus::TEXT_DOMAIN))
+            ) : '';
 
         $wrapper_attributes = get_block_wrapper_attributes([
             'id' => $block_id,
@@ -281,5 +279,4 @@ use Poeticsoft\Heart\Utils\Utils;
     }
 
     echo $dom;
-
 })($attributes, $content, $block);

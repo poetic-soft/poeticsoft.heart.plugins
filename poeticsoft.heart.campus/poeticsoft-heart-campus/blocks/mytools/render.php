@@ -36,18 +36,17 @@ if (is_wp_error($attrs)) {
 $valid_user_mail = Campus::get(Access::class)->validate_email();
 
 if ($valid_user_mail) {
-
     $logout_url = add_query_arg(['action' => 'logout'], get_permalink($post->ID));
 
     $element = '';
     switch ($attrs['linkType']) {
-
         case 'button':
             $element = sprintf(
-                '<button class="wp-block-button__link wp-element-button"><a href="%s">SALIR</a></button>',
-                esc_url($logout_url)
+                '<button class="wp-block-button__link wp-element-button"><a href="%s">%s</a></button>',
+                esc_url($logout_url),
+                esc_html(__('SALIR', Campus::TEXT_DOMAIN))
             );
-            
+
             $element = sprintf(
                 '<div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
                     <div class="wp-block-button">
@@ -55,19 +54,21 @@ if ($valid_user_mail) {
                             href="%s" 
                             class="wp-block-button__link wp-element-button"
                         >
-                            SALIR
+                            %s
                         </a>
                     </div>
                 </div>',
-                esc_url($logout_url)
+                esc_url($logout_url),
+                esc_html(__('SALIR', Campus::TEXT_DOMAIN))
             );
             break;
 
         case 'link':
         default:
             $element = sprintf(
-                '<a href="%s">SALIR</a>',
-                esc_url($logout_url)
+                '<a href="%s">%s</a>',
+                esc_url($logout_url),
+                esc_html(__('SALIR', Campus::TEXT_DOMAIN))
             );
             break;
     }
@@ -89,33 +90,36 @@ if ($valid_user_mail) {
         $identify,
         $link
     );
-
 } else {
-
     $element = '';
     switch ($attrs['linkType'] ?? 'link') {
-
         case 'button':
-            $element = '<div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
-                <div class="wp-block-button">
-                    <a 
-                        href="#" 
-                        class="wp-block-button__link wp-element-button Login"
-                    >
-                        ENTRAR
-                    </a>
-                </div>
-            </div>';
+            $element = sprintf(
+                '<div class="wp-block-buttons is-layout-flex wp-block-buttons-is-layout-flex">
+                    <div class="wp-block-button">
+                        <a 
+                            href="#" 
+                            class="wp-block-button__link wp-element-button Login"
+                        >
+                            %s
+                        </a>
+                    </div>
+                </div>',
+                esc_html(__('ENTRAR', Campus::TEXT_DOMAIN))
+            );
             break;
 
         case 'link':
         default:
-            $element = '<a 
-                href="#" 
-                class="Login"
-            >
-                ENTRAR
-            </a>';
+            $element = sprintf(
+                '<a 
+                    href="#" 
+                    class="Login"
+                >
+                    %s
+                </a>',
+                esc_html(__('ENTRAR', Campus::TEXT_DOMAIN))
+            );
             break;
     }
 

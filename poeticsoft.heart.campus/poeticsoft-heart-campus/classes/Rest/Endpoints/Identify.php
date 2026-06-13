@@ -8,16 +8,8 @@ use Poeticsoft\Heart\Validation\Access;
 use Poeticsoft\Heart\Utils\Utils
 ;
 
-/**
- * System Endpoint Section.
- * Example of modular API implementation with security levels.
- */
 class Identify extends Endpoint
 {
-
-    /**
-     * Define routes for this section.
-     */
     public function get_routes()
     {
         return [
@@ -30,51 +22,45 @@ class Identify extends Endpoint
     }
 
     public function identify($request)
-    {   
-        
-      $email = $request->get_param('email');
-      $url = $request->get_param('url');
+    {
 
-      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $email = $request->get_param('email');
+        $url = $request->get_param('url');
 
-        return $this->send_error( 
-          'IDENTIFY_MAIL_INVALID',  
-          __('El correo no está registrado'), 
-          $status = 404 
-        );
-
-      } else {                
-
-        global $wpdb;
-        $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
-        $access = $wpdb->get_results(
-          $wpdb->prepare(
-            "SELECT
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $this->send_error(
+                'IDENTIFY_MAIL_INVALID',
+                __('El correo no está registrado', Campus::TEXT_DOMAIN),
+                $status = 404
+            );
+        } else {
+            global $wpdb;
+            $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
+            $access = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT
             id,
             user_mail
             FROM {$table_name}
             WHERE user_mail = %s",
-            $email
-          )
-        );
+                    $email
+                )
+            );
 
-        if(count($access)) {      
-          
-          $link = Campus::get(Access::class)->send_magick_link($email, $url);
-            
-          return $this->send_success([
-            // 'link' => $link,
-            'time'   => current_time('mysql'),
-          ]);
+            if (count($access)) {
+                $link = Campus::get(Access::class)->send_magick_link($email, $url);
 
-        } else {
+                return $this->send_success([
 
-          return $this->send_error( 
-            'IDENTIFY_MAIL_NOTFOUND', 
-            __('El correo no está registrado'), 
-            $status = 404 
-          );
+                'time'   => current_time('mysql'),
+                ]);
+            } else {
+                return $this->send_error(
+                    'IDENTIFY_MAIL_NOTFOUND',
+                    __('El correo no está registrado', Campus::TEXT_DOMAIN),
+                    $status = 404
+                );
+            }
         }
-      }
-    } 
+    }
 }

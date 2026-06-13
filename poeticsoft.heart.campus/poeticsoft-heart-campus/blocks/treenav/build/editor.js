@@ -334,6 +334,9 @@ var _wp$components = wp.components,
   PanelBody = _wp$components.PanelBody,
   ToggleControl = _wp$components.ToggleControl,
   NumberControl = _wp$components.__experimentalNumberControl;
+var _wp$i18n = wp.i18n,
+  __ = _wp$i18n.__,
+  sprintf = _wp$i18n.sprintf;
 
 
 
@@ -350,11 +353,11 @@ var Edit = function Edit(props) {
   var blockProps = useBlockProps();
   (0,blockscommon_uniqueid__WEBPACK_IMPORTED_MODULE_2__.useUniqueId)(clientId, attributes, setAttributes);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
-    title: 'Opciones del Bloque',
+    title: __('Opciones del Bloque', 'poeticsoft-heart-campus'),
     initialOpen: true,
     className: "TreeNavControls"
   }, /*#__PURE__*/React.createElement(ToggleControl, {
-    label: "\n            Ignorar ra\xEDz \n            (".concat(ignoreRoot ? 'SI' : 'NO', ")\n          "),
+    label: sprintf(__('Ignorar raíz (%s)', 'poeticsoft-heart-campus'), ignoreRoot ? __('SÍ', 'poeticsoft-heart-campus') : __('NO', 'poeticsoft-heart-campus')),
     checked: ignoreRoot,
     onChange: function onChange(value) {
       return setAttributes({
@@ -362,7 +365,7 @@ var Edit = function Edit(props) {
       });
     }
   }), /*#__PURE__*/React.createElement(ToggleControl, {
-    label: "\n            Ver s\xF3lo suscripciones \n            (".concat(onlySubscriptions ? 'SI' : 'NO', ")\n          "),
+    label: sprintf(__('Ver sólo suscripciones (%s)', 'poeticsoft-heart-campus'), onlySubscriptions ? __('SÍ', 'poeticsoft-heart-campus') : __('NO', 'poeticsoft-heart-campus')),
     checked: onlySubscriptions,
     onChange: function onChange(value) {
       return setAttributes({
@@ -371,7 +374,7 @@ var Edit = function Edit(props) {
     }
   }), /*#__PURE__*/React.createElement(NumberControl, {
     className: "MaxDeep",
-    label: "M\xE1ximo nivel (0 para todos)",
+    label: __('Máximo nivel (0 para todos)', 'poeticsoft-heart-campus'),
     value: maxDeep,
     min: 0,
     onChange: function onChange(value) {
@@ -383,14 +386,14 @@ var Edit = function Edit(props) {
     isShiftStepEnabled: true,
     shiftStep: 5
   }), /*#__PURE__*/React.createElement(ToggleControl, {
-    label: "\n            Ver leyenda \n            (".concat(showLegend ? 'SI' : 'NO', ")\n          "),
+    label: sprintf(__('Ver leyenda (%s)', 'poeticsoft-heart-campus'), showLegend ? __('SÍ', 'poeticsoft-heart-campus') : __('NO', 'poeticsoft-heart-campus')),
     checked: showLegend,
     onChange: function onChange(value) {
       return setAttributes({
         showLegend: value
       });
     }
-  }))), /*#__PURE__*/React.createElement("div", blockProps, "Navegaci\xF3n del", onlySubscriptions ? ' (Sólo suscripciones & Libre)' : '', showLegend ? ' (Con leyenda)' : ''));
+  }))), /*#__PURE__*/React.createElement("div", blockProps, __('Navegación del ', 'poeticsoft-heart-campus'), onlySubscriptions ? __(' (Sólo suscripciones & Libre)', 'poeticsoft-heart-campus') : '', showLegend ? __(' (Con leyenda)', 'poeticsoft-heart-campus') : ''));
 };
 var Save = function Save() {
   return null;

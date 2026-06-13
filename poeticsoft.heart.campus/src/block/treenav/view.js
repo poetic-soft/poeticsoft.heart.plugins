@@ -1,74 +1,55 @@
-import './view.scss'
+import './view.scss';
 
-(function($) {
+(function ($) {
+    const statusKey = 'PoeticsoftHeartCampusTreeNavState';
 
-  const statusKey = 'PoeticsoftHeartCampusTreeNavState'
-  
-  const $treenav = $('.wp-block-poeticsoft-heart-campus-treenav')
-  if($treenav.length) {
+    const $treenav = $('.wp-block-poeticsoft-heart-campus-treenav');
+    if ($treenav.length) {
+        const $nav = $treenav.find('.Nav');
+        const $pages = $nav.find('.Page');
+        const $opencloses = $nav.find('.OpenClose');
 
-    const $nav = $treenav.find('.Nav')
-    const $pages = $nav.find('.Page')
-    const $opencloses = $nav.find('.OpenClose')
+        let state = {};
 
-    let state = {}
+        const updateNav = () => {
+            $pages.each(function () {
+                const $this = $(this);
 
-    const updateNav = () => {
+                const id = $this.attr('id');
 
-      $pages.each(function() {
+                if (state[id]) {
+                    $this.addClass('Visible');
+                }
+            });
+        };
 
-        const $this = $(this)
+        const loadState = () => {
+            state = JSON.parse(localStorage.getItem(statusKey)) || {};
 
-        const id = $this.attr('id')
+            updateNav();
+        };
 
-        if(state[id]) {
+        const saveState = () => {
+            localStorage.setItem(statusKey, JSON.stringify(state));
+        };
 
-          $this.addClass('Visible')
-        }
-      })
+        $opencloses.on('click', function () {
+            const $this = $(this);
+            const $page = $this.closest('.Page');
+            const id = $page.attr('id');
+            if ($page.hasClass('Visible')) {
+                $page.removeClass('Visible');
+
+                state[id] = false;
+            } else {
+                $page.addClass('Visible');
+
+                state[id] = true;
+            }
+
+            saveState();
+        });
+
+        loadState();
     }
-
-    const loadState = () => {
-
-      state = JSON.parse(localStorage.getItem(statusKey)) || {}
-
-      updateNav()
-    }
-
-    const saveState = () => {
-
-      localStorage.setItem(
-        statusKey,
-        JSON.stringify(state)
-      )
-    }
-
-    $opencloses.on(
-      'click',
-      function() {
-
-        const $this = $(this)
-        const $page = $this.closest('.Page')
-        const id = $page.attr('id')
-        if($page.hasClass('Visible')) {
-
-          $page.removeClass('Visible')
-
-          state[id] = false
-          
-        } else {
-
-          $page.addClass('Visible')
-          
-          state[id] = true
-        }
-
-        saveState()
-      }
-    )
-
-    loadState()
-  }  
-
-})(jQuery)
-
+})(jQuery);

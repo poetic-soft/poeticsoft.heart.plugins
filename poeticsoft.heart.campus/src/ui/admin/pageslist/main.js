@@ -1,34 +1,25 @@
-import './main.scss'
-import pagelist from './js/pagelist'
-import quickedit from './js/quickedit'
+import './main.scss';
+import pagelist from './js/pagelist';
+import quickedit from './js/quickedit';
 
-(function($) {
+(function ($) {
+    const $body = $('body');
 
-  const $body = $('body')
+    const waitpages = setInterval(() => {
+        if (poeticsoft_heart_campus_admin_pageslist) {
+            clearInterval(waitpages);
 
-  const waitpages = setInterval(() => {    
+            if ($body.hasClass('edit-php')) {
+                window.poeticsoft_heart_campus_admin_pageslist_refresh = () => {
+                    pagelist($);
+                };
 
-    if(poeticsoft_heart_campus_admin_pageslist) {
+                window.poeticsoft_heart_campus_admin_pageslist_refresh();
 
-      clearInterval(waitpages)
+                $('body').addClass('PHCVisible');
 
-      if($body.hasClass('edit-php')) {
-
-        window.poeticsoft_heart_campus_admin_pageslist_refresh = () => {
-
-          pagelist($)
+                quickedit($);
+            }
         }
-
-        window.poeticsoft_heart_campus_admin_pageslist_refresh();
-        
-        $('body').addClass('PHCVisible')
-
-        quickedit($)
-      }
-    }
-  }, 100)  
-
-})(jQuery)
-
-
-
+    }, 100);
+})(jQuery);

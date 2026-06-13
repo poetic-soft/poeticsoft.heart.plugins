@@ -1,6 +1,5 @@
-export default data => {
-
-  return `
+export default (data) => {
+    return `
     <div class="Form Identify">
       <div class="FormName">Identify</div>
       <div class="Explain">
@@ -30,5 +29,5 @@ export default data => {
       </div>
       <div class="Message"></div>          
     </div>
-  `
-}
+  `;
+};

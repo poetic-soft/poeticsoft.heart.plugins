@@ -1,38 +1,30 @@
-import login from './js/identify/do-login'
-import identify from './js/identify/do-identify'
-import ask from './js/identify/do-ask'
-import cantAccess from './js/cantaccess/do-cantaccess'
+import login from './js/identify/do-login';
+import identify from './js/identify/do-identify';
+import ask from './js/identify/do-ask';
+import cantAccess from './js/cantaccess/do-cantaccess';
 
-import './main.scss'
+import './main.scss';
 
-(function($) {
-  
-  const $postContent = $('.wp-block-poeticsoft-heart-campus-postcontent')
-  
-  const $mytools = $('.wp-block-poeticsoft-heart-campus-mytools')
-  if($mytools.length) {
+(function ($) {
+    const $postContent = $('.wp-block-poeticsoft-heart-campus-postcontent');
 
-    login($, $mytools)
-  
-    const $formsIdentify = $postContent.find('.Forms.Identify')
-    if($formsIdentify.length) {
+    const $mytools = $('.wp-block-poeticsoft-heart-campus-mytools');
+    if ($mytools.length) {
+        login($, $mytools);
 
-      ask($, $postContent)
-    }    
+        const $formsIdentify = $postContent.find('.Forms.Identify');
+        if ($formsIdentify.length) {
+            ask($, $postContent);
+        }
+    } else {
+        const $formsIdentify = $postContent.find('.Forms.Identify');
+        if ($formsIdentify.length) {
+            identify($, $postContent);
+        }
+    }
 
-  } else {
-  
-    const $formsIdentify = $postContent.find('.Forms.Identify')
-    if($formsIdentify.length) {
-
-      identify($, $postContent)
-    }    
-  }
- 
-  const $formsCantAccess = $postContent.find('.Forms.CantAccess')
-  if($formsCantAccess.length) {
-
-    cantAccess($, $postContent)
-  }
-
-})(jQuery)
+    const $formsCantAccess = $postContent.find('.Forms.CantAccess');
+    if ($formsCantAccess.length) {
+        cantAccess($, $postContent);
+    }
+})(jQuery);

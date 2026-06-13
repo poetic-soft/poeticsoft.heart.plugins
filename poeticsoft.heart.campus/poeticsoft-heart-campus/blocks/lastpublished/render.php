@@ -48,7 +48,6 @@ if ($cache_key) {
 }
 
 if (false === $related_dom || empty($cache_key)) {
-
     $mode = $attrs['mode'] ?? 'compact';
     $section_heading_tag = tag_escape($attrs['sectionHeadingType'] ?? 'h2');
     $area_heading_tag = tag_escape($attrs['areaHeadingType'] ?? 'h3');
@@ -115,7 +114,7 @@ if (false === $related_dom || empty($cache_key)) {
     }
 
     if ($cache_key) {
-        set_transient($cache_key, $related_dom, 0); 
+        set_transient($cache_key, $related_dom, 0);
     }
 }
 

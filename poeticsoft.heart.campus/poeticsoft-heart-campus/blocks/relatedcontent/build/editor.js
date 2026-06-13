@@ -404,32 +404,33 @@ var _wp$element = wp.element,
   useState = _wp$element.useState;
 var _wp = wp,
   apiFetch = _wp.apiFetch;
+var __ = wp.i18n.__;
 
 
 
 
 var includesOptions = [{
-  label: 'Sólo relacionados',
+  label: __('Sólo relacionados', 'poeticsoft-heart-campus'),
   value: 'related'
 }, {
-  label: 'Sólo tags',
+  label: __('Sólo tags', 'poeticsoft-heart-campus'),
   value: 'tags'
 }, {
-  label: 'Relacionados y tags',
+  label: __('Relacionados y tags', 'poeticsoft-heart-campus'),
   value: 'relatedandtags'
 }];
 var modeOptions = [{
-  label: 'Título, Imagen & Extracto',
+  label: __('Título, Imagen & Extracto', 'poeticsoft-heart-campus'),
   value: 'complete'
 }, {
-  label: 'Sólo título',
+  label: __('Sólo título', 'poeticsoft-heart-campus'),
   value: 'compact'
 }];
 var visibilityOptions = [{
-  label: 'Visible siempre',
+  label: __('Visible siempre', 'poeticsoft-heart-campus'),
   value: 'visiblealways'
 }, {
-  label: 'Sólo en contenedores',
+  label: __('Sólo en contenedores', 'poeticsoft-heart-campus'),
   value: 'onlyincontainers'
 }];
 var hs = {
@@ -508,13 +509,13 @@ var Edit = function Edit(props) {
     setSelectedTags(JSON.parse(savedTags));
   }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
-    title: "Opciones del Bloque",
+    title: __('Opciones del Bloque', 'poeticsoft-heart-campus'),
     initialOpen: true
   }, /*#__PURE__*/React.createElement("div", {
     className: "\r containerchildren\r SeccionTitle\r "
   }, /*#__PURE__*/React.createElement("div", {
     className: "EditTitle"
-  }, "Titulo de secci\xF3n"), /*#__PURE__*/React.createElement("div", {
+  }, __('Título de sección', 'poeticsoft-heart-campus')), /*#__PURE__*/React.createElement("div", {
     className: "EditText"
   }, /*#__PURE__*/React.createElement(RichText, {
     tagName: "div",
@@ -525,9 +526,9 @@ var Edit = function Edit(props) {
         title: value
       });
     },
-    placeholder: "T\xEDtulo"
+    placeholder: __('Título', 'poeticsoft-heart-campus')
   }))), /*#__PURE__*/React.createElement(SelectControl, {
-    label: "Visualizar",
+    label: __('Visualizar', 'poeticsoft-heart-campus'),
     value: includesMode,
     options: includesOptions,
     onChange: function onChange(value) {
@@ -536,14 +537,14 @@ var Edit = function Edit(props) {
       });
     }
   }), /*#__PURE__*/React.createElement(SelectControl, {
-    label: "Tags",
+    label: __('Tags', 'poeticsoft-heart-campus'),
     multiple: true,
     value: selectedTags,
     options: availableTags,
     onChange: selectTags,
     disabled: includesMode == 'related'
   }), /*#__PURE__*/React.createElement(blockscommon_elementselector__WEBPACK_IMPORTED_MODULE_0__.HeadingSelector, {
-    title: "Elemento de t\xEDtulo de secci\xF3n",
+    title: __('Elemento de título de sección', 'poeticsoft-heart-campus'),
     value: sectionHeadingType,
     onChange: function onChange(value) {
       return setAttributes({
@@ -551,7 +552,7 @@ var Edit = function Edit(props) {
       });
     }
   }), /*#__PURE__*/React.createElement(blockscommon_elementselector__WEBPACK_IMPORTED_MODULE_0__.HeadingSelector, {
-    title: "Elemento de t\xEDtulo de \xE1rea",
+    title: __('Elemento de título de área', 'poeticsoft-heart-campus'),
     value: areaHeadingType,
     onChange: function onChange(value) {
       return setAttributes({
@@ -559,7 +560,7 @@ var Edit = function Edit(props) {
       });
     }
   }), /*#__PURE__*/React.createElement(SelectControl, {
-    label: "Modo",
+    label: __('Modo', 'poeticsoft-heart-campus'),
     value: mode,
     options: modeOptions,
     onChange: function onChange(value) {
@@ -568,7 +569,7 @@ var Edit = function Edit(props) {
       });
     }
   }), /*#__PURE__*/React.createElement(SelectControl, {
-    label: "Visibilidad",
+    label: __('Visibilidad', 'poeticsoft-heart-campus'),
     value: visibility,
     options: visibilityOptions,
     onChange: function onChange(value) {
@@ -578,7 +579,7 @@ var Edit = function Edit(props) {
     }
   }))), /*#__PURE__*/React.createElement("div", blockProps, hs[sectionHeadingType](title), /*#__PURE__*/React.createElement("div", {
     className: "Content"
-  }, hs[areaHeadingType]('Contenidos'), modeOptions.find(function (o) {
+  }, hs[areaHeadingType](__('Contenidos', 'poeticsoft-heart-campus')), modeOptions.find(function (o) {
     return o.value == mode;
   }).label)));
 };
