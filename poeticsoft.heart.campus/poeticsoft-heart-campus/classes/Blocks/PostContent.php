@@ -46,7 +46,7 @@ class PostContent
             Campus::PLUGIN_SLUG . '-postcontent',
             Utils::url('ui/frontend/postcontent/main.js'),
             [
-            'jquery'
+                'jquery'
             ],
             filemtime(Utils::path('ui/frontend/postcontent/main.js')),
             true
@@ -64,7 +64,7 @@ class PostContent
             Campus::PLUGIN_SLUG . '-register-access',
             Utils::url('ui/frontend/registeraccess/main.js'),
             [
-            'jquery'
+                'jquery'
             ],
             filemtime(Utils::path('ui/frontend/registeraccess/main.js')),
             true
@@ -170,7 +170,7 @@ class PostContent
     private function render_access_form($post_id, $block_attrs)
     {
         $show_restricted_text = isset($block_attrs['showRestrictedText']) ?
-        $block_attrs['showRestrictedText'] : '';
+            $block_attrs['showRestrictedText'] : '';
         $post_child_ids = get_posts([
             'post_type' => 'page',
             'posts_per_page' => -1,
@@ -191,16 +191,16 @@ class PostContent
         }
 
         $restricted_visible_text = isset($block_attrs['restrictedVisibleText']) ?
-        $block_attrs['restrictedVisibleText']
-        :
-        '';
+            $block_attrs['restrictedVisibleText']
+            :
+            __('El contenido de esta página está restringido, solicita acceso.', Campus::TEXT_DOMAIN);
 
         $valid_user_mail = Campus::get(Access::class)->validate_email();
 
         return Campus::get(View::class)->render('frontend/post-content-access', [
             'valid_user_mail'          => $valid_user_mail,
             'post_id'                  => $post_id,
-            'restricted_visible_text' => $restricted_visible_text,
+            'restricted_visible_text'  => $restricted_visible_text,
         ], false);
     }
 }
