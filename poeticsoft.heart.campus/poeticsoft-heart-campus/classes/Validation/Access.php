@@ -10,7 +10,6 @@ class Access
 {
     public function __construct()
     {
-
         add_action(
             'template_redirect',
             [$this, 'check_access']
@@ -19,7 +18,6 @@ class Access
 
     public function check_access()
     {
-
         global $post;
 
         if (
@@ -30,7 +28,6 @@ class Access
             $_GET['action'] == 'logout'
         ) {
             $is_wp_logged_in = is_user_logged_in();
-
             unset($_COOKIE['campus_user_useremail']);
             setcookie('campus_user_useremail', '', time() - 3600, '/', COOKIE_DOMAIN, is_ssl(), true);
 
@@ -39,7 +36,6 @@ class Access
             }
 
             wp_safe_redirect(get_permalink($post->ID));
-
             exit;
         }
 
@@ -54,7 +50,6 @@ class Access
                 $access_data = json_decode($transient);
                 $email = $access_data->email;
                 $url = $access_data->url;
-
                 unset($_COOKIE['campus_user_useremail']);
                 setcookie('campus_user_useremail', '', time() - 3600, '/', COOKIE_DOMAIN, is_ssl(), true);
 
@@ -75,7 +70,6 @@ class Access
 
     public static function send_magick_link($email, $url)
     {
-
         $magick_link_duration_option_name = Campus::PREFIX . 'magick_link_duration';
         $magick_link_duration = get_option($magick_link_duration_option_name);
         $expire_time = $magick_link_duration * DAY_IN_SECONDS;
@@ -95,7 +89,6 @@ class Access
         );
 
         $link = add_query_arg('access', $token, home_url('/'));
-
         $sitename = get_bloginfo('name');
         $sitedescription = get_bloginfo('description');
         $siteurl = get_bloginfo('url');
@@ -124,7 +117,6 @@ class Access
         $order_by_date = 'ASC',
         $status = 'publish',
     ) {
-
         $email = $this->validate_email();
 
         if (!$email) {
@@ -196,14 +188,12 @@ class Access
 
     public function logged_user_mail()
     {
-
         $user_id = get_current_user_id();
 
         if ($user_id) {
             $user_info = get_userdata($user_id);
             if ($user_info) {
                 $email = $user_info->user_email;
-
                 unset($_COOKIE['campus_user_useremail']);
                 setcookie('campus_user_useremail', '', time() - 3600, '/', COOKIE_DOMAIN, is_ssl(), true);
 
@@ -228,7 +218,6 @@ class Access
 
     public function validate_email()
     {
-
         $logged_user_email = $this->logged_user_mail();
 
         if ($logged_user_email) {
@@ -244,13 +233,11 @@ class Access
 
     public function can_access_cause_not_in_campus($post_id)
     {
-
         return !$this->post_is_in_campus($post_id);
     }
 
     public function can_access_cause_is_admin()
     {
-
         $current_user = wp_get_current_user();
         $allow_admin = $this->get_allow_admin();
         $can_access = false;
@@ -271,7 +258,6 @@ class Access
 
     public function can_access_cause_is_open($post_id)
     {
-
         if ($post_id) {
             $access = get_post_meta(
                 $post_id,
@@ -288,7 +274,6 @@ class Access
 
     public function can_access_by_post_access($post_id)
     {
-
         $valid_user_mail = $this->validate_email();
         if (!$valid_user_mail) {
             return false;
@@ -319,7 +304,6 @@ class Access
                 array_merge([$valid_user_mail], $ancestor_ids)
             );
             $exists = $wpdb->get_var($query);
-
             $result = $exists > 0;
 
             if ($cache_key) {
@@ -334,7 +318,6 @@ class Access
 
     public function can_access_cause_child_accessible($post_id)
     {
-
         $valid_user_mail = $this->validate_email();
         if (!$valid_user_mail) {
             return false;
@@ -382,7 +365,6 @@ class Access
             ", $meta_key, $valid_user_mail);
 
             $descendants_visibles = $wpdb->get_results($sql);
-
             $result = count($descendants_visibles) > 0;
 
             if ($cache_key) {
@@ -401,7 +383,6 @@ class Access
 
     public function can_access($post_id)
     {
-
         if ($this->can_access_cause_not_in_campus($post_id)) {
             return true;
         }

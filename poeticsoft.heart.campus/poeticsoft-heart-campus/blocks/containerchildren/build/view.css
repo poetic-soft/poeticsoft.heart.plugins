@@ -24,17 +24,17 @@
   --s16: calc(var(--space) * 16);
   --s18: calc(var(--space) * 18);
   --s20: calc(var(--space) * 20);
-  --color-light: #ffffff;
-  --color-dark-transparent-a: #ffffff88;
+  --color-light: #fff;
+  --color-dark-transparent-a: #fff8;
   --color-0: #ea6d4e;
   --color-1: #ca2721;
   --color-2: #55413d;
   --color-3: #334155;
-  --color-4: hsl(90, 11%, 86%);
-  --color-5: #FFFFFF;
+  --color-4: hsl(90deg, 11%, 86%);
+  --color-5: #fff;
   --color-6: #054948;
-  --color-7: #111111;
-  --color-8: rgba(255, 255, 255, 0.78);
+  --color-7: #111;
+  --color-8: rgb(255, 255, 255, 78%);
   --color-info: #35ca21;
   --color-warn: var(--color-0);
   --color-error: var(--color-1);
@@ -68,10 +68,10 @@
 }
 .wp-block-poeticsoft-heart-campus-containerchildren .Areas .Area {
   width: 100%;
-  border-color: #E2E8F0;
+  border-color: #e2e8f0;
   border-width: 1px;
   border-radius: 12px;
-  background-color: #FFFFFF;
+  background-color: #fff;
   padding: 32px;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
@@ -81,7 +81,7 @@
 .wp-block-poeticsoft-heart-campus-containerchildren .Areas .Area:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-  border-color: #E2E8F0;
+  border-color: #e2e8f0;
 }
 .wp-block-poeticsoft-heart-campus-containerchildren .Areas .Area .Title {
   margin-top: 0;

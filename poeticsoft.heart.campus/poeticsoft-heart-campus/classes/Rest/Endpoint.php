@@ -17,7 +17,6 @@ abstract class Endpoint
         return Utils::send_success($data, $status);
     }
 
-
     public function send_error($code, $message, $status = 400)
     {
         return Utils::send_error($code, $message, $status);

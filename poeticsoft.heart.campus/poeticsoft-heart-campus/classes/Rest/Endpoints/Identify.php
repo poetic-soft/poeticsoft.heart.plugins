@@ -23,7 +23,6 @@ class Identify extends Endpoint
 
     public function identify($request)
     {
-
         $email = $request->get_param('email');
         $url = $request->get_param('url');
 

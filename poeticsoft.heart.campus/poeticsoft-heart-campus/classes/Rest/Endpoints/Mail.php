@@ -19,7 +19,6 @@ class Mail extends Endpoint
         ];
     }
 
-
     public function test($request)
     {
         $smtp_use = get_option(Campus::PREFIX . 'smtp_use');

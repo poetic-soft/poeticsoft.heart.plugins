@@ -17,7 +17,7 @@ var _wp = wp,
 var getPageStatus = function getPageStatus(pageId) {
   return apiFetch({
     path: "poeticsoft/heart/campus/v1/page/access/get/".concat(pageId),
-    method: "GET"
+    method: 'GET'
   })["catch"](function (error) {
     return console.error('Heart Campus API Error:', error);
   });

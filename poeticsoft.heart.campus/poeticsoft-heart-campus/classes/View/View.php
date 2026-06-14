@@ -8,12 +8,10 @@ class View
 {
     private $base_dir;
 
-
     public function __construct()
     {
         $this->base_dir = dirname(dirname(__DIR__)) . '/views/';
     }
-
 
     public function render($template_name, $data = [], $echo = true)
     {
@@ -27,10 +25,7 @@ class View
             return;
         }
 
-
         extract($data);
-
-
         ob_start();
         include $file;
         $content = ob_get_clean();

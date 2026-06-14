@@ -30,10 +30,8 @@ class Page extends Endpoint
         ];
     }
 
-
     public function access_get($request)
     {
-
         $campus_root_id_option_name = sprintf('%sroot_post_id', Campus::PREFIX);
         $campus_root_id = intval(get_option($campus_root_id_option_name));
 
@@ -59,10 +57,7 @@ class Page extends Endpoint
         ));
 
         $ids = wp_list_pluck($descendants, 'ID');
-
         $ids[] = (int)$campus_root_id;
-
-
         $posts_status = [];
         foreach ($ids as $id) {
             $post_status = get_post_meta(
@@ -80,10 +75,8 @@ class Page extends Endpoint
         ]);
     }
 
-
     public function access_get_pageid($request)
     {
-
         $page_id = $request->get_param('pageid');
 
         if (!$page_id) {
@@ -109,8 +102,6 @@ class Page extends Endpoint
             'time'   => current_time('mysql'),
         ]);
     }
-
-
 
     public function access_update($request)
     {

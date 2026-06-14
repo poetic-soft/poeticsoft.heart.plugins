@@ -16,8 +16,6 @@ class Hall extends AdminPage
 
         $this->settings = [
 
-
-
             [
                 'key'         => 'block_cache_enabled',
                 'title'       => __('Activar caché de bloques', Campus::TEXT_DOMAIN),
@@ -28,8 +26,6 @@ class Hall extends AdminPage
                 'type'        => 'checkbox',
                 'description' => __('Cuando está activado, los bloques complejos como Contenido Relacionado guardarán en caché sus resultados indefinidamente para mejorar la velocidad de carga.', Campus::TEXT_DOMAIN),
             ],
-
-
 
             [
                 'key'         => 'magick_link_duration',
@@ -42,8 +38,6 @@ class Hall extends AdminPage
                 'description' => __('Duración en días de la validez del link de acceso al campus', Campus::TEXT_DOMAIN),
                 'width'       => 80
             ],
-
-
 
             [
                 'key' => 'access_by',
@@ -86,8 +80,6 @@ class Hall extends AdminPage
                 'section' => 'campus_settings'
             ],
 
-
-
             [
                 'key' => 'directus_access_url',
                 'field_type' => 'string',
@@ -124,8 +116,6 @@ class Hall extends AdminPage
                 'section' => 'directus'
             ],
 
-
-
             [
                 'key' => 'mailrelay_api_url',
                 'field_type' => 'string',
@@ -146,7 +136,6 @@ class Hall extends AdminPage
         ];
     }
 
-
     protected function handle_action($action)
     {
         if ('clear_block_cache' === $action) {
@@ -158,8 +147,6 @@ class Hall extends AdminPage
                 '_transient_timeout_' . $prefix . '%'
             ));
 
-
-
             add_action('admin_notices', function () {
                 $this->render_view('admin/notice', [
                     'type'    => 'success',
@@ -168,7 +155,6 @@ class Hall extends AdminPage
             });
         }
     }
-
 
     protected function render_content()
     {
@@ -180,10 +166,7 @@ class Hall extends AdminPage
             ),
         ];
 
-
         $this->render_view('admin/generic-settings');
-
-
         $this->render_view('admin/cache-management-card', $data);
     }
 }

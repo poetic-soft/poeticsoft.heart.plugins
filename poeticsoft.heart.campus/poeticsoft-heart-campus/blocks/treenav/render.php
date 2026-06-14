@@ -14,7 +14,6 @@ use Poeticsoft\Heart\Validation\Validation;
 use Poeticsoft\Heart\Utils\Utils;
 
 (function ($attributes, $content, $block) {
-
     global $wpdb;
     global $post;
 
@@ -50,7 +49,6 @@ use Poeticsoft\Heart\Utils\Utils;
     $show_legend = $attrs['showLegend'] ?? true;
     $ignore_root = (bool) ($attrs['ignoreRoot'] ?? false);
     $max_deep = intval($attrs['maxDeep'] ?? 0);
-
     $first_visible_level = $ignore_root ? 1 : 0;
     $max_allowed_level = $first_visible_level + $max_deep - 1;
 
@@ -63,7 +61,6 @@ use Poeticsoft\Heart\Utils\Utils;
     ]);
 
     $valid_user_email = Campus::get(Access::class)->validate_email();
-
     $block_id = $attrs['blockId'] ?? '';
     $cache_enabled = (bool) get_option(Campus::PREFIX . 'block_cache_enabled', true);
     $cache_key = ($block_id && $cache_enabled) ? 'poeticsoft_heart_campus_' . md5($block_id . '_' . $post->ID . '_' . $valid_user_email) : '';
@@ -76,9 +73,7 @@ use Poeticsoft\Heart\Utils\Utils;
     if (false === $dom || empty($cache_key)) {
         $admin_access_option_name = Campus::PREFIX . 'admin_access';
         $admin_access = get_option($admin_access_option_name);
-
         $is_admin_and_can_view_all = current_user_can('manage_options') && $admin_access;
-
         $user_contents = [];
         if ($valid_user_email) {
             $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
@@ -101,7 +96,6 @@ use Poeticsoft\Heart\Utils\Utils;
                 $is_user_contents = in_array($campus_root_id, $user_contents);
                 $type = get_post_meta($campus_root_id, Campus::PREFIX . 'access', true);
                 $type = is_string($type) ? trim($type) : '';
-
                 $root_level = $level + 1;
 
                 $list[] = [
@@ -147,12 +141,9 @@ use Poeticsoft\Heart\Utils\Utils;
             foreach ($pages as $page) {
                 $is_this_node_user = $page['is_user_contents'];
                 $is_this_node_free = $page['is_free'];
-
                 $inherited_user = $parent_is_user || $is_this_node_user;
                 $inherited_free = $parent_is_free || $is_this_node_free;
-
                 $children_pages = $build_object_tree($page['pages'], $inherited_user, $inherited_free);
-
                 $has_within_user = $is_this_node_user || $children_pages['has_user_content'];
                 $has_within_free = $is_this_node_free || $children_pages['has_free'];
 
@@ -242,7 +233,6 @@ use Poeticsoft\Heart\Utils\Utils;
 
         $pages_tree = $build_page_tree();
         $object_tree = $build_object_tree($pages_tree, false, false);
-
         $root_children = [];
         if ($ignore_root && !empty($object_tree['children'])) {
             $root_children = $object_tree['children'][0]['pages'] ?? [];

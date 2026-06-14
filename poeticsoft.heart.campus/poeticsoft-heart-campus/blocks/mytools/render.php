@@ -37,7 +37,6 @@ $valid_user_mail = Campus::get(Access::class)->validate_email();
 
 if ($valid_user_mail) {
     $logout_url = add_query_arg(['action' => 'logout'], get_permalink($post->ID));
-
     $element = '';
     switch ($attrs['linkType']) {
         case 'button':

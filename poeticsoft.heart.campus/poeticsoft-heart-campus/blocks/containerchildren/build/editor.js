@@ -78,7 +78,7 @@ var seenBlockIds = new Map();
 
 /**
  * Hook para gestionar un blockId único y persistente.
- * 
+ *
  * @param {string} clientId El clientId del bloque proporcionado por Gutenberg.
  * @param {Object} attributes Los atributos del bloque.
  * @param {Function} setAttributes Función para actualizar los atributos.

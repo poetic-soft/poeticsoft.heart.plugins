@@ -11,7 +11,7 @@ import './editor.scss';
 
 const Edit = (props) => {
     const { clientId, attributes, setAttributes } = props;
-    const { blockId, refClientId, ignoreRoot, onlySubscriptions, maxDeep, showLegend } = attributes;
+    const { ignoreRoot, onlySubscriptions, maxDeep, showLegend } = attributes;
     const blockProps = useBlockProps();
 
     useUniqueId(clientId, attributes, setAttributes);

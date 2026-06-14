@@ -8,10 +8,8 @@ class Meta
 {
     protected $metas;
 
-
     public function __construct()
     {
-
         $this->metas = [
             [
                 'post_type' => 'page',
@@ -26,9 +24,7 @@ class Meta
 
     public function init()
     {
-
         add_action('init', function () {
-
             foreach ($this->metas as $meta) {
                 register_post_meta(
                     $meta['post_type'],

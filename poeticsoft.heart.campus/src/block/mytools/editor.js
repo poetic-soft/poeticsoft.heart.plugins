@@ -33,7 +33,7 @@ const Link = (props) => {
 
 const Edit = (props) => {
     const { clientId, attributes, setAttributes } = props;
-    const { blockId, refClientId, linkType, idVisible } = attributes;
+    const { linkType, idVisible } = attributes;
     const blockProps = useBlockProps();
 
     const selectLinkType = (value) => {

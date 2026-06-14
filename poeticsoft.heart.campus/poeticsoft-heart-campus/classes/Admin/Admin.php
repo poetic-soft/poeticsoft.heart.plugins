@@ -25,10 +25,8 @@ class Admin
         );
     }
 
-
     public function route_sub_controllers()
     {
-
         $screen = get_current_screen();
 
         if (! $screen) {

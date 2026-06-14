@@ -9,7 +9,7 @@ import './editor.scss';
 
 const Edit = (props) => {
     const { clientId, attributes, setAttributes } = props;
-    const { blockId, refClientId, defaultOpen } = attributes;
+    const { defaultOpen } = attributes;
     const blockProps = useBlockProps();
 
     useUniqueId(clientId, attributes, setAttributes);

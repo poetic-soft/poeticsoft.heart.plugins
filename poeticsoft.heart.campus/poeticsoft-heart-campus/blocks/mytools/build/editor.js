@@ -78,7 +78,7 @@ var seenBlockIds = new Map();
 
 /**
  * Hook para gestionar un blockId único y persistente.
- * 
+ *
  * @param {string} clientId El clientId del bloque proporcionado por Gutenberg.
  * @param {Object} attributes Los atributos del bloque.
  * @param {Function} setAttributes Función para actualizar los atributos.
@@ -403,24 +403,18 @@ var Link = function Link(props) {
   switch (props.linkType) {
     case 'button':
       return /*#__PURE__*/React.createElement("button", {
-        "class": "\r wp-block-button__link \r wp-element-button\r "
+        className: "\r wp-block-button__link \r wp-element-button\r "
       }, /*#__PURE__*/React.createElement("a", {
         href: "#"
       }, __('SALIR', 'poeticsoft-heart-campus')));
-      // removed by dead control flow
-
     case 'link':
       return /*#__PURE__*/React.createElement("a", {
         href: "#"
       }, __('SALIR', 'poeticsoft-heart-campus'));
-      // removed by dead control flow
-
     default:
       return /*#__PURE__*/React.createElement("a", {
         href: "#"
       }, __('SALIR', 'poeticsoft-heart-campus'));
-      // removed by dead control flow
-
   }
 };
 var Edit = function Edit(props) {
@@ -454,7 +448,7 @@ var Edit = function Edit(props) {
     value: linkType,
     onChange: selectLinkType
   }))), /*#__PURE__*/React.createElement("div", blockProps, idVisible ? /*#__PURE__*/React.createElement("span", {
-    "class": "Identify"
+    className: "Identify"
   }, __('identificación', 'poeticsoft-heart-campus')) : '', /*#__PURE__*/React.createElement(Link, {
     linkType: linkType
   })));

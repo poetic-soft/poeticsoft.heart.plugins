@@ -14,7 +14,6 @@ class Rest
 {
     private $namespace;
 
-
     private $sections = [
         Page::class,
         Access::class,
@@ -22,12 +21,10 @@ class Rest
         Mail::class,
     ];
 
-
     public function __construct()
     {
         $this->namespace = Campus::API_NAMESPACE;
     }
-
 
     public function init()
     {
@@ -36,10 +33,8 @@ class Rest
         }
     }
 
-
     private function register_section($section_class)
     {
-
         $instance = Campus::get($section_class);
         $routes   = $instance->get_routes();
 
@@ -54,10 +49,8 @@ class Rest
         }
     }
 
-
     private function check_auth($level)
     {
-
         if ($level === Endpoint::AUTH_PUBLIC) {
             return true;
         }

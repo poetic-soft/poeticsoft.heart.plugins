@@ -137,7 +137,7 @@ var refresh = function refresh($, pages) {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
   return apiFetch({
     path: 'poeticsoft/heart/campus/v1/page/access/get',
-    method: "GET"
+    method: 'GET'
   }).then(function (response) {
     var pages = response.data.pages;
     refresh($, pages);
@@ -164,7 +164,7 @@ var _wp = wp,
 var getPageStatus = function getPageStatus(pageId) {
   return apiFetch({
     path: "poeticsoft/heart/campus/v1/page/access/get/".concat(pageId),
-    method: "GET"
+    method: 'GET'
   })["catch"](function (error) {
     return console.error('Heart Campus API Error:', error);
   });

@@ -16,7 +16,6 @@ class Dashboard extends AdminPage
         $this->page_title = sprintf(__('Panel de control de %s', Campus::TEXT_DOMAIN), Campus::PLUGIN_NAME);
     }
 
-
     protected function handle_action($action)
     {
         if ('refresh_status' === $action) {

@@ -54,7 +54,6 @@ if (false === $related_dom || empty($cache_key)) {
     $area_heading_tag = tag_escape($attrs['areaHeadingType'] ?? 'h3');
     $title = $attrs['title'] ?? '';
     $visibility = $attrs['visibility'] ?? 'visiblealways';
-
     $campus_root_id = absint(get_option(Campus::PREFIX . 'root_post_id', 0));
 
     $has_children = count(get_posts([

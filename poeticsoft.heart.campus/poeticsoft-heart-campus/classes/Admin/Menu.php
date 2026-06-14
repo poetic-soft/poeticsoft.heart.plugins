@@ -15,7 +15,6 @@ class Menu
         return Campus::PLUGIN_SLUG;
     }
 
-
     private $pages = [
         Dashboard::class,
         Smtp::class,
@@ -23,17 +22,14 @@ class Menu
         Access::class,
     ];
 
-
     public function init()
     {
         add_action('admin_menu', [$this, 'register_menus']);
     }
 
-
     public function register_menus()
     {
         $parent_slug = $this->get_parent_slug();
-
 
         add_menu_page(
             Campus::PLUGIN_NAME,
@@ -45,11 +41,8 @@ class Menu
             30
         );
 
-
         foreach ($this->pages as $page_class) {
             $page = Campus::get($page_class);
-
-
 
             if ($page->get_slug() === $parent_slug) {
                 $page->init();
@@ -64,7 +57,6 @@ class Menu
                 $page->get_slug(),
                 [$page, 'render']
             );
-
 
             $page->init();
         }

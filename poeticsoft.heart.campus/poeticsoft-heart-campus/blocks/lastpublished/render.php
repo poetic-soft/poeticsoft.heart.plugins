@@ -27,7 +27,7 @@ $schema = [
     'title'              => ['type' => 'text', 'required' => false],
     'maxCount'           => ['type' => 'number', 'required' => false],
     'sectionHeadingType' => ['type' => 'key',  'required' => false],
-    'areaHeadingType'    => ['type' => 'key',  'required' => false],// JSON string
+    'areaHeadingType'    => ['type' => 'key',  'required' => false], // JSON string
     'mode'               => ['type' => 'key',  'required' => false],
     'visibility'         => ['type' => 'key',  'required' => false],
 ];
@@ -52,9 +52,8 @@ if (false === $related_dom || empty($cache_key)) {
     $section_heading_tag = tag_escape($attrs['sectionHeadingType'] ?? 'h2');
     $area_heading_tag = tag_escape($attrs['areaHeadingType'] ?? 'h3');
     $title = $attrs['title'] ?? '';
-    $max_count = $attrs['maxCount'] ?? 3;
+    $max_count = intval($attrs['maxCount'] ?? 3);
     $visibility = $attrs['visibility'] ?? 'visiblealways';
-
     $campus_root_id = absint(get_option(Campus::PREFIX . 'root_post_id', 0));
 
     $has_children = count(get_posts([
@@ -68,7 +67,7 @@ if (false === $related_dom || empty($cache_key)) {
         return;
     }
 
-    $results = Campus::get(Access::class)->all_user_access_posts(0);
+    $results = Campus::get(Access::class)->all_user_access_posts($max_count);
 
     if (count($results)) {
         $title_dom = '';

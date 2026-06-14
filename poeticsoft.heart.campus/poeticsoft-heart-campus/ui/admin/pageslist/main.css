@@ -25,17 +25,17 @@
   --s16: calc(var(--space) * 16);
   --s18: calc(var(--space) * 18);
   --s20: calc(var(--space) * 20);
-  --color-light: #ffffff;
-  --color-dark-transparent-a: #ffffff88;
+  --color-light: #fff;
+  --color-dark-transparent-a: #fff8;
   --color-0: #ea6d4e;
   --color-1: #ca2721;
   --color-2: #55413d;
   --color-3: #334155;
-  --color-4: hsl(90, 11%, 86%);
-  --color-5: #FFFFFF;
+  --color-4: hsl(90deg, 11%, 86%);
+  --color-5: #fff;
   --color-6: #054948;
-  --color-7: #111111;
-  --color-8: rgba(255, 255, 255, 0.78);
+  --color-7: #111;
+  --color-8: rgb(255, 255, 255, 78%);
   --color-info: #35ca21;
   --color-warn: var(--color-0);
   --color-error: var(--color-1);
@@ -79,7 +79,7 @@ body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title 
   position: relative;
   cursor: pointer;
 }
-body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title .TitleContainer .OpenClose:after, body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title .TitleContainer .OpenClose:before {
+body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title .TitleContainer .OpenClose::after, body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title .TitleContainer .OpenClose::before {
   content: "";
   display: block;
   width: var(--s15);
@@ -88,11 +88,11 @@ body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title 
   position: absolute;
   left: 6px;
 }
-body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title .TitleContainer .OpenClose:after {
+body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title .TitleContainer .OpenClose::after {
   transform: rotate(45deg);
   top: var(--s);
 }
-body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title .TitleContainer .OpenClose:before {
+body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title .TitleContainer .OpenClose::before {
   transform: rotate(-45deg);
   top: var(--s2);
 }
@@ -104,7 +104,7 @@ body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title 
   margin-right: var(--s);
   position: relative;
 }
-body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title .TitleContainer .Indent:before {
+body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr td.column-title .TitleContainer .Indent::before {
   content: "";
   display: block;
   width: var(--s);
@@ -150,19 +150,19 @@ body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.level-9 td.colum
 body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.level-10 td.column-title {
   padding-left: calc(var(--s4) * 10);
 }
-body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.Opened td.column-title .TitleContainer .OpenClose:after, body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.Opened td.column-title .TitleContainer .OpenClose:before {
+body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.Opened td.column-title .TitleContainer .OpenClose::after, body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.Opened td.column-title .TitleContainer .OpenClose::before {
   top: var(--s15);
 }
-body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.Opened td.column-title .TitleContainer .OpenClose:after {
+body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.Opened td.column-title .TitleContainer .OpenClose::after {
   left: 2px;
 }
-body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.Opened td.column-title .TitleContainer .OpenClose:before {
+body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.Opened td.column-title .TitleContainer .OpenClose::before {
   left: 10px;
 }
 body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.level-0, body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.Visible {
   display: table-row !important;
 }
-body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.InCampus td.column-title .TitleContainer a.row-title:before {
+body.PoeticsoftHeartCampus.wp-admin.post-type-page #the-list tr.InCampus td.column-title .TitleContainer a.row-title::before {
   content: "📚";
   margin-right: var(--s05);
 }

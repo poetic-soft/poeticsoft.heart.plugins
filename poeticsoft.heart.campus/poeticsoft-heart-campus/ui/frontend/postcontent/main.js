@@ -101,9 +101,9 @@ __webpack_require__.r(__webpack_exports__);
 var apiFetch = function apiFetch(data) {
   return new Promise(function (resolve, reject) {
     fetch('/wp-json/poeticsoft/heart/campus/v1/' + data.url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
         'X-WP-Nonce': poeticsoft_heart_campus_api.nonce
       },

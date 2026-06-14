@@ -11,7 +11,6 @@ class PostContent
 {
     public function __construct()
     {
-
         add_action(
             'wp_enqueue_scripts',
             [$this, 'enqueue_scripts']
@@ -32,10 +31,8 @@ class PostContent
         );
     }
 
-
     public function enqueue_scripts()
     {
-
         global $post;
         if (
             !$post
@@ -108,7 +105,6 @@ class PostContent
 
             $settings['style'][] = 'wp-block-button';
             $settings['style'][] = 'wp-block-buttons';
-
             $settings['style'] = array_unique($settings['style']);
         }
 
@@ -117,7 +113,6 @@ class PostContent
 
     public function post_content_render($block_content, $block)
     {
-
         global $post;
 
         if (!$post) {
@@ -140,7 +135,6 @@ class PostContent
 
     private function render_access_messages($block_content, $post_id)
     {
-
         if (
             current_user_can('manage_options')
             &&
@@ -149,7 +143,6 @@ class PostContent
             $banner = Campus::get(View::class)->render('frontend/admin-view-banner', [], false);
             return $banner . $block_content;
         }
-
 
         $valid_user_mail = Campus::get(Access::class)->validate_email();
         if ($valid_user_mail) {
@@ -176,7 +169,6 @@ class PostContent
 
     private function render_access_form($post_id, $block_attrs)
     {
-
         $show_restricted_text = isset($block_attrs['showRestrictedText']) ?
         $block_attrs['showRestrictedText'] : '';
         $post_child_ids = get_posts([

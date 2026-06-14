@@ -66,7 +66,6 @@ class Smtp extends AdminPage
                 ],
             ],
 
-
             [
                 'key'         => 'smtp_user',
                 'field_type'  => 'text',
@@ -84,7 +83,6 @@ class Smtp extends AdminPage
                 'type'        => 'password',
                 'section'     => 'auth_settings',
             ],
-
 
             [
                 'key'         => 'smtp_from_email',

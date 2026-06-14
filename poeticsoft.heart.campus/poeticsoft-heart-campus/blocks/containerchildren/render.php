@@ -37,7 +37,6 @@ if (is_wp_error($attrs)) {
 }
 
 $valid_user_email = Campus::get(Access::class)->validate_email();
-
 $block_id = $attrs['blockId'] ?? '';
 $cache_enabled = (bool) get_option(Campus::PREFIX . 'block_cache_enabled', true);
 $cache_key = ($block_id && $cache_enabled) ? 'poeticsoft_heart_campus_' . md5($block_id . '_' . $post->ID . '_' . $valid_user_email) : '';
@@ -141,7 +140,6 @@ if (false === $dom || empty($cache_key)) {
                             '',
                             array_map(
                                 function ($page) {
-
                                     return '<div class="ChildChildPage">
                                         <a href="' . get_permalink($page->ID) . '">
                                             ' . $page->post_title . '

@@ -30,10 +30,8 @@ class Mail
         );
     }
 
-
     public function phpmailer_init($phpmailer)
     {
-
         $smtp_use = get_option(Campus::PREFIX . 'smtp_use');
 
         if (!$smtp_use) {
@@ -47,11 +45,7 @@ class Mail
         $smtp_password   = get_option(Campus::PREFIX . 'smtp_pass');
         $smtp_from       = get_option(Campus::PREFIX . 'smtp_from_email');
         $smtp_fromname   = get_option(Campus::PREFIX . 'smtp_from_name');
-
-
         $phpmailer->isSMTP();
-
-
 
         $phpmailer->Debugoutput = function ($str, $level) {
             Utils::log("SMTP debug [$level]: " . trim($str));
@@ -75,10 +69,8 @@ class Mail
         $phpmailer->isHTML(true);
     }
 
-
     public function mail_from($from)
     {
-
         $smtp_use = get_option(Campus::PREFIX . 'smtp_use');
         if (!$smtp_use) {
             return $from;
@@ -88,7 +80,6 @@ class Mail
 
         return $smtp_from_email ? $smtp_from_email : $from;
     }
-
 
     public function mail_from_name($from_name)
     {
@@ -102,10 +93,8 @@ class Mail
         return $smtp_from_name ? $smtp_from_name : $from_name;
     }
 
-
     public function mail_failed($wp_error)
     {
-
         Utils::log('---------------------------------------------------------------');
         Utils::log('wp_mail failed error details:');
         Utils::log('---------------------------------------------------------------');

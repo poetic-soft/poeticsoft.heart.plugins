@@ -23,4 +23,15 @@
         <!-- Allow snake_case method names standard in WordPress development -->
         <exclude name="PSR1.Methods.CamelCapsMethodName.NotCamelCaps"/>
     </rule>
+
+    <!-- Enforce consistent line spacing -->
+    <!-- Disallow multiple consecutive blank lines inside functions, classes, and files -->
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <properties>
+            <property name="ignoreBlankLines" value="false"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines"/>
+
+
 </ruleset>

@@ -35,9 +35,7 @@ if (is_single() || is_page()) {
 
     $campus_root_id_option_name = sprintf('%sroot_post_id', Campus::PREFIX);
     $campus_root_id = get_option($campus_root_id_option_name);
-
     $separator = '<span class="Separator">&raquo;</span>';
-
     $ancestors = get_post_ancestors($post);
     $ancestors = array_reverse($ancestors);
     $breadcrumbs = implode(

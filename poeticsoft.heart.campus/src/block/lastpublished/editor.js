@@ -44,16 +44,7 @@ const hs = {
 
 const Edit = (props) => {
     const { clientId, attributes, setAttributes } = props;
-    const {
-        blockId,
-        refClientId,
-        title,
-        maxCount,
-        sectionHeadingType,
-        areaHeadingType,
-        mode,
-        visibility
-    } = attributes;
+    const { title, maxCount, sectionHeadingType, areaHeadingType, mode, visibility } = attributes;
 
     const blockProps = useBlockProps();
 

@@ -10,7 +10,6 @@ class Pages
 {
     public function init()
     {
-
         add_filter(
             'manage_pages_columns',
             [$this, 'manage_pages_columns']
@@ -50,14 +49,12 @@ class Pages
 
     public function manage_pages_columns($columns)
     {
-
         $columns['access'] = 'Acceso';
         return $columns;
     }
 
     public function manage_pages_custom_column($column_name, $post_id)
     {
-
         if (
             Utils::post_is_in_campus($post_id)
             &&
@@ -73,7 +70,6 @@ class Pages
         }
     }
 
-
     public function quick_edit($column_name, $post_type)
     {
         if ($post_type !== 'page' || $column_name !== 'access') {
@@ -85,7 +81,6 @@ class Pages
         if (!$is_bulk) {
             $nonce_action = Campus::PREFIX . 'status_nonce';
             $nonce_name = $nonce_action . '_field';
-
             wp_nonce_field($nonce_action, $nonce_name);
         }
 
@@ -99,7 +94,6 @@ class Pages
         ]);
     }
 
-
     public function add_metaboxes()
     {
         add_meta_box(
@@ -111,7 +105,6 @@ class Pages
             'default'
         );
     }
-
 
     public function render_metabox($post)
     {
@@ -130,7 +123,6 @@ class Pages
             'current_value' => $current_value,
         ]);
     }
-
 
     public function save_post($post_id)
     {

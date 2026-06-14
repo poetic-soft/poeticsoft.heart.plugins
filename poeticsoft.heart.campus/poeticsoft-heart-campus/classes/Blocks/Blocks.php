@@ -9,10 +9,8 @@ class Blocks
 {
     private $available_blocks;
 
-
     public function init()
     {
-
         $this->available_blocks = [
            'breadcrumbs',
             'columntools',
@@ -29,14 +27,12 @@ class Blocks
 
     private function register_category()
     {
-
         add_filter(
             'block_categories_all',
             function (
                 $categories,
                 $post
             ) {
-
                 return array_merge(
                     [
                         [
@@ -55,11 +51,9 @@ class Blocks
 
     private function register_blocks()
     {
-
         add_action(
             'enqueue_block_editor_assets',
             function () {
-
                 wp_enqueue_script(
                     Campus::PREFIX . 'coreblocks-configs',
                     Utils::url('ui/edit/coreconfigs/main.js'),
@@ -82,7 +76,6 @@ class Blocks
         add_filter(
             'register_block_type_args',
             function ($args, $block_type) {
-
                 if ($block_type === 'core/post-content') {
                     if (! isset($args['attributes'])) {
                         $args['attributes'] = array();
@@ -100,7 +93,6 @@ class Blocks
         add_action(
             'init',
             function () {
-
                 $blocks_path = Utils::path('blocks');
                 $block_paths = glob($blocks_path . '/*', GLOB_ONLYDIR);
                 $block_names = array_map('basename', $block_paths);
@@ -111,7 +103,6 @@ class Blocks
                     }
 
                     $block_json_dir = $blocks_path . '/' . $block_name;
-
                     register_block_type($block_json_dir);
                 }
             }

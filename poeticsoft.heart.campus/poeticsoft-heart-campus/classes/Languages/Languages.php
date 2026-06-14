@@ -12,7 +12,6 @@ class Languages
         add_action('init', [$this, 'load_textdomain']);
     }
 
-
     public function load_textdomain()
     {
         load_plugin_textdomain(
@@ -21,7 +20,6 @@ class Languages
             Utils::path('languages')
         );
     }
-
 
     public function get_domain()
     {

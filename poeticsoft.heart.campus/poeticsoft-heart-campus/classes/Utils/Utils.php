@@ -8,7 +8,6 @@ class Utils
 {
     public static function get_request_ip()
     {
-
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -21,18 +20,15 @@ class Utils
         return $ip;
     }
 
-
     public static function path($relative_path = '')
     {
         return plugin_dir_path(dirname(__DIR__, 2) . '/' . Campus::PLUGIN_SLUG . '.php') . ltrim($relative_path, '/');
     }
 
-
     public static function url($relative_path = '')
     {
         return plugin_dir_url(dirname(__DIR__, 2) . '/' . Campus::PLUGIN_SLUG . '.php') . ltrim($relative_path, '/');
     }
-
 
     public static function log($message, $level = 'info')
     {
@@ -44,10 +40,8 @@ class Utils
         }
 
         $formatted_message = sprintf("[%s] [%s]: %s\n", $timestamp, strtoupper($level), $message);
-
         file_put_contents($log_file, $formatted_message, FILE_APPEND);
     }
-
 
     public static function is_rest()
     {
@@ -59,10 +53,8 @@ class Utils
             return false;
         }
 
-
         return strpos($_SERVER['REQUEST_URI'], '/wp-json/') !== false;
     }
-
 
     public static function sanitize($value, $type = 'text')
     {
@@ -93,7 +85,6 @@ class Utils
         }
     }
 
-
     public static function validate($value, $rule)
     {
         if (( is_null($value) || $value === '' ) && 'required' === $rule) {
@@ -118,7 +109,6 @@ class Utils
         }
     }
 
-
     public static function validate_schema($data, $schema)
     {
         $sanitized = [];
@@ -127,18 +117,15 @@ class Utils
         foreach ($schema as $field => $rules) {
             $value = $data[ $field ] ?? null;
 
-
             if (! empty($rules['required']) && empty($value)) {
                 $errors->add('missing_field', "Field '{$field}' is required.");
                 continue;
             }
 
-
             if (! empty($rules['rule']) && ! self::validate($value, $rules['rule'])) {
                 $errors->add('invalid_field', "Field '{$field}' is invalid.");
                 continue;
             }
-
 
             $type = $rules['type'] ?? 'text';
             $sanitized[ $field ] = self::sanitize($value, $type);
@@ -151,7 +138,6 @@ class Utils
         return $sanitized;
     }
 
-
     public static function send_success($data, $status = 200)
     {
         return new \WP_REST_Response([
@@ -159,7 +145,6 @@ class Utils
             'data'    => $data,
         ], $status);
     }
-
 
     public static function send_error($code, $message, $status = 400)
     {
@@ -172,7 +157,6 @@ class Utils
         ], $status);
     }
 
-
     public static function map_field_type_to_wp($type)
     {
         $map = [
@@ -183,30 +167,24 @@ class Utils
         return $map[$type] ?? 'string';
     }
 
-
     public static function get_campus_root_id()
     {
-
         $campus_root_id_option_name = sprintf('%sroot_post_id', Campus::PREFIX);
         $campus_root_id = get_option($campus_root_id_option_name);
 
         return $campus_root_id ? intval($campus_root_id) : null;
     }
 
-
     public static function get_allow_admin()
     {
-
         $allow_admin_option_name = sprintf('%sadmin_access', Campus::PREFIX);
         $allow_admin = get_option($allow_admin_option_name);
 
         return (bool) $allow_admin;
     }
 
-
     public static function post_is_in_campus($post_id)
     {
-
         if ($post_id) {
             $campus_root_id = self::get_campus_root_id();
             $ancestors = get_post_ancestors($post_id);

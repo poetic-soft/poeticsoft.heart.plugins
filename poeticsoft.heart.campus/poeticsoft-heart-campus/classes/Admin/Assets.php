@@ -20,20 +20,14 @@ class Assets
         );
     }
 
-
     public function enqueue_scripts($hook_suffix)
     {
-
         $screen = get_current_screen();
-
         $screen_id = sprintf('%1$s_%2$s', $screen->base, $screen->id);
         $page_access = sprintf('%s_page_%saccess', Campus::PLUGIN_SLUG, Campus::PREFIX);
-
         $enqueue_handle = Campus::PLUGIN_SLUG . 'admin-';
         $enqueue_url = 'ui/admin/';
-
         $enqueue_data = null;
-
 
         switch ($hook_suffix) {
             case $page_access:
@@ -47,7 +41,6 @@ class Assets
 
                 break;
         }
-
 
         switch ($screen_id) {
             case 'edit_edit-page':
@@ -81,7 +74,6 @@ class Assets
 
     private function enqueue($enqueue_data)
     {
-
         wp_enqueue_style(
             $enqueue_data['handle'],
             Utils::url($enqueue_data['url'] . 'css'),
@@ -98,10 +90,8 @@ class Assets
         );
     }
 
-
     private function add_inline_script($enqueue_data)
     {
-
         switch ($enqueue_data['enqueue']) {
             case 'edit_edit-page':
                 $pages = get_posts([
@@ -115,7 +105,6 @@ class Assets
                 foreach ($pages as $page_id) {
                     $page_ids['post-' . $page_id] = array_map(
                         function ($child) {
-
                             return 'post-' . $child;
                         },
                         get_children([
@@ -134,8 +123,6 @@ class Assets
                     $inline_js,
                     'after'
                 );
-
-
 
                 $campus_root_id_option_name = sprintf('%sroot_post_id', Campus::PREFIX);
                 $campus_root_id = intval(get_option($campus_root_id_option_name));
@@ -158,7 +145,6 @@ class Assets
                 $descendant_ids[] = $campus_root_id;
                 $campus_ids = array_map(
                     function ($id) {
-
                         return 'post-' . $id;
                     },
                     $descendant_ids
@@ -179,7 +165,6 @@ class Assets
 
     public function enqueue_block_assets()
     {
-
         wp_enqueue_style('dashicons');
     }
 }

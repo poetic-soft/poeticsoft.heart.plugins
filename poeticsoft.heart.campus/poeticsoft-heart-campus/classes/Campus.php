@@ -20,7 +20,6 @@ final class Campus
 
     const VERSION = '1.0.0';
 
-
     const PLUGIN_ID      = 'campus';
     const PLUGIN_NAME    = 'Poeticsoft Heart Campus';
     const PLUGIN_SLUG    = 'poeticsoft-heart-' . self::PLUGIN_ID;
@@ -28,25 +27,20 @@ final class Campus
     const PREFIX         = 'poeticsoft_heart_' . self::PLUGIN_ID . '_';
     const API_NAMESPACE  = 'poeticsoft/heart/' . self::PLUGIN_ID . '/v1';
 
-
     private static $instance = null;
-
 
     public static function instance()
     {
         if (is_null(self::$instance)) {
             self::$instance = new self();
-
             self::$instance->init();
         }
         return self::$instance;
     }
 
-
     private function __construct()
     {
     }
-
 
     public static function get($class)
     {
@@ -56,28 +50,20 @@ final class Campus
         return self::$services[$class];
     }
 
-
     private function init()
     {
-
         $this->init_global();
-
 
         if (is_admin()) {
             $this->init_admin();
         }
 
-
-
         $this->init_rest();
-
-
 
         if (! is_admin() && ! Utils::is_rest()) {
             $this->init_frontend();
         }
     }
-
 
     private function init_admin()
     {
@@ -85,12 +71,10 @@ final class Campus
         self::get(Admin::class)->init();
     }
 
-
     private function init_frontend()
     {
         self::get(Frontend::class)->init();
     }
-
 
     private function init_rest()
     {
@@ -99,25 +83,16 @@ final class Campus
         });
     }
 
-
     private function init_global()
     {
-
         self::get(Languages::class)->init();
-
-
         self::get(Database::class)->init();
-
-
         self::get(Blocks::class)->init();
-
-
         self::get(Mail::class)->init();
 
         add_action(
             'init',
             function () {
-
                 register_taxonomy_for_object_type('post_tag', 'page');
             }
         );

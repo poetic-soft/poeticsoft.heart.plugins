@@ -11,12 +11,10 @@ class Validation
         return Utils::sanitize($value, $type);
     }
 
-
     public function validate($value, $rule)
     {
         return Utils::validate($value, $rule);
     }
-
 
     public function validate_schema($data, $schema)
     {

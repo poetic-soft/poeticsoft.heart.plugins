@@ -25,17 +25,17 @@
   --s16: calc(var(--space) * 16);
   --s18: calc(var(--space) * 18);
   --s20: calc(var(--space) * 20);
-  --color-light: #ffffff;
-  --color-dark-transparent-a: #ffffff88;
+  --color-light: #fff;
+  --color-dark-transparent-a: #fff8;
   --color-0: #ea6d4e;
   --color-1: #ca2721;
   --color-2: #55413d;
   --color-3: #334155;
-  --color-4: hsl(90, 11%, 86%);
-  --color-5: #FFFFFF;
+  --color-4: hsl(90deg, 11%, 86%);
+  --color-5: #fff;
   --color-6: #054948;
-  --color-7: #111111;
-  --color-8: rgba(255, 255, 255, 0.78);
+  --color-7: #111;
+  --color-8: rgb(255, 255, 255, 78%);
   --color-info: #35ca21;
   --color-warn: var(--color-0);
   --color-error: var(--color-1);
@@ -73,7 +73,7 @@
   position: relative;
   cursor: pointer;
 }
-.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose:after, .wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose:before {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose::after, .wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose::before {
   content: "";
   display: block;
   width: var(--s15);
@@ -82,11 +82,11 @@
   position: absolute;
   left: 6px;
 }
-.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose:after {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose::after {
   transform: rotate(45deg);
   top: var(--s);
 }
-.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose:before {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .OpenClose::before {
   transform: rotate(-45deg);
   top: var(--s2);
 }
@@ -98,7 +98,7 @@
   margin-right: var(--s05);
   position: relative;
 }
-.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .Indent:before {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title .Indent::before {
   content: "";
   display: block;
   width: var(--s);
@@ -117,13 +117,13 @@
 .wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon {
   display: inline-block;
 }
-.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon:after {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon::after {
   content: "🗝️​";
 }
-.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon.Paid:after {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon.Paid::after {
   content: "✅​";
 }
-.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon.Free:after {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title a.TitleLink .Icon.Free::after {
   content: "✔️​";
 }
 .wp-block-poeticsoft-heart-campus-treenav .Nav .Page .Title.Current a.TitleLink .Text {
@@ -133,13 +133,13 @@
   margin-left: var(--s15);
   display: none;
 }
-.wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose:after, .wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose:before {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose::after, .wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose::before {
   top: 14px;
 }
-.wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose:after {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose::after {
   left: 2px;
 }
-.wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose:before {
+.wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Title > .OpenClose::before {
   left: 10px;
 }
 .wp-block-poeticsoft-heart-campus-treenav .Nav .Page.Visible > .Pages {
@@ -157,13 +157,13 @@
 .wp-block-poeticsoft-heart-campus-treenav .Legend .Type .Icon {
   display: inline-block;
 }
-.wp-block-poeticsoft-heart-campus-treenav .Legend .Type.ShouldPay .Icon:after {
+.wp-block-poeticsoft-heart-campus-treenav .Legend .Type.ShouldPay .Icon::after {
   content: "🗝️​";
 }
-.wp-block-poeticsoft-heart-campus-treenav .Legend .Type.Free .Icon:after {
+.wp-block-poeticsoft-heart-campus-treenav .Legend .Type.Free .Icon::after {
   content: "✔️​";
 }
-.wp-block-poeticsoft-heart-campus-treenav .Legend .Type.Paid .Icon:after {
+.wp-block-poeticsoft-heart-campus-treenav .Legend .Type.Paid .Icon::after {
   content: "✅​";
 }
 

@@ -12,16 +12,12 @@ class Database
         return Campus::PREFIX . 'db_version';
     }
 
-
     const TARGET_VERSION = '1.0.0';
-
 
     public function init()
     {
-
         add_action('admin_init', [$this, 'check_version']);
     }
-
 
     public function check_version()
     {
@@ -31,7 +27,6 @@ class Database
             $this->install();
         }
     }
-
 
     public function install()
     {
@@ -49,26 +44,20 @@ class Database
         update_option($this->get_db_version_option(), self::TARGET_VERSION);
     }
 
-
     public function uninstall()
     {
         global $wpdb;
 
-
         $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
         $wpdb->query("DROP TABLE IF EXISTS $table_name");
-
-
         delete_option($this->get_db_version_option());
     }
-
 
     private function get_schema($charset_collate)
     {
         global $wpdb;
 
         $tables = [];
-
         $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
         $tables[] = "CREATE TABLE $table_name (
 			id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,

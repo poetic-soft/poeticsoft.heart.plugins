@@ -87,7 +87,7 @@ var postContentVisibleOptions = [{
   value: 'onlyincontents'
 }];
 var withInspectorControls = createHigherOrderComponent(function (BlockEdit) {
-  return function (props) {
+  return function WithInspectorControls(props) {
     if (props.name === 'core/post-content') {
       var attributes = props.attributes,
         setAttributes = props.setAttributes;

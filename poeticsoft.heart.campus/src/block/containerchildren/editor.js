@@ -50,8 +50,7 @@ const hs = {
 
 const Edit = (props) => {
     const { clientId, attributes, setAttributes } = props;
-    const { blockId, refClientId, title, sectionHeadingType, areaHeadingType, contents, mode } =
-        attributes;
+    const { title, sectionHeadingType, areaHeadingType, contents, mode } = attributes;
     const blockProps = useBlockProps();
 
     useUniqueId(clientId, attributes, setAttributes);

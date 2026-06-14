@@ -6,13 +6,11 @@ class Updater
 {
     private $remote_url = 'https://poeticsoft.com/plugins/poeticsoft-heart-campus/poeticsoft-heart-campus.json';
 
-
     public function init()
     {
         add_filter('site_transient_update_plugins', [$this, 'check_update']);
         add_filter('plugins_api', [$this, 'plugin_info'], 20, 3);
     }
-
 
     public function check_update($transient)
     {
@@ -29,13 +27,11 @@ class Updater
             $res->new_version = $remote->version;
             $res->tested      = $remote->tested;
             $res->package     = $remote->download_url;
-
             $transient->response[$res->plugin] = $res;
         }
 
         return $transient;
     }
-
 
     public function plugin_info($res, $action, $args)
     {
@@ -67,7 +63,6 @@ class Updater
 
         return $res;
     }
-
 
     private function get_remote_data()
     {

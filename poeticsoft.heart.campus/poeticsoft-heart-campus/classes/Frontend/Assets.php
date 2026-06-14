@@ -17,7 +17,6 @@ class Assets
 
     public function enqueue_scripts()
     {
-
         wp_register_script(
             Campus::PLUGIN_SLUG . '-api-front',
             false,
