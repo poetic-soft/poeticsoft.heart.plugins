@@ -48,7 +48,7 @@ if ($cache_key) {
 
 if (false === $dom || empty($cache_key)) {
     $mode = $attrs['mode'] ?? 'compact';
-    $contents = $attrs['contents'] ?? 'subscriptionsandfree';
+    $contents = $attrs['contents'] ?? 'subscriptionsandopen';
     $section_heading_tag = tag_escape($attrs['sectionHeadingType'] ?? 'h3');
     $area_heading_tag = tag_escape($attrs['areaHeadingType'] ?? 'h4');
     $title = $attrs['title'] ?? '';
@@ -70,7 +70,7 @@ if (false === $dom || empty($cache_key)) {
                 }
                 break;
 
-            case 'subscriptionsandfree':
+            case 'subscriptionsandopen':
                 $child_ids = array_values(
                     array_filter(
                         $child_ids,

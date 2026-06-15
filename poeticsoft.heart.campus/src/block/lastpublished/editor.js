@@ -59,9 +59,9 @@ const Edit = (props) => {
                 >
                     <div
                         className="
-          containerchildren
-          SeccionTitle
-        "
+                            containerchildren
+                            SeccionTitle
+                        "
                     >
                         <div className="EditTitle">
                             {__('Título de sección', 'poeticsoft-heart-campus')}
@@ -87,7 +87,7 @@ const Edit = (props) => {
                         min={0}
                         onChange={(value) =>
                             setAttributes({
-                                maxCount: value
+                                maxCount: parseInt(value)
                             })
                         }
                         isDragEnabled={true}

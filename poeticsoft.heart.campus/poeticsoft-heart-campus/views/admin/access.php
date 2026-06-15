@@ -7,28 +7,34 @@
  * @var string $sorted_list
  */
 
-    $access_table = '';
-    $index = 1;
-foreach ($sorted_list as $mail => $titles) {
-    $titles_table = '<div class="posts">';
-    foreach ($titles as $title) {
-        $titles_table .= '<div class="post">' .
-            $title .
-        '</div>';
+$access_table = '';
+$index = 1;
+foreach ($sorted_list as $mail => $datas) {
+    $subscriptions_table = '<div class="posts">';
+    foreach ($datas as $data) {
+
+        $subscriptions_table .= '<div class="post">
+            <span class="pageid">' .
+            $data['page_id'] .
+            '</span>
+            <span class="pagepath">' .
+            $data['page_path'] .
+            '</span>
+        </div>';
     }
-    $titles_table .= '</div>';
+    $subscriptions_table .= '</div>';
 
     $access_table .= '<div class="user">
-            <div class="index-mail">
-                <div class="index">' .
-                $index .
-            '</div>
-                <div class="mail">' .
-                $mail .
-            '</div>
-            </div>' .
-        $titles_table .
-    '</div>';
+        <div class="index-mail">
+            <div class="index">' .
+        $index .
+        '</div>
+            <div class="mail">' .
+        $mail .
+        '</div>
+        </div>' .
+        $subscriptions_table .
+        '</div>';
 
     $index++;
 }
@@ -44,13 +50,13 @@ foreach ($sorted_list as $mail => $titles) {
 
 <div class="stats">
     <div class="stat users">
-        <div class="text"><?php _e('Humanos', \Poeticsoft\Heart\Campus::TEXT_DOMAIN); ?></div> 
-        <div class="value"><?php echo $sorted_list->count(); ?></div>      
+        <div class="text"><?php _e('Humanos', \Poeticsoft\Heart\Campus::TEXT_DOMAIN); ?></div>
+        <div class="value"><?php echo $sorted_list->count(); ?></div>
     </div>
 </div>
 
 <div class="access">
     <table>
-    <?php echo $access_table; ?>        
+        <?php echo $access_table; ?>
     </table>
 </div>

@@ -169,6 +169,7 @@ class PostContent
 
     private function render_access_form($post_id, $block_attrs)
     {
+
         $show_restricted_text = isset($block_attrs['showRestrictedText']) ?
             $block_attrs['showRestrictedText'] : '';
         $post_child_ids = get_posts([

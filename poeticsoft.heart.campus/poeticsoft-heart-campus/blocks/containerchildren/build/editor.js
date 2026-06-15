@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   LinkSelector: () => (/* binding */ LinkSelector)
 /* harmony export */ });
 var SelectControl = wp.components.SelectControl;
+var __ = wp.i18n.__;
 var LinkSelector = function LinkSelector(_ref) {
   var value = _ref.value,
     onChange = _ref.onChange;
@@ -52,7 +53,7 @@ var HeadingSelector = function HeadingSelector(props) {
     value: 'h6'
   }];
   return /*#__PURE__*/React.createElement(SelectControl, {
-    label: props.title || 'Elemento',
+    label: props.title || __('Elemento', 'poeticsoft-heart-campus'),
     value: props.value,
     options: options,
     onChange: props.onChange
@@ -405,8 +406,8 @@ var contentsOptions = [{
   label: __('Todo visible para identificados', 'poeticsoft-heart-campus'),
   value: 'allidentified'
 }, {
-  label: __('Suscripciones & Libre', 'poeticsoft-heart-campus'),
-  value: 'subscriptionsandfree'
+  label: __('Suscripciones & Abierto', 'poeticsoft-heart-campus'),
+  value: 'subscriptionsandopen'
 }];
 var modeOptions = [{
   label: __('Título, Imagen & Extracto', 'poeticsoft-heart-campus'),
@@ -454,9 +455,7 @@ var Edit = function Edit(props) {
   var clientId = props.clientId,
     attributes = props.attributes,
     setAttributes = props.setAttributes;
-  var blockId = attributes.blockId,
-    refClientId = attributes.refClientId,
-    title = attributes.title,
+  var title = attributes.title,
     sectionHeadingType = attributes.sectionHeadingType,
     areaHeadingType = attributes.areaHeadingType,
     contents = attributes.contents,

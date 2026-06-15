@@ -32,6 +32,7 @@ class Utils
 
     public static function log($message, $level = 'info')
     {
+
         $log_file = self::path('debug.log');
         $timestamp = date('Y-m-d H:i:s');
 
@@ -87,7 +88,7 @@ class Utils
 
     public static function validate($value, $rule)
     {
-        if (( is_null($value) || $value === '' ) && 'required' === $rule) {
+        if ((is_null($value) || $value === '') && 'required' === $rule) {
             return false;
         }
 
@@ -115,7 +116,7 @@ class Utils
         $errors    = new \WP_Error();
 
         foreach ($schema as $field => $rules) {
-            $value = $data[ $field ] ?? null;
+            $value = $data[$field] ?? null;
 
             if (! empty($rules['required']) && empty($value)) {
                 $errors->add('missing_field', "Field '{$field}' is required.");
@@ -128,7 +129,7 @@ class Utils
             }
 
             $type = $rules['type'] ?? 'text';
-            $sanitized[ $field ] = self::sanitize($value, $type);
+            $sanitized[$field] = self::sanitize($value, $type);
         }
 
         if ($errors->has_errors()) {
@@ -199,5 +200,21 @@ class Utils
         }
 
         return false;
+    }
+
+    public static function all_pages_in_campus_ids()
+    {
+        $campus_root_id = self::get_campus_root_id();
+        $campus_page_ids = [$campus_root_id];
+        $descendants = get_pages([
+            'child_of'     => $campus_root_id,
+            'post_type'    => 'page',
+            'post_status'  => ['publish', 'draft', 'pending', 'private', 'future'],
+            'fields'       => 'ids',
+        ]);
+        $campus_page_ids = array_merge($campus_page_ids, $descendants);
+        $campus_page_ids = wp_list_pluck($campus_page_ids, 'ID');
+
+        return $campus_page_ids;
     }
 }

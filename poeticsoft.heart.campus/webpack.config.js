@@ -14,7 +14,7 @@ module.exports = (env) => {
     const name = params[1] || 'base'; // base | etc.
 
     let mode = params[2] || 'dev'; // dev | prod
-    let watch = params[3] || 'no'; // si | no
+    let watch = params[3] || 'si'; // si | no
 
     const paths = {
         output: destdir + '/' + type + '/' + name,

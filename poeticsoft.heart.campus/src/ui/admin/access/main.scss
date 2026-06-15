@@ -81,7 +81,23 @@ body.poeticsoft-heart-campus_page_poeticsoft_heart_campus_access #wpbody-content
                     padding: 0 0 0 24px;
 
                     .post {
-                        padding: 0 0 8px;
+                        padding: 4px 0;
+
+                        .pageid {
+                            display: inline-block;
+                            vertical-align: center;
+                            padding: 2px 8px;
+                            border: solid 1px #ccc;
+                        }
+
+                        .pagepath {
+                            display: inline-block;
+                            vertical-align: center;
+
+                            .sep {
+                                margin: 0 4px;
+                            }
+                        }
                     }
 
                     .post + .post {

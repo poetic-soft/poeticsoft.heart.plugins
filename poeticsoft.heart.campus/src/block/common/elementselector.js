@@ -1,4 +1,5 @@
 const { SelectControl } = wp.components;
+const { __ } = wp.i18n;
 
 export const LinkSelector = ({ value, onChange }) => {
     const options = [
@@ -27,7 +28,7 @@ export const HeadingSelector = (props) => {
 
     return (
         <SelectControl
-            label={props.title || 'Elemento'}
+            label={props.title || __('Elemento', 'poeticsoft-heart-campus')}
             value={props.value}
             options={options}
             onChange={props.onChange}

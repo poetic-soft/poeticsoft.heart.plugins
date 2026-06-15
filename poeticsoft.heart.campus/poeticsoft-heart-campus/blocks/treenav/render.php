@@ -45,7 +45,7 @@ use Poeticsoft\Heart\Utils\Utils;
         return;
     }
 
-    $only_subscriptions = $attrs['onlySubscriptions'] ?? true;
+    $only_subscriptions = $attrs['onlySubscriptions'] ?? true; // AND abierta
     $show_legend = $attrs['showLegend'] ?? true;
     $ignore_root = (bool) ($attrs['ignoreRoot'] ?? false);
     $max_deep = intval($attrs['maxDeep'] ?? 0);
@@ -94,17 +94,16 @@ use Poeticsoft\Heart\Utils\Utils;
                 }
 
                 $is_user_contents = in_array($campus_root_id, $user_contents);
-                $type = get_post_meta($campus_root_id, Campus::PREFIX . 'access', true);
-                $type = is_string($type) ? trim($type) : '';
+                $access = get_post_meta($campus_root_id, Campus::PREFIX . 'access', true);
                 $root_level = $level + 1;
 
                 $list[] = [
                     'id'               => $campus_root_id,
                     'level'            => $root_level,
-                    'type'             => $type,
+                    'access'             => $access,
                     'current'          => $campus_root_id == $post->ID,
                     'is_user_contents' => $is_user_contents,
-                    'is_free'          => $type == '1',
+                    'is_open'          => $access == 'abierta',
                     'title'            => $page->post_title,
                     'pages'            => $build_page_tree($campus_root_id, $root_level)
                 ];
@@ -113,17 +112,16 @@ use Poeticsoft\Heart\Utils\Utils;
                 foreach ($campus_pages as $page) {
                     if ($page->post_parent == $parent) {
                         $is_user_contents = in_array($page->ID, $user_contents);
-                        $type = get_post_meta($page->ID, Campus::PREFIX . 'access', true);
-                        $type = is_string($type) ? trim($type) : '';
+                        $access = get_post_meta($page->ID, Campus::PREFIX . 'access', true);
 
                         $list[] = [
                             'id'               => $page->ID,
-                            'type'             => $type,
+                            'access'           => $access,
                             'level'            => $child_level,
                             'title'            => $page->post_title,
                             'current'          => $page->ID == $post->ID,
                             'is_user_contents' => $is_user_contents,
-                            'is_free'          => $type == '1',
+                            'is_open'          => $access == 'abierta',
                             'pages'            => $build_page_tree($page->ID, $child_level)
                         ];
                     }
@@ -133,25 +131,25 @@ use Poeticsoft\Heart\Utils\Utils;
             return $list;
         };
 
-        $build_object_tree = function ($pages, $parent_is_user = false, $parent_is_free = false) use ($is_admin_and_can_view_all, &$build_object_tree) {
+        $build_object_tree = function ($pages, $parent_is_user = false, $parent_is_open = false) use ($is_admin_and_can_view_all, &$build_object_tree) {
             $page_data = [];
             $branch_has_user_content = false;
-            $branch_has_free = false;
+            $branch_has_open = false;
 
             foreach ($pages as $page) {
                 $is_this_node_user = $page['is_user_contents'];
-                $is_this_node_free = $page['is_free'];
+                $is_this_node_open = $page['is_open'];
                 $inherited_user = $parent_is_user || $is_this_node_user;
-                $inherited_free = $parent_is_free || $is_this_node_free;
-                $children_pages = $build_object_tree($page['pages'], $inherited_user, $inherited_free);
+                $inherited_open = $parent_is_open || $is_this_node_open;
+                $children_pages = $build_object_tree($page['pages'], $inherited_user, $inherited_open);
                 $has_within_user = $is_this_node_user || $children_pages['has_user_content'];
-                $has_within_free = $is_this_node_free || $children_pages['has_free'];
+                $has_within_open = $is_this_node_open || $children_pages['has_open'];
 
                 if ($has_within_user) {
                     $branch_has_user_content = true;
                 }
-                if ($has_within_free) {
-                    $branch_has_free = true;
+                if ($has_within_open) {
+                    $branch_has_open = true;
                 }
 
                 $page_path = get_permalink($page['id']);
@@ -160,7 +158,7 @@ use Poeticsoft\Heart\Utils\Utils;
                 }
 
                 $has_children = isset($page['pages']) && count($page['pages']) > 0;
-                $visible = $is_admin_and_can_view_all || $parent_is_user || $is_this_node_user || $has_within_user || $has_within_free;
+                $visible = $is_admin_and_can_view_all || $parent_is_user || $is_this_node_user || $has_within_user || $has_within_open;
 
                 $page_data[] = [
                     'page_id'          => $page['id'],
@@ -169,12 +167,12 @@ use Poeticsoft\Heart\Utils\Utils;
                     'page_path'        => $page_path,
                     'current'          => $page['current'],
                     'has_children'     => $has_children,
-                    'is_free'          => $page['is_free'],
+                    'is_open'          => $page['is_open'],
                     'is_user_contents' => $page['is_user_contents'],
                     'has_within_user'  => $has_within_user,
-                    'has_within_free'  => $has_within_free,
+                    'has_within_open'  => $has_within_open,
                     'parent_is_user'   => $parent_is_user,
-                    'parent_is_free'   => $parent_is_free,
+                    'parent_is_open'   => $parent_is_open,
                     'visible'          => $visible,
                     'pages'            => $children_pages['children']
                 ];
@@ -183,7 +181,7 @@ use Poeticsoft\Heart\Utils\Utils;
             return [
                 'children'         => $page_data,
                 'has_user_content' => $branch_has_user_content,
-                'has_free'         => $branch_has_free
+                'has_open'         => $branch_has_open
             ];
         };
 
@@ -217,13 +215,13 @@ use Poeticsoft\Heart\Utils\Utils;
                     $page['level'],
                     $page['is_user_contents'] ? ' IsUserContents' : '',
                     $has_children ? ' HasChildren' : '',
-                    $page['is_free'] ? ' IsFree' : '',
+                    $page['is_open'] ? ' IsOpen' : '',
                     $page['current'] ? ' Current' : '',
                     $has_children ? '<div class="OpenClose"></div>' : '<div class="Indent"></div>',
                     esc_url($page['page_path']),
                     esc_html($page['title']),
                     $page['is_user_contents'] ? ' Paid' : '',
-                    $page['is_free'] ? ' Free' : '',
+                    $page['is_open'] ? ' Free' : '',
                     $has_children ? '<div class="Pages">' . $inner_dom . '</div>' : ''
                 );
             }

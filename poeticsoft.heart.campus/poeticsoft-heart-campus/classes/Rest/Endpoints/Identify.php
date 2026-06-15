@@ -5,8 +5,7 @@ namespace Poeticsoft\Heart\Rest\Endpoints;
 use Poeticsoft\Heart\Campus;
 use Poeticsoft\Heart\Rest\Endpoint;
 use Poeticsoft\Heart\Validation\Access;
-use Poeticsoft\Heart\Utils\Utils
-;
+use Poeticsoft\Heart\Utils\Utils;
 
 class Identify extends Endpoint
 {
@@ -51,7 +50,7 @@ class Identify extends Endpoint
 
                 return $this->send_success([
 
-                'time'   => current_time('mysql'),
+                    'time'   => current_time('mysql'),
                 ]);
             } else {
                 return $this->send_error(

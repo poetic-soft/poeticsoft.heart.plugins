@@ -344,9 +344,7 @@ var Edit = function Edit(props) {
   var clientId = props.clientId,
     attributes = props.attributes,
     setAttributes = props.setAttributes;
-  var blockId = attributes.blockId,
-    refClientId = attributes.refClientId,
-    ignoreRoot = attributes.ignoreRoot,
+  var ignoreRoot = attributes.ignoreRoot,
     onlySubscriptions = attributes.onlySubscriptions,
     maxDeep = attributes.maxDeep,
     showLegend = attributes.showLegend;
@@ -379,7 +377,7 @@ var Edit = function Edit(props) {
     min: 0,
     onChange: function onChange(value) {
       return setAttributes({
-        maxDeep: value
+        maxDeep: parseInt(value)
       });
     },
     isDragEnabled: true,

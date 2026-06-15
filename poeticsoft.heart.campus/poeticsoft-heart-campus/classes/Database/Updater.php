@@ -3,55 +3,30 @@
 namespace Poeticsoft\Heart\Database;
 
 use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Validation\Access;
 
 class Updater
 {
     public function get_formatted_access_data()
     {
-        $campus_root_id_option_name = sprintf('%sroot_post_id', Campus::PREFIX);
-        $campus_root_id = get_option($campus_root_id_option_name);
-
-        if (!$campus_root_id) {
-            return;
-        }
-
-        $campus_pages = get_pages([
-            'child_of'    => $campus_root_id,
-            'post_type'   => 'page',
-            'post_status' => [
-                'publish',
-                'draft',
-                'pending',
-                'private',
-            ],
-        ]);
-
-        $campus_root = get_post($campus_root_id);
-        $campus_pages_id_title = [];
-        $campus_pages_id_title[$campus_root_id] = get_the_title($campus_root_id);
-        $debug_ids = [];
-        foreach ($campus_pages as $page) {
-            $campus_pages_id_title[$page->ID] = get_the_title($page->ID);
-            $debug_ids[] = $page->ID;
-        }
-
-        $resultado = [];
-
         global $wpdb;
 
         $table_name = $wpdb->prefix . Campus::PREFIX . 'access';
         $actual_data = $wpdb->get_results("SELECT * FROM $table_name");
 
+        $resultado = [];
+
         foreach ($actual_data as $access) {
-            $post_id = $access->post_id;
-            $debug_post_id = $post_id ? $post_id : $debug_ids[rand(0, count($debug_ids) - 1)];
-            $campus_page_title = $campus_pages_id_title[$debug_post_id];
             $user_mail = $access->user_mail;
+            $access_data = [
+                'page_id' => $access->post_id,
+                'page_path' => Campus::get(Access::class)->campus_page_path($access->post_id)
+            ];
 
             if (isset($resultado[$user_mail])) {
-                $resultado[$user_mail][] = $campus_page_title;
+                $resultado[$user_mail][] = $access_data;
             } else {
-                $resultado[$user_mail] = [$campus_page_title];
+                $resultado[$user_mail] = [$access_data];
             }
         }
 
@@ -144,8 +119,6 @@ class Updater
 
                     if (count($post_ids)) {
                         foreach ($post_ids as $post_id) {
-                            $post = get_post((int) $post_id);
-                            $post_id = $post ? $post_id : 'no';
                             $access = [
                                 'user_mail' => $email_value,
                                 'post_id' => $post_id

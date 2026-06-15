@@ -59,7 +59,7 @@ const Edit = (props) => {
                         min={0}
                         onChange={(value) =>
                             setAttributes({
-                                maxDeep: value
+                                maxDeep: parseInt(value)
                             })
                         }
                         isDragEnabled={true}

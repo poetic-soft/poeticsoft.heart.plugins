@@ -61,7 +61,20 @@ body.poeticsoft-heart-campus_page_poeticsoft_heart_campus_access #wpbody-content
   padding: 0 0 0 24px;
 }
 body.poeticsoft-heart-campus_page_poeticsoft_heart_campus_access #wpbody-content .wrap .poeticsoft-heart-campus-page-content .access .user .posts .post {
-  padding: 0 0 8px;
+  padding: 4px 0;
+}
+body.poeticsoft-heart-campus_page_poeticsoft_heart_campus_access #wpbody-content .wrap .poeticsoft-heart-campus-page-content .access .user .posts .post .pageid {
+  display: inline-block;
+  vertical-align: center;
+  padding: 2px 8px;
+  border: solid 1px #ccc;
+}
+body.poeticsoft-heart-campus_page_poeticsoft_heart_campus_access #wpbody-content .wrap .poeticsoft-heart-campus-page-content .access .user .posts .post .pagepath {
+  display: inline-block;
+  vertical-align: center;
+}
+body.poeticsoft-heart-campus_page_poeticsoft_heart_campus_access #wpbody-content .wrap .poeticsoft-heart-campus-page-content .access .user .posts .post .pagepath .sep {
+  margin: 0 4px;
 }
 body.poeticsoft-heart-campus_page_poeticsoft_heart_campus_access #wpbody-content .wrap .poeticsoft-heart-campus-page-content .access .user .posts .post + .post {
   border: dotted #ccc;

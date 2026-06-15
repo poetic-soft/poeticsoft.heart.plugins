@@ -19,8 +19,8 @@ const contentsOptions = [
         value: 'allidentified'
     },
     {
-        label: __('Suscripciones & Libre', 'poeticsoft-heart-campus'),
-        value: 'subscriptionsandfree'
+        label: __('Suscripciones & Abierto', 'poeticsoft-heart-campus'),
+        value: 'subscriptionsandopen'
     }
 ];
 

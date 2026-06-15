@@ -112,11 +112,47 @@ class Access
         return $link;
     }
 
+    public function campus_page_path($page_id)
+    {
+        $page_id = intval($page_id);
+
+        if (!$page_id || !get_post($page_id)) {
+            return '';
+        }
+
+        $html = '';
+        $ancestors = get_post_ancestors($page_id);
+
+        if (!empty($ancestors)) {
+
+            $ancestors = array_reverse($ancestors);
+
+            array_shift($ancestors);
+
+            error_log(json_encode($ancestors));
+
+            foreach ($ancestors as $ancestor_id) {
+                $html .= esc_html(get_the_title($ancestor_id));
+                $html .= ' <span class="sep">></span>';
+            }
+        }
+
+        // Añadir la página del ID al final (como página actual)
+        $html .= '<span class="pagina-actual">
+            <a href="' . esc_url(get_permalink($page_id)) . '">' .
+            esc_html(get_the_title($page_id)) .
+            '</a> 
+        </span>';
+
+        return $html;
+    }
+
     public function all_user_access_posts(
         $max_count,
-        $order_by_date = 'ASC',
+        $order_by_date = 'DESC',
         $status = 'publish',
     ) {
+
         $email = $this->validate_email();
 
         if (!$email) {

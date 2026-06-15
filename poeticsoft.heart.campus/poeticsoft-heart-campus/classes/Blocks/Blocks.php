@@ -12,7 +12,7 @@ class Blocks
     public function init()
     {
         $this->available_blocks = [
-           'breadcrumbs',
+            'breadcrumbs',
             'columntools',
             'containerchildren',
             'mytools',
@@ -81,7 +81,7 @@ class Blocks
                         $args['attributes'] = array();
                     }
 
-                    $args['attributes']['showRestrictedText'] = array('type' => 'string', 'default' => 'hiddenalways');
+                    $args['attributes']['showRestrictedText'] = array('type' => 'string', 'default' => '');
                     $args['attributes']['restrictedText'] = array('type' => 'string', 'default' => '');
                 }
                 return $args;

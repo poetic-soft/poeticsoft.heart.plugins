@@ -52,7 +52,7 @@ if (false === $related_dom || empty($cache_key)) {
     $section_heading_tag = tag_escape($attrs['sectionHeadingType'] ?? 'h2');
     $area_heading_tag = tag_escape($attrs['areaHeadingType'] ?? 'h3');
     $title = $attrs['title'] ?? '';
-    $max_count = intval($attrs['maxCount'] ?? 3);
+    $max_count = intval($attrs['maxCount']);
     $visibility = $attrs['visibility'] ?? 'visiblealways';
     $campus_root_id = absint(get_option(Campus::PREFIX . 'root_post_id', 0));
 
@@ -64,6 +64,11 @@ if (false === $related_dom || empty($cache_key)) {
     ])) > 0;
 
     if (!$has_children && $visibility === 'onlyincontainers') {
+        return;
+    }
+
+    if (!Campus::get(Access::class)->validate_email()) {
+
         return;
     }
 
