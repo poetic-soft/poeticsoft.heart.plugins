@@ -21,18 +21,21 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
+use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Database\Database;
+
 /**
  * Initialize the plugin.
  */
 add_action('plugins_loaded', function () {
-    \Poeticsoft\Heart\Campus::instance();
+    Campus::instance();
 });
 
 /**
  * Activation Hook.
  */
 register_activation_hook(__FILE__, function () {
-    \Poeticsoft\Heart\Campus::get(\Poeticsoft\Heart\Database\Database::class)->install();
+    Campus::get(Database::class)->install();
 });
 
 /**

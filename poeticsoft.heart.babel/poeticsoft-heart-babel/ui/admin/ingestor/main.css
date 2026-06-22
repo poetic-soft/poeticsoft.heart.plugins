@@ -1,0 +1,347 @@
+/*!******************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./src/ui/admin/ingestor/main.scss ***!
+  \******************************************************************************************************************************************************/
+:root {
+  /* SIZES */
+  --space: 8px;
+  --s025: calc(var(--space) * 0.25);
+  --s05: calc(var(--space) * 0.5);
+  --s075: calc(var(--space) * 0.75);
+  --s: var(--space);
+  --s15: calc(var(--space) * 1.5);
+  --s2: calc(var(--space) * 2);
+  --s3: calc(var(--space) * 3);
+  --s4: calc(var(--space) * 4);
+  --s45: calc(var(--space) * 4.5);
+  --s5: calc(var(--space) * 5);
+  --s6: calc(var(--space) * 6);
+  --s7: calc(var(--space) * 7);
+  --s8: calc(var(--space) * 8);
+  --s9: calc(var(--space) * 9);
+  --s10: calc(var(--space) * 10);
+  --s12: calc(var(--space) * 12);
+  --s14: calc(var(--space) * 14);
+  --s16: calc(var(--space) * 16);
+  --s18: calc(var(--space) * 18);
+  --s20: calc(var(--space) * 20);
+  --color-light: #ffffff;
+  --color-dark-transparent-a: #ffffff88;
+  --color-0: #ea6d4e;
+  --color-1: #ca2721;
+  --color-2: #55413d;
+  --color-3: #334155;
+  --color-4: hsl(90, 11%, 86%);
+  --color-5: #FFFFFF;
+  --color-6: #054948;
+  --color-7: #111111;
+  --color-8: rgba(255, 255, 255, 0.78);
+  --color-info: #35ca21;
+  --color-warn: var(--color-0);
+  --color-error: var(--color-1);
+  --color-borders: #a1a1a1;
+  --color-access-abierta: #b6dfb1;
+  --color-access-restringida: #d3b1b1;
+  --fc-button-text-color: var(--color-5);
+  --fc-button-bg-color: var(--color-0);
+  --fc-button-border-color: var(--color-0);
+  --fc-button-hover-bg-color: var(--color-1);
+  --fc-button-hover-border-color: var(--color-1);
+  --fc-button-active-bg-color: var(--color-1);
+  --fc-button-active-border-color: var(--color-1);
+  --fc-event-bg-color: var(--color-1);
+  --fc-event-border-color: var(--color-1);
+  --fc-event-text-color: var(--color-5);
+  --fc-event-selected-overlay-color: var(--color-0);
+}
+
+.babel-ingestion-dashboard {
+  max-width: 1000px;
+  margin: var(--s2) 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+.babel-ingestion-dashboard .babel-dashboard-header {
+  margin-bottom: var(--s3);
+}
+.babel-ingestion-dashboard .babel-dashboard-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-7);
+  margin: 0 0 var(--s05) 0;
+}
+.babel-ingestion-dashboard .babel-dashboard-header .description {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+}
+.babel-ingestion-dashboard {
+  /* Dashboard Cards */
+}
+.babel-ingestion-dashboard .babel-dashboard-card {
+  background: #ffffff;
+  border: 1px solid #ccd0d4;
+  border-radius: 6px;
+  padding: var(--s3);
+  margin-bottom: var(--s3);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+.babel-ingestion-dashboard .babel-dashboard-card .card-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-7);
+  margin: 0 0 var(--s) 0;
+  padding-bottom: var(--s);
+  border-bottom: 1px solid #f0f0f1;
+}
+.babel-ingestion-dashboard .babel-dashboard-card .card-desc {
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 var(--s2) 0;
+}
+.babel-ingestion-dashboard {
+  /* Drag & Drop Area */
+}
+.babel-ingestion-dashboard .babel-dropzone-area {
+  background: #ffffff;
+  border: 2px dashed #007cba;
+  border-radius: 8px;
+  padding: var(--s5);
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  margin-bottom: var(--s3);
+}
+.babel-ingestion-dashboard .babel-dropzone-area.hover {
+  background: #eef7fc;
+  border-color: #005a87;
+}
+.babel-ingestion-dashboard .babel-dropzone-area .icon-upload {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #007cba;
+  margin-bottom: var(--s);
+}
+.babel-ingestion-dashboard .babel-dropzone-area h2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: var(--s) 0 var(--s05) 0;
+  color: var(--color-7);
+}
+.babel-ingestion-dashboard .babel-dropzone-area .formats {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: var(--s2);
+}
+.babel-ingestion-dashboard .babel-dropzone-area .babel-dropzone-actions {
+  display: flex;
+  gap: var(--s);
+  justify-content: center;
+}
+.babel-ingestion-dashboard {
+  /* File Tree List */
+}
+.babel-ingestion-dashboard .babel-file-tree {
+  max-height: 300px;
+  overflow-y: auto;
+  background: #f6f7f7;
+  border: 1px solid #dcdcde;
+  border-radius: 4px;
+  padding: var(--s2);
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+}
+.babel-ingestion-dashboard .babel-file-tree ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.babel-ingestion-dashboard .babel-file-tree ul li {
+  padding: var(--s05) var(--s);
+  border-bottom: 1px solid #f0f0f1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.babel-ingestion-dashboard .babel-file-tree ul li:last-child {
+  border-bottom: none;
+}
+.babel-ingestion-dashboard .babel-file-tree ul li .file-info {
+  display: flex;
+  align-items: center;
+  gap: var(--s);
+}
+.babel-ingestion-dashboard .babel-file-tree ul li .file-info .dashicons {
+  color: #646970;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+.babel-ingestion-dashboard .babel-file-tree ul li .file-ext {
+  color: #8c8f94;
+  font-size: 11px;
+  font-weight: 600;
+}
+.babel-ingestion-dashboard .card-actions {
+  margin-top: calc(var(--space) * 2.5);
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+}
+.babel-ingestion-dashboard .card-actions .action-desc {
+  color: #646970;
+  font-size: 13px;
+}
+.babel-ingestion-dashboard {
+  /* Console Logger */
+}
+.babel-ingestion-dashboard .log-console {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  padding: var(--s15);
+  border-radius: 4px;
+  max-height: 250px;
+  overflow-y: auto;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.babel-ingestion-dashboard .log-console .log-line {
+  margin-bottom: var(--s05);
+}
+.babel-ingestion-dashboard .log-console .log-line:last-child {
+  margin-bottom: 0;
+}
+.babel-ingestion-dashboard .log-console .log-line.success {
+  color: #4ec9b0;
+}
+.babel-ingestion-dashboard .log-console .log-line.error {
+  color: #f44747;
+}
+.babel-ingestion-dashboard .log-console .log-line.pending {
+  color: #dcdcaa;
+}
+.babel-ingestion-dashboard {
+  /* Progress States */
+}
+.babel-ingestion-dashboard .progress-card {
+  border-color: #ccd0d4;
+}
+.babel-ingestion-dashboard .progress-card .progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s);
+}
+.babel-ingestion-dashboard .progress-card .progress-header h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-7);
+  margin: 0;
+}
+.babel-ingestion-dashboard .progress-card .progress-header .percentage {
+  font-size: 14px;
+  font-weight: 600;
+  color: #007cba;
+}
+.babel-ingestion-dashboard .progress-card .progress-bar-container {
+  background: #f0f0f1;
+  border-radius: 4px;
+  height: 8px;
+  overflow: hidden;
+  margin-bottom: var(--s2);
+}
+.babel-ingestion-dashboard .progress-card .progress-bar-container .progress-bar {
+  background: #46b450;
+  width: 0%;
+  height: 100%;
+  transition: width 0.3s ease-in-out;
+}
+.babel-ingestion-dashboard .progress-card .completion-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--s);
+  background: #e6f6ec;
+  border: 1px solid #b2dba1;
+  color: #1e4620;
+  border-radius: 4px;
+  padding: var(--s15);
+  margin-top: var(--s2);
+  font-size: 13px;
+  font-weight: 600;
+}
+.babel-ingestion-dashboard .progress-card .completion-badge .dashicons {
+  color: #22c55e;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+.babel-ingestion-dashboard {
+  /* Empty State */
+}
+.babel-ingestion-dashboard .empty-state {
+  display: flex;
+  align-items: center;
+  gap: var(--s);
+  background: #f6f7f7;
+  border: 1px dashed #dcdcde;
+  border-radius: 4px;
+  padding: var(--s3);
+  text-align: center;
+  justify-content: center;
+}
+.babel-ingestion-dashboard .empty-state .success-icon {
+  color: #22c55e;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+.babel-ingestion-dashboard .empty-state p {
+  margin: 0;
+  font-size: 13px;
+  color: #646970;
+  font-style: italic;
+}
+.babel-ingestion-dashboard {
+  /* WordPress Content Sync Boxes */
+}
+.babel-ingestion-dashboard .sync-status-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
+  padding: var(--s2);
+  border: 1px solid #dcdcde;
+}
+.babel-ingestion-dashboard .sync-status-box.pending {
+  background: #f6f7f7;
+  border-color: #ccd0d4;
+}
+.babel-ingestion-dashboard .sync-status-box.synced {
+  background: #e6f6ec;
+  border-color: #b2dba1;
+  color: #1e4620;
+}
+.babel-ingestion-dashboard .sync-status-box .status-message {
+  display: flex;
+  align-items: center;
+  gap: var(--s);
+  font-size: 13px;
+  font-weight: 600;
+}
+.babel-ingestion-dashboard .sync-status-box .status-message .success-icon {
+  color: #22c55e;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+.babel-ingestion-dashboard .sync-status-box .status-message .count-badge {
+  background: #007cba;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/*# sourceMappingURL=main.css.map*/

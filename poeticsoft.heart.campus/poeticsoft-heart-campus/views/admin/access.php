@@ -7,6 +7,8 @@
  * @var string $sorted_list
  */
 
+use Poeticsoft\Heart\Campus;
+
 $access_table = '';
 $index = 1;
 foreach ($sorted_list as $mail => $datas) {
@@ -44,13 +46,13 @@ foreach ($sorted_list as $mail => $datas) {
     <form method="post" action="">
         <input type="hidden" name="action" value="refresh_access">
         <?php $page->nonce_field(); ?>
-        <?php submit_button(__('Recargar accesos', \Poeticsoft\Heart\Campus::TEXT_DOMAIN), 'secondary'); ?>
+        <?php submit_button(__('Recargar accesos', Campus::TEXT_DOMAIN), 'secondary'); ?>
     </form>
 </div>
 
 <div class="stats">
     <div class="stat users">
-        <div class="text"><?php _e('Humanos', \Poeticsoft\Heart\Campus::TEXT_DOMAIN); ?></div>
+        <div class="text"><?php _e('Humanos', Campus::TEXT_DOMAIN); ?></div>
         <div class="value"><?php echo $sorted_list->count(); ?></div>
     </div>
 </div>

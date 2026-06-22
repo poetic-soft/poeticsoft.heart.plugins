@@ -7,7 +7,7 @@ interface Provider {
     /**
      * Configura el proveedor con las credenciales y modelos necesarios.
      */
-    public function set_config( array $config );
+    public function set_config(array $config);
 
     /**
      * Devuelve el identificador único del proveedor (ej: 'gemini', 'openai').
@@ -27,5 +27,5 @@ interface Provider {
      * @param callable $callback Función para manejar el streaming.
      * @return string ID de caché (nuevo o existente).
      */
-    public function execute( array $params, callable $callback );
+    public function execute(array $params, callable $callback);
 }

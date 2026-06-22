@@ -7,7 +7,7 @@
  * Text Domain: poeticsoft-heart-ai
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
         exit;
 }
 
@@ -17,4 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-new \Poeticsoft\Heart\AI();
+use Poeticsoft\Heart\AI;
+
+/**
+ * Initialize the plugin.
+ */
+add_action('plugins_loaded', function() {
+	AI::instance();
+});

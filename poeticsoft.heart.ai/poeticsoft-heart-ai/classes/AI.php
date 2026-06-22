@@ -2,20 +2,177 @@
 
 namespace Poeticsoft\Heart;
 
+use Poeticsoft\Heart\Admin\Admin;
+use Poeticsoft\Heart\Rest\Rest;
 use Poeticsoft\Heart\AIAgent\AIAgent;
-use Poeticsoft\Heart\API\API;
 use Poeticsoft\Heart\Blocks\Blocks;
-use Poeticsoft\Heart\Credentials\Credentials;
 use Poeticsoft\Heart\Prompts\Prompts;
-use Poeticsoft\Heart\Telemetry\Telemetry;
 
-class AI {
-    public function __construct() {
-        new AIAgent();
-        new API();
-        new Blocks();
-        new Credentials();
-        new Prompts();
-        new Telemetry();
-    }
+/**
+ * Main Plugin Class (AI).
+ * Acts as a Service Container and Context Router.
+ */
+final class AI {
+
+	/**
+	 * Stores service instances.
+	 *
+	 * @var array
+	 */
+	private static $services = [];
+
+	/**
+	 * Plugin version.
+	 */
+	const VERSION = '2.1.0';
+
+	/**
+	 * Plugin Identity Constants.
+	 */
+	const PLUGIN_ID     = 'ai';
+	const PLUGIN_NAME   = 'Poeticsoft Heart AI';
+	const PLUGIN_SLUG   = 'poeticsoft-heart-' . self::PLUGIN_ID;
+	const TEXT_DOMAIN   = 'poeticsoft-heart-' . self::PLUGIN_ID;
+	const PREFIX        = 'poeticsoft_heart_' . self::PLUGIN_ID . '_';
+	const API_NAMESPACE = 'poeticsoft/heart/' . self::PLUGIN_ID . '/v1';
+
+	/**
+	 * Plugin instance.
+	 *
+	 * @var AI
+	 */
+	private static $instance = null;
+
+	/**
+	 * Get class instance (Singleton).
+	 */
+	public static function instance() {
+		if (is_null(self::$instance)) {
+			self::$instance = new self();
+			// self::log(self::PLUGIN_NAME . ' Initialized', 'success');
+			self::$instance->init();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Constructor.
+	 */
+	private function __construct() {}
+
+	/**
+	 * Service Container: Get or Instantiate a service.
+	 *
+	 * @param string $class FQDN of the class.
+	 * @return object
+	 */
+	public static function get($class) {
+		if (!isset(self::$services[$class])) {
+			self::$services[$class] = new $class();
+		}
+		return self::$services[$class];
+	}
+
+	/**
+	 * Get absolute path to plugin folder or file.
+	 *
+	 * @param string $relative_path Path relative to plugin root.
+	 * @return string
+	 */
+	public static function path($relative_path = '') {
+		return plugin_dir_path(dirname(__DIR__) . '/' . self::PLUGIN_SLUG . '.php') . ltrim($relative_path, '/');
+	}
+
+	/**
+	 * Get public URL to plugin folder or file.
+	 *
+	 * @param string $relative_path Path relative to plugin root.
+	 * @return string
+	 */
+	public static function url($relative_path = '') {
+		return plugin_dir_url(dirname(__DIR__) . '/' . self::PLUGIN_SLUG . '.php') . ltrim($relative_path, '/');
+	}
+
+	/**
+	 * Custom Logger.
+	 * Writes to a debug.log file in the plugin root for development purposes.
+	 *
+	 * @param mixed  $message The message or data to log.
+	 * @param string $level   Log level (info, debug, error, success).
+	 */
+	public static function log($message, $level = 'info') {
+		$log_file = self::path('debug.log');
+		$timestamp = date('Y-m-d H:i:s');
+
+		if (!is_string($message)) {
+			$message = json_encode($message, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+		}
+
+		$formatted_message = sprintf("[%s] [%s]: %s\n", $timestamp, strtoupper($level), $message);
+
+		file_put_contents($log_file, $formatted_message, FILE_APPEND);
+	}
+
+	/**
+	 * Initialize the plugin based on context.
+	 */
+	private function init() {
+		// 1. Admin Context
+		if (is_admin()) {
+			$this->init_admin();
+		}
+
+		// 2. REST API Context
+		if (defined('REST_REQUEST') && REST_REQUEST) {
+			$this->init_rest();
+		}
+
+		// 3. Frontend Context (Always loaded if not admin/rest, but also handles common hooks)
+		if (!is_admin() && !(defined('REST_REQUEST') && REST_REQUEST)) {
+			$this->init_frontend();
+		}
+
+		// 4. Global Hooks (Always loaded)
+		$this->init_global();
+	}
+
+	/**
+	 * Load Admin components.
+	 */
+	private function init_admin() {
+		add_action('init', function() {
+			self::get(Admin::class)->init();
+		});
+	}
+
+	/**
+	 * Load Frontend components.
+	 */
+	private function init_frontend() {
+		// Currently no frontend-specific orchestrator, but placeholder is here for structure.
+	}
+
+	/**
+	 * Load REST API components.
+	 */
+	private function init_rest() {
+		add_action('rest_api_init', function() {
+			self::get(Rest::class)->init();
+		});
+	}
+
+	/**
+	 * Load Global components.
+	 */
+	private function init_global() {
+
+		// Initialize Blocks.
+		self::get(Blocks::class)->init();
+
+		// Initialize Prompts.
+		self::get(Prompts::class)->init();
+
+		// Initialize AIAgent.
+		self::get(AIAgent::class)->init();
+	}
 }

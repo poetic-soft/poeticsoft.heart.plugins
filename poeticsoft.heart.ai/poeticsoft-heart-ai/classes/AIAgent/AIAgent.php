@@ -2,6 +2,7 @@
 
 namespace Poeticsoft\Heart\AIAgent;
 
+use Poeticsoft\Heart\AI;
 use Poeticsoft\Heart\AIAgent\Gemini;
 use Exception;
 
@@ -13,17 +14,17 @@ class AIAgent {
 	private $providers = [];
 
 	/**
-	 * Constructor.
+	 * Initialize AI agent hooks and providers.
 	 */
-	public function __construct() {
-		$this->register_provider( new Gemini() );
+	public function init() {
+		$this->register_provider(AI::get(Gemini::class));
 	}
 
 	/**
 	 * Registra un nuevo proveedor de IA.
 	 */
-	public function register_provider( $provider ) {
-		$this->providers[ $provider->get_name() ] = $provider;
+	public function register_provider($provider) {
+		$this->providers[$provider->get_name()] = $provider;
 	}
 
 	/**
@@ -33,29 +34,29 @@ class AIAgent {
 	 * @param callable $callback Callback para el streaming.
 	 * @return string ID del caché (si se utilizó).
 	 */
-	public function execute( array $params, callable $callback ) {
-		$provider_name = get_option( 'psh_ai_active_provider', 'gemini' );
-		$provider      = $this->get_provider( $provider_name );
+	public function execute(array $params, callable $callback) {
+		$provider_name = get_option(AI::PREFIX . 'ai_active_provider', 'gemini');
+		$provider      = $this->get_provider($provider_name);
 
-		if ( ! $provider ) {
-			throw new Exception( "Proveedor de IA activo no encontrado o no configurado: {$provider_name}" );
+		if (!$provider) {
+			throw new Exception("Proveedor de IA activo no encontrado o no configurado: {$provider_name}");
 		}
 
-		return $provider->execute( $params, $callback );
+		return $provider->execute($params, $callback);
 	}
 
 	/**
 	 * Obtiene un proveedor configurado con los ajustes globales.
 	 */
-	public function get_provider( $name ) {
-		$provider = $this->providers[ $name ] ?? null;
-		if ( $provider ) {
+	public function get_provider($name) {
+		$provider = $this->providers[$name] ?? null;
+		if ($provider) {
 			$config = [
-				'api_key'   => get_option( 'psh_ai_' . $name . '_key' ),
-				'model'     => get_option( 'psh_ai_' . $name . '_model' ),
-				'cache_ttl' => get_option( 'psh_ai_cache_ttl', 0 ),
+				'api_key'   => get_option(AI::PREFIX . 'ai_' . $name . '_key'),
+				'model'     => get_option(AI::PREFIX . 'ai_' . $name . '_model'),
+				'cache_ttl' => get_option(AI::PREFIX . 'ai_cache_ttl', 0),
 			];
-			$provider->set_config( $config );
+			$provider->set_config($config);
 		}
 		return $provider;
 	}

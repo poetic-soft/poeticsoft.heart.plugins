@@ -1,0 +1,155 @@
+{
+  "phpcs.executablePath": "${workspaceFolder}/poeticsoft-heart-babel/vendor/bin/phpcs",
+  "phpcbf.executablePath": "${workspaceFolder}/poeticsoft-heart-babel/vendor/bin/phpcbf",
+  "phpcs.standard": "${workspaceFolder}/poeticsoft-heart-babel/phpcs.xml",
+  "phpcbf.standard": "${workspaceFolder}/poeticsoft-heart-babel/phpcs.xml",
+  "phpcs.ignore": [
+    "**/vendor/*",
+    "**/cache/*",
+    "**/vendor/autoload.php"
+  ],
+  "intelephense.stubs": [
+    "apache",
+    "bcmath",
+    "bz2",
+    "calendar",
+    "Core",
+    "curl",
+    "date",
+    "dba",
+    "dom",
+    "enchant",
+    "fileinfo",
+    "filter",
+    "ftp",
+    "gd",
+    "gettext",
+    "gmp",
+    "hash",
+    "iconv",
+    "imap",
+    "intl",
+    "json",
+    "ldap",
+    "libxml",
+    "mbstring",
+    "mcrypt",
+    "meta",
+    "mysqli",
+    "oci8",
+    "odbc",
+    "openssl",
+    "pcntl",
+    "pcre",
+    "PDO",
+    "pdo_ibm",
+    "pdo_mysql",
+    "pdo_pgsql",
+    "pdo_sqlite",
+    "pgsql",
+    "Phar",
+    "posix",
+    "pspell",
+    "readline",
+    "recode",
+    "Reflection",
+    "session",
+    "shmop",
+    "SimpleXML",
+    "snmp",
+    "soap",
+    "sockets",
+    "sodium",
+    "SPL",
+    "sqlite3",
+    "standard",
+    "superglobals",
+    "sysvmsg",
+    "sysvsem",
+    "sysvshm",
+    "tidy",
+    "tokenizer",
+    "xml",
+    "xmlreader",
+    "xmlrpc",
+    "xmlwriter",
+    "xsl",
+    "Zend OPcache",
+    "zip",
+    "zlib",
+    "wordpress"
+  ],
+  "intelephense.environment.includePaths": [
+    "${workspaceFolder}/poeticsoft-heart-babel/vendor/php-stubs/wordpress-stubs"
+  ],
+  "[php]": {
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "intelephense.format.braces": "psr12",
+    "php.suggest.basic": false
+  },
+  "editor.formatOnSave": true,
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false
+  },
+
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true
+  },
+
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true
+  },
+
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true
+  },
+
+  "files.associations": {
+    "*.js": "javascriptreact"
+  },
+
+  "prettier.tabWidth": 4,
+  "prettier.useTabs": false,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "none",
+  "prettier.printWidth": 100,
+  "prettier.semi": true,
+
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact"
+  ],
+  "stylelint.validate": [
+    "css",
+    "scss"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  }
+}

@@ -1,10 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
-  "name": "poeticsoft-heart/voicespeaker",
+  "name": "poeticsoft-heart-ai/voicespeaker",
   "title": "Voicespeaker",
-  "description": "Bloque voicespeaker para el ecosistema Poeticsoft Heart.",
-  "category": "poeticsoft-heart",
+  "description": "Bloque voicespeaker para el ecosistema Poeticsoft Heart AI.",
+  "category": "poeticsoft-heart-ai",
   "icon": "admin-plugins",
   "keywords": [],
   "textdomain": "poeticsoft-heart-ai",
@@ -20,8 +20,8 @@
       "default": ""
     }
   },
-  "editorScript": "file:./build/edit.js",
-  "editorStyle": "file:./build/edit.css",
+  "editorScript": "file:./build/editor.js",
+  "editorStyle": "file:./build/editor.css",
   "viewScript": "file:./build/view.js",
   "viewStyle": "file:./build/view.css",
   "render": "file:./render.php"

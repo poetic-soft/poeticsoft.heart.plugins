@@ -1,0 +1,325 @@
+@use 'styles/root';
+
+.babel-ingestion-dashboard {
+    max-width: 1000px;
+    margin: var(--s2) 0;
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+        'Helvetica Neue', sans-serif;
+
+    .babel-dashboard-header {
+        margin-bottom: var(--s3);
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--color-7);
+            margin: 0 0 var(--s05) 0;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #555;
+            margin: 0;
+        }
+    }
+
+    /* Dashboard Cards */
+    .babel-dashboard-card {
+        background: #ffffff;
+        border: 1px solid #ccd0d4;
+        border-radius: 6px;
+        padding: var(--s3);
+        margin-bottom: var(--s3);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--color-7);
+            margin: 0 0 var(--s) 0;
+            padding-bottom: var(--s);
+            border-bottom: 1px solid #f0f0f1;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #666;
+            margin: 0 0 var(--s2) 0;
+        }
+    }
+
+    /* Drag & Drop Area */
+    .babel-dropzone-area {
+        background: #ffffff;
+        border: 2px dashed #007cba;
+        border-radius: 8px;
+        padding: var(--s5);
+        text-align: center;
+        cursor: pointer;
+        transition:
+            background 0.2s ease-in-out,
+            border-color 0.2s ease-in-out;
+        margin-bottom: var(--s3);
+
+        &.hover {
+            background: #eef7fc;
+            border-color: #005a87;
+        }
+
+        .icon-upload {
+            font-size: 48px;
+            width: 48px;
+            height: 48px;
+            color: #007cba;
+            margin-bottom: var(--s);
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin: var(--s) 0 var(--s05) 0;
+            color: var(--color-7);
+        }
+
+        .formats {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: var(--s2);
+        }
+
+        .babel-dropzone-actions {
+            display: flex;
+            gap: var(--s);
+            justify-content: center;
+        }
+    }
+
+    /* File Tree List */
+    .babel-file-tree {
+        max-height: 300px;
+        overflow-y: auto;
+        background: #f6f7f7;
+        border: 1px solid #dcdcde;
+        border-radius: 4px;
+        padding: var(--s2);
+        font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+        font-size: 13px;
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li {
+                padding: var(--s05) var(--s);
+                border-bottom: 1px solid #f0f0f1;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                .file-info {
+                    display: flex;
+                    align-items: center;
+                    gap: var(--s);
+
+                    .dashicons {
+                        color: #646970;
+                        font-size: 18px;
+                        width: 18px;
+                        height: 18px;
+                    }
+                }
+
+                .file-ext {
+                    color: #8c8f94;
+                    font-size: 11px;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .card-actions {
+        margin-top: calc(var(--space) * 2.5);
+        display: flex;
+        align-items: center;
+        gap: var(--s2);
+
+        .action-desc {
+            color: #646970;
+            font-size: 13px;
+        }
+    }
+
+    /* Console Logger */
+    .log-console {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+        font-size: 12px;
+        line-height: 1.6;
+        padding: var(--s15);
+        border-radius: 4px;
+        max-height: 250px;
+        overflow-y: auto;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+
+        .log-line {
+            margin-bottom: var(--s05);
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &.success {
+                color: #4ec9b0;
+            }
+
+            &.error {
+                color: #f44747;
+            }
+
+            &.pending {
+                color: #dcdcaa;
+            }
+        }
+    }
+
+    /* Progress States */
+    .progress-card {
+        border-color: #ccd0d4;
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--s);
+
+            h3 {
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--color-7);
+                margin: 0;
+            }
+
+            .percentage {
+                font-size: 14px;
+                font-weight: 600;
+                color: #007cba;
+            }
+        }
+
+        .progress-bar-container {
+            background: #f0f0f1;
+            border-radius: 4px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: var(--s2);
+
+            .progress-bar {
+                background: #46b450;
+                width: 0%;
+                height: 100%;
+                transition: width 0.3s ease-in-out;
+            }
+        }
+
+        .completion-badge {
+            display: flex;
+            align-items: center;
+            gap: var(--s);
+            background: #e6f6ec;
+            border: 1px solid #b2dba1;
+            color: #1e4620;
+            border-radius: 4px;
+            padding: var(--s15);
+            margin-top: var(--s2);
+            font-size: 13px;
+            font-weight: 600;
+
+            .dashicons {
+                color: #22c55e;
+                font-size: 20px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+
+    /* Empty State */
+    .empty-state {
+        display: flex;
+        align-items: center;
+        gap: var(--s);
+        background: #f6f7f7;
+        border: 1px dashed #dcdcde;
+        border-radius: 4px;
+        padding: var(--s3);
+        text-align: center;
+        justify-content: center;
+
+        .success-icon {
+            color: #22c55e;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+        }
+
+        p {
+            margin: 0;
+            font-size: 13px;
+            color: #646970;
+            font-style: italic;
+        }
+    }
+
+    /* WordPress Content Sync Boxes */
+    .sync-status-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 4px;
+        padding: var(--s2);
+        border: 1px solid #dcdcde;
+
+        &.pending {
+            background: #f6f7f7;
+            border-color: #ccd0d4;
+        }
+
+        &.synced {
+            background: #e6f6ec;
+            border-color: #b2dba1;
+            color: #1e4620;
+        }
+
+        .status-message {
+            display: flex;
+            align-items: center;
+            gap: var(--s);
+            font-size: 13px;
+            font-weight: 600;
+
+            .success-icon {
+                color: #22c55e;
+                font-size: 20px;
+                width: 20px;
+                height: 20px;
+            }
+
+            .count-badge {
+                background: #007cba;
+                color: #ffffff;
+                border-radius: 10px;
+                padding: 2px 10px;
+                font-size: 12px;
+                font-weight: 700;
+            }
+        }
+    }
+}

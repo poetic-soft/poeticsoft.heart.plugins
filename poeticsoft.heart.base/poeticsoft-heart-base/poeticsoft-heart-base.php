@@ -20,16 +20,19 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
+use Poeticsoft\Heart\Base;
+use Poeticsoft\Heart\Database\Database;
+
 /**
  * Initialize the plugin.
  */
 add_action( 'plugins_loaded', function() {
-	\Poeticsoft\Heart\Base::instance();
+	Base::instance();
 });
 
 /**
  * Activation Hook.
  */
 register_activation_hook( __FILE__, function() {
-	\Poeticsoft\Heart\Base::get( \Poeticsoft\Heart\Database\Database::class )->install();
+	Base::get( Database::class )->install();
 } );

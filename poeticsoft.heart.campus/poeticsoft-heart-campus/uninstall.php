@@ -17,11 +17,14 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
+use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Database\Database;
+
 /**
  * Use the Database Orchestrator to clean up.
  */
 try {
-    \Poeticsoft\Heart\Campus::get(\Poeticsoft\Heart\Database\Database::class)->uninstall();
+    Campus::get(Database::class)->uninstall();
 } catch (\Exception $e) {
     // Silent fail in uninstall to avoid breaking WordPress deletion.
 }
