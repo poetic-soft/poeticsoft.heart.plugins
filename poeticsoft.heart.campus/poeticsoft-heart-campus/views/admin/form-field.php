@@ -3,7 +3,7 @@
 /**
  * Generic Form Field Template.
  *
- * @var \Poeticsoft\Heart\Admin\Page $page
+ * @var \Poeticsoft\Heart\Campus\Admin\Page $page
  * @var string $option_name
  * @var mixed  $value
  * @var string $type

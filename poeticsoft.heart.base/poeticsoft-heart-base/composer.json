@@ -9,10 +9,10 @@
             "name": "Alberto en Poeticsoft",
             "email": "alberto@poeticsoft.com"
         }
-    ],
+   ],
     "autoload": {
         "psr-4": {
-            "Poeticsoft\\Heart\\": "classes/"
+            "Poeticsoft\\Heart\\Base\\": "classes/Base"
         }
     },
     "config": {

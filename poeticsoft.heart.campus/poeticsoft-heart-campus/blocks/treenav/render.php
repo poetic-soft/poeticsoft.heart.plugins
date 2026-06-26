@@ -8,10 +8,9 @@
 
 defined('ABSPATH') || exit;
 
-use Poeticsoft\Heart\Campus;
-use Poeticsoft\Heart\Validation\Access;
-use Poeticsoft\Heart\Validation\Validation;
-use Poeticsoft\Heart\Utils\Utils;
+use Poeticsoft\Heart\Campus\Campus;
+use Poeticsoft\Heart\Campus\Validation\Access;
+use Poeticsoft\Heart\Campus\Validation\Validation;
 
 (function ($attributes, $content, $block) {
     global $wpdb;

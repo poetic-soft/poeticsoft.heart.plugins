@@ -2,7 +2,7 @@
 /**
  * Generic Settings Page Template.
  *
- * @var \Poeticsoft\Heart\Admin\AbstractPage $page
+ * @var \Poeticsoft\Heart\Campus\Admin\AbstractPage $page
  */
 ?>
 <form method="post" action="options.php">

@@ -12,7 +12,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Poeticsoft\\Heart\\": "classes/"
+            "Poeticsoft\\Heart\\Campus\\": "classes/Campus/"
         }
     },
     "config": {

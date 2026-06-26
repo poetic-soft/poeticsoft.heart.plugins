@@ -11,28 +11,28 @@
  * Domain Path: /languages
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
 	exit;
 }
 
 // Load Composer Autoloader.
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-use Poeticsoft\Heart\Base;
-use Poeticsoft\Heart\Database\Database;
+use Poeticsoft\Heart\Base\Base;
+use Poeticsoft\Heart\Base\Database\Database;
 
 /**
  * Initialize the plugin.
  */
-add_action( 'plugins_loaded', function() {
+add_action('plugins_loaded', function() {
 	Base::instance();
 });
 
 /**
  * Activation Hook.
  */
-register_activation_hook( __FILE__, function() {
-	Base::get( Database::class )->install();
-} );
+register_activation_hook(__FILE__, function() {
+	Base::get(Database::class)->install();
+});

@@ -3,10 +3,10 @@
 /**
  * Admin Pages Quick Edit View.
  *
- * @package Poeticsoft\Heart
+ * @package Poeticsoft\Heart\Campus
  */
 
-use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Campus\Campus;
 
 if (! defined('ABSPATH')) {
     exit;

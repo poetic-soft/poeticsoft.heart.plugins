@@ -3,10 +3,10 @@
 /**
  * Master Admin Page Layout.
  *
- * @var \Poeticsoft\Heart\Admin\AbstractPage $page
+ * @var \Poeticsoft\Heart\Campus\Admin\AbstractPage $page
  */
 
-use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Campus\Campus;
 ?>
 <div class="wrap">
     <h1><?php echo esc_html($page->get_page_title()); ?></h1>

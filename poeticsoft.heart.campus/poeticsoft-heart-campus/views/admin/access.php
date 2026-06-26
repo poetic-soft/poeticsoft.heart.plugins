@@ -3,11 +3,11 @@
 /**
  * Dashboard Template.
  *
- * @var \Poeticsoft\Heart\Admin\Page $page
+ * @var \Poeticsoft\Heart\Campus\Admin\Page $page
  * @var string $sorted_list
  */
 
-use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Campus\Campus;
 
 $access_table = '';
 $index = 1;

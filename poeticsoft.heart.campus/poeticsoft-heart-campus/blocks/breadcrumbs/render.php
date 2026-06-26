@@ -6,8 +6,8 @@
  * - $block: array con info completa del bloque
  */
 
-use Poeticsoft\Heart\Campus;
-use Poeticsoft\Heart\Validation\Validation;
+use Poeticsoft\Heart\Campus\Campus;
+use Poeticsoft\Heart\Campus\Validation\Validation;
 
 defined('ABSPATH') || exit;
 

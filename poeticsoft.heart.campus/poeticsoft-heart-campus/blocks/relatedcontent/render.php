@@ -8,8 +8,8 @@
 
 defined('ABSPATH') || exit;
 
-use Poeticsoft\Heart\Campus;
-use Poeticsoft\Heart\Validation\Validation;
+use Poeticsoft\Heart\Campus\Campus;
+use Poeticsoft\Heart\Campus\Validation\Validation;
 
 global $post;
 

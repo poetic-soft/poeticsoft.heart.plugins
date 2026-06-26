@@ -3,12 +3,13 @@
 /**
  * Dashboard Template.
  *
- * @var \Poeticsoft\Heart\Admin\AbstractPage $page
+ * @var \Poeticsoft\Heart\Campus\Admin\AbstractPage $page
  * @var string $welcome_message
  * @var array  $status_data
  */
 
-use Poeticsoft\Heart\Campus;
+use Poeticsoft\Heart\Campus\Campus;
+
 ?>
 <p><?php echo esc_html($welcome_message); ?></p>
 

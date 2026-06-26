@@ -3,7 +3,7 @@
 /**
  * Frontend Post Content Access Restriction View.
  *
- * @package Poeticsoft\Heart
+ * @package Poeticsoft\Heart\Campus
  */
 
 if (! defined('ABSPATH')) {
