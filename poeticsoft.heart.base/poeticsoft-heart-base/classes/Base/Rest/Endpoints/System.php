@@ -2,14 +2,15 @@
 
 namespace Poeticsoft\Heart\Base\Rest\Endpoints;
 
+use Poeticsoft\Heart\Rest\Endpoint;
+
 use Poeticsoft\Heart\Base\Base;
-use Poeticsoft\Heart\Base\Rest\AbstractEndpoint;
 
 /**
  * System Endpoint Section.
  * Example of modular API implementation with security levels.
  */
-class System extends AbstractEndpoint {
+class System extends Endpoint {
 
 	/**
 	 * Define routes for this section.

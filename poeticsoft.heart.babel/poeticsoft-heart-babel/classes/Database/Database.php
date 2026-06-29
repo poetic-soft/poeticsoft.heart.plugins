@@ -51,6 +51,8 @@ class Database
      */
     public function install()
     {
+        return;
+        
         global $wpdb;
 
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';

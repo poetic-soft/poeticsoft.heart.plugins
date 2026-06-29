@@ -1,16 +1,10 @@
 <?php
-/**
- * Generic Form Field Template.
- * 
- * @var \Poeticsoft\Heart\Admin\AbstractPage $page
- * @var string $option_name
- * @var mixed  $value
- * @var string $type
- * @var string $description
- * @var array  $options (optional, for select)
- */
 
-switch ($type) {
+use Poeticsoft\Heart\Base\Base;
+
+Base::log($field_type);
+
+switch ($field_type) {
 	case 'checkbox':
 		printf(
 			'<input type="checkbox" id="%1$s" name="%1$s" value="1" %2$s />',

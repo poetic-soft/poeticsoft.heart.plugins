@@ -1,0 +1,148 @@
+[2026-06-27 15:08:15] [SUCCESS]: Poeticsoft Heart ORG Initialized
+[2026-06-27 15:08:15] [INFO]: init
+[2026-06-27 15:08:46] [SUCCESS]: Database migrated to version 1.0.0
+[2026-06-27 15:08:55] [SUCCESS]: Poeticsoft Heart ORG Initialized
+[2026-06-27 15:08:55] [INFO]: init
+[2026-06-27 15:09:25] [SUCCESS]: Poeticsoft Heart ORG Initialized
+[2026-06-27 15:09:27] [SUCCESS]: Poeticsoft Heart ORG Initialized
+[2026-06-27 15:09:43] [SUCCESS]: Poeticsoft Heart ORG Initialized
+[2026-06-27 15:09:54] [SUCCESS]: Poeticsoft Heart ORG Initialized
+[2026-06-27 15:09:54] [INFO]: init
+[2026-06-27 15:10:54] [SUCCESS]: Poeticsoft Heart ORG Initialized
+[2026-06-27 15:10:55] [SUCCESS]: Poeticsoft Heart ORG Initialized
+[2026-06-27 15:13:32] [INFO]: init
+[2026-06-27 15:20:25] [INFO]: REST
+[2026-06-27 15:21:11] [INFO]: REST
+[2026-06-27 15:22:47] [INFO]: REST
+[2026-06-27 15:23:13] [INFO]: REST
+[2026-06-27 15:25:29] [INFO]: REST
+[2026-06-27 15:26:12] [INFO]: REST
+[2026-06-27 15:27:09] [INFO]: REST
+[2026-06-27 15:27:15] [INFO]: REST
+[2026-06-27 15:28:27] [INFO]: REST
+[2026-06-27 15:29:01] [INFO]: REST
+[2026-06-27 15:29:06] [INFO]: REST
+[2026-06-27 15:31:27] [INFO]: REST
+[2026-06-27 15:32:38] [INFO]: REST
+[2026-06-27 15:32:38] [INFO]: {
+    "errors": {
+        "error_crear_pagina": [
+            "El usuario no existe o no pertenece a este sitio."
+        ]
+    },
+    "error_data": []
+}
+[2026-06-27 15:35:01] [INFO]: REST
+[2026-06-27 15:35:01] [INFO]: {
+    "userId": 1,
+    "title": "Esta es mi página"
+}
+[2026-06-27 15:35:47] [INFO]: REST
+[2026-06-27 15:35:47] [INFO]: 1
+[2026-06-27 15:36:06] [INFO]: REST
+[2026-06-27 15:36:06] [INFO]: 1
+[2026-06-27 15:36:44] [INFO]: REST
+[2026-06-27 15:36:44] [INFO]: 1
+[2026-06-27 15:36:44] [INFO]: 1
+[2026-06-27 15:37:04] [INFO]: REST
+[2026-06-27 15:37:31] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:37:31] [INFO]: REST
+[2026-06-27 15:37:33] [INFO]: REST
+[2026-06-27 15:37:33] [INFO]: REST
+[2026-06-27 15:37:33] [INFO]: REST
+[2026-06-27 15:37:33] [INFO]: REST
+[2026-06-27 15:37:33] [INFO]: REST
+[2026-06-27 15:37:33] [INFO]: REST
+[2026-06-27 15:42:49] [INFO]: REST
+[2026-06-27 15:42:51] [INFO]: REST
+[2026-06-27 15:42:59] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:42:59] [INFO]: REST
+[2026-06-27 15:43:00] [INFO]: REST
+[2026-06-27 15:43:00] [INFO]: REST
+[2026-06-27 15:43:00] [INFO]: REST
+[2026-06-27 15:43:00] [INFO]: REST
+[2026-06-27 15:43:00] [INFO]: REST
+[2026-06-27 15:43:00] [INFO]: REST
+[2026-06-27 15:43:00] [INFO]: REST
+[2026-06-27 15:43:07] [INFO]: REST
+[2026-06-27 15:43:11] [INFO]: REST
+[2026-06-27 15:43:32] [INFO]: REST
+[2026-06-27 15:43:32] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:43:32] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:43:32] [INFO]: REST
+[2026-06-27 15:43:56] [INFO]: REST
+[2026-06-27 15:44:07] [INFO]: REST
+[2026-06-27 15:44:11] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:44:22] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:44:22] [INFO]: REST
+[2026-06-27 15:44:25] [INFO]: REST
+[2026-06-27 15:44:25] [INFO]: REST
+[2026-06-27 15:44:25] [INFO]: REST
+[2026-06-27 15:44:25] [INFO]: REST
+[2026-06-27 15:44:25] [INFO]: REST
+[2026-06-27 15:44:25] [INFO]: REST
+[2026-06-27 15:44:27] [INFO]: REST
+[2026-06-27 15:44:30] [INFO]: REST
+[2026-06-27 15:44:31] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:44:31] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:44:31] [INFO]: REST
+[2026-06-27 15:46:19] [INFO]: REST
+[2026-06-27 15:46:33] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:46:33] [INFO]: REST
+[2026-06-27 15:46:35] [INFO]: REST
+[2026-06-27 15:46:35] [INFO]: REST
+[2026-06-27 15:46:35] [INFO]: REST
+[2026-06-27 15:46:36] [INFO]: REST
+[2026-06-27 15:46:36] [INFO]: REST
+[2026-06-27 15:46:36] [INFO]: REST
+[2026-06-27 15:46:37] [INFO]: REST
+[2026-06-27 15:46:47] [INFO]: REST
+[2026-06-27 15:46:47] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:46:47] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:46:47] [INFO]: REST
+[2026-06-27 15:47:12] [INFO]: REST
+[2026-06-27 15:47:12] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:47:12] [DEBUG]: PostEditorController initialized
+[2026-06-27 15:47:12] [INFO]: REST
+[2026-06-27 16:19:23] [INFO]: REST
+[2026-06-27 16:45:40] [INFO]: REST
+[2026-06-27 16:46:41] [INFO]: REST
+[2026-06-27 16:46:58] [INFO]: REST
+[2026-06-27 17:13:19] [INFO]: REST
+[2026-06-27 17:14:14] [INFO]: REST
+[2026-06-27 17:14:24] [INFO]: REST
+[2026-06-27 17:15:09] [INFO]: REST
+[2026-06-27 17:16:42] [INFO]: alberto@poeticsoft.com
+[2026-06-27 17:17:16] [INFO]: {
+    "errors": {
+        "email_existe": [
+            "El correo electrónico ya está registrado."
+        ]
+    },
+    "error_data": []
+}
+[2026-06-27 17:19:15] [INFO]: 5
+[2026-06-27 18:54:14] [INFO]: {
+    "errors": {
+        "error_crear_pagina": [
+            "No se pudo crear la página, falta autor o titulo."
+        ]
+    },
+    "error_data": []
+}
+[2026-06-27 18:54:48] [INFO]: {
+    "errors": {
+        "error_crear_pagina": [
+            "No se pudo crear la página, falta autor o titulo."
+        ]
+    },
+    "error_data": []
+}
+[2026-06-27 18:55:29] [INFO]: {
+    "errors": {
+        "error_crear_pagina": [
+            "No se pudo crear la página, falta autor o titulo."
+        ]
+    },
+    "error_data": []
+}

@@ -5,28 +5,15 @@ namespace Poeticsoft\Heart\Base;
 use Poeticsoft\Heart\Base\Base; 
 use stdClass;
 
-/**
- * Remote Updater Class.
- * Handles self-hosted updates via native WordPress filters.
- */
 class Updater {
 
-	/**
-	 * Remote API URL.
-	 */
 	private $remote_url = 'https://api.poeticsoft.com/update.json';
 
-	/**
-	 * Initialize the updater hooks.
-	 */
 	public function init() {
 		add_filter('site_transient_update_plugins', [$this, 'check_update']);
 		add_filter('plugins_api', [$this, 'plugin_info'], 20, 3);
 	}
 
-	/**
-	 * Check for updates against the remote JSON.
-	 */
 	public function check_update($transient) {
 		if (empty($transient->checked)) {
 			return $transient;
@@ -48,9 +35,6 @@ class Updater {
 		return $transient;
 	}
 
-	/**
-	 * Provide plugin information for the "View details" modal.
-	 */
 	public function plugin_info($res, $action, $args) {
 		if ('plugin_information' !== $action) {
 			return $res;
@@ -66,7 +50,7 @@ class Updater {
 			return $res;
 		}
 
-		$res = new \stdClass();
+		$res = new stdClass();
 		$res->name           = Base::PLUGIN_NAME;
 		$res->slug           = Base::PLUGIN_SLUG;
 		$res->version        = $remote->version;
@@ -81,9 +65,6 @@ class Updater {
 		return $res;
 	}
 
-	/**
-	 * Fetch remote data with caching via transients.
-	 */
 	private function get_remote_data() {
 		$remote = get_transient(Base::PREFIX . 'update');
 

@@ -10,10 +10,6 @@
             "email": "alberto@poeticsoft.com"
         }
     ],
-    "require": {
-        "guzzlehttp/guzzle": "^7.12",
-        "smalot/pdfparser": "^2.12"
-    },
     "autoload": {
         "psr-4": {
             "Poeticsoft\\Heart\\Babel\\": "classes/"
@@ -26,6 +22,10 @@
     "scripts": {
         "format": "vendor/bin/phpcbf",
         "lint": "vendor/bin/phpcs"
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.12",
+        "smalot/pdfparser": "^2.12"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.10"
