@@ -1,0 +1,35 @@
+@mixin absolutebox($top: 0, $right: 0, $bottom: 0, $left: 0) {
+    position: absolute !important;
+    inset: $top $right $bottom $left;
+}
+
+@mixin ellipsis() {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@mixin flexcenter($direction: row) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: $direction wrap;
+}
+
+@mixin bgimage($image, $size: contain, $position: center) {
+    background-image: url($image);
+    background-size: $size;
+    background-position: $position;
+    background-repeat: no-repeat;
+}
+
+@mixin centerflex() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin fixedbox($top: 0, $right: 0, $bottom: 0, $left: 0) {
+    position: fixed;
+    inset: $top $right $bottom $left;
+}

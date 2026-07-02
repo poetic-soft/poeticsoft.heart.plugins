@@ -6,7 +6,7 @@ use Poeticsoft\Heart\Heart;
 use Poeticsoft\Heart\View\View;
 use Poeticsoft\Heart\Validation\Validation;
 
-abstract class Page {
+abstract class AbstractPage {
 
 	protected $slug;
 	protected $menu_title;
@@ -23,6 +23,7 @@ abstract class Page {
 
 	public function init() {
 		add_action('admin_init', [$this, 'register_settings']);
+	    add_action('admin_init', [$this, 'maybe_handle_action']);
 	}
 
 	public function register_settings() {
@@ -35,16 +36,21 @@ abstract class Page {
 		foreach ($this->settings as $setting) {
 			$option_name = Heart::PLUGIN_PREFIX . $setting['key'];
 
-			register_setting($this->slug, $option_name, [
-				'type'              => $setting['type'] ?? 'text',
-				'sanitize_callback' => function($value) use ($setting) {
-					return Heart::get(Validation::class)->sanitize($value, $setting['type'] ?? 'text');
-				},
-				'default'           => $setting['value'] ?? '',
-			]);
+			register_setting(
+				$this->slug, 
+				$option_name, 
+				[
+					'type' => $setting['type'] ?? 'text', // string | boolean | integer | number | array | object
+					'sanitize_callback' => function($value) use ($setting) {
+						return Heart::get(Validation::class)->sanitize($value, $setting['type'] ?? 'text');
+					},
+					'default' => $setting['value'] ?? '',
+				]
+			);
 
 			$section_id = $setting['section'] ?? 'default';
-			if (! in_array($section_id, $sections)) {
+			if (!in_array($section_id, $sections)) {
+
 				$section_title = $setting['section_title'] ?? ucwords(str_replace(['_', '-'], ' ', $section_id));
 				add_settings_section(
 					$section_id,
@@ -70,6 +76,7 @@ abstract class Page {
 		$field_data = [
 			'option_name' => Heart::PLUGIN_PREFIX . $args['key'],
 			'value'       => get_option(Heart::PLUGIN_PREFIX . $args['key'], $args['value'] ?? ''),
+			'field_type'  => $args['field_type'] ?? 'text', // Input type
 			'type'        => $args['type'] ?? 'text',
 			'description' => $args['description'] ?? '',
 			'options'     => $args['options'] ?? [],
@@ -77,6 +84,22 @@ abstract class Page {
 
 		$this->render_view('admin/form-field', $field_data);
 	}
+
+    public function maybe_handle_action()
+    {
+        $action = $_REQUEST['action'] ?? '';
+
+        if (empty($action) || !$this->is_current_page()) {
+            return;
+        }
+
+        $this->check_security();
+        $this->handle_action($action);
+    }
+
+    protected function handle_action($action)
+    {
+    }
 
 	public function get_slug() {
 		return $this->slug;
@@ -99,11 +122,11 @@ abstract class Page {
 	}
 
 	protected function check_security() {
-		if (! current_user_can($this->capability)) {
+		if (!current_user_can($this->capability)) {
 			wp_die(esc_html__('You do not have sufficient permissions to access this page.', Heart::TEXT_DOMAIN));
 		}
 
-		if (! empty($_REQUEST['action'])) {
+		if (!empty($_REQUEST['action'])) {
 			check_admin_referer($this->get_nonce_action(), $this->get_nonce_name());
 		}
 	}
@@ -121,7 +144,7 @@ abstract class Page {
 	}
 
 	public function render_content() {
-		if (! empty($this->settings)) {
+		if (!empty($this->settings)) {
 			$this->render_view('admin/generic-settings');
 		}
 	}
@@ -132,7 +155,7 @@ abstract class Page {
 	}
 
 	public function render() {
-		if (! current_user_can($this->capability)) {
+		if (!current_user_can($this->capability)) {
 			wp_die(esc_html__('You do not have sufficient permissions to access this page.', Heart::TEXT_DOMAIN));
 		}
 

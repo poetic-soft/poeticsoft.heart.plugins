@@ -5,7 +5,7 @@ namespace Poeticsoft\Heart\Rest;
 use WP_REST_Response;
 use WP_Error;
 
-abstract class Endpoint {
+abstract class AbstractEndpoint {
 
 	const AUTH_PUBLIC = 'public';
 	const AUTH_USER   = 'user';

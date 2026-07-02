@@ -3,10 +3,10 @@
 namespace Poeticsoft\Heart\Admin\Pages;
 
 use Poeticsoft\Heart\Heart;
-use Poeticsoft\Heart\Admin\Page;
+use Poeticsoft\Heart\Admin\AbstractPage;
 use Poeticsoft\Heart\View\View;
 
-class Dashboard extends Page {
+class Dashboard extends AbstractPage {
 
 	protected function define_page_props() {
 		$this->slug       = Heart::PLUGIN_SLUG;

@@ -15,7 +15,7 @@ class View {
 	public function render($template_name, $data = [], $echo = true) {
 		$file = $this->base_dir . $template_name . '.php';
 
-		if (! file_exists($file)) {
+		if (!file_exists($file)) {
 			$error = "Template not found: {$template_name}";
 			if (defined('WP_DEBUG') && WP_DEBUG) {
 				echo esc_html($error);

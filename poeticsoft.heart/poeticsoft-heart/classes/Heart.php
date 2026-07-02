@@ -3,6 +3,9 @@
 namespace Poeticsoft\Heart;
 
 use Poeticsoft\Heart\Admin\Admin;
+use Poeticsoft\Heart\UI\UI;
+use Poeticsoft\Heart\Admin\Mail;
+use Poeticsoft\Heart\Rest\Rest;
 
 class Heart {
 
@@ -18,7 +21,7 @@ class Heart {
 	const PLUGIN_SLUG    = 'poeticsoft-' . self::PLUGIN_ID;
 	const TEXT_DOMAIN    = self::PLUGIN_SLUG;
 	const PLUGIN_PREFIX  = 'poeticsoft_' . self::PLUGIN_ID . '_';
-	const API_NAMESPACE  = 'poeticsoft/' . self::PLUGIN_ID . '/v1';	
+	const API_NAMESPACE  = 'poeticsoft/' . self::PLUGIN_ID;	
     const PLUGIN_DIR     =  WP_PLUGIN_DIR . '/' . self::PLUGIN_SLUG;
     const PLUGIN_URL     =  WP_PLUGIN_URL . '/' . self::PLUGIN_SLUG ; 
 
@@ -65,12 +68,16 @@ class Heart {
 	private function init() {		
 
 		if (is_admin()) {
-			$this->init_admin();
+
+			self::get(Admin::class)->init();
 		}
-	}
 
-	private function init_admin() {
+		add_action('rest_api_init', function () {
+            self::get(Rest::class)->init();
+        });
 
-		self::get(Admin::class)->init();
+		self::get(Mail::class)->init();
+
+		self::get(UI::class)->init();
 	}
 }

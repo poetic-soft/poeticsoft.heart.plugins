@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "poeticsoft-heart/base",
+  "title": "Base",
+  "category": "poeticsoft-heart",
+  "icon": "media-archive",
+  "description": "Base",
+  "keywords": [],
+  "textdomain": "poeticsoft-heart",
+  "version": "0.0.0",
+  "editorScript": "file:./build/editor.js",
+  "editorStyle": "file:./build/editor.css",
+  "viewScript": "file:./build/view.js",
+  "viewStyle": "file:./build/view.css",
+  "render": "file:./render.php"
+}

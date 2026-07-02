@@ -43,7 +43,7 @@ class Menu {
             $page->get_capability(),
             $page->get_slug(),
             [$page, 'render']
-        );
+       );
 
         $page->init();
     }

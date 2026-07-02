@@ -1,0 +1,48 @@
+{
+  "name": "poeticsoft.heart.campus",
+  "version": "0.0.0",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "lint:js": "eslint \"src/**/*.js\"",
+    "lint:scss": "stylelint \"src/**/*.scss\"",
+    "format:js": "eslint \"src/**/*.js\" --fix",
+    "format:scss": "stylelint \"src/**/*.scss\" --fix",
+    "block:base": "webpack --env=block-base",    
+    "admin:dashboard": "webpack --env=ui-admin/dashboard",  
+    "edit:coreconfigs": "webpack --env=ui-edit/coreconfigs",
+    "front:theme": "webpack --env=ui-front/theme",
+    "all": "npm run block:base && npm run admin:dashboard && npm run front:theme && npm run edit:coreconfigs"
+  },
+  "dependencies": {
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/runtime": "^7.18.9",
+    "immutable-update": "^1.0.0",
+    "sass": "^1.89.2",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.29.7",
+    "babel-loader": "^8.2.5",
+    "baseline-browser-mapping": "^2.9.14",
+    "css-loader": "^6.7.1",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "file-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.1",
+    "stylelint": "^17.13.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "webpack": "^5.100.2",
+    "webpack-cli": "^6.0.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  }
+}

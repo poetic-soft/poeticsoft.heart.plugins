@@ -60,12 +60,12 @@ class Validation {
 		foreach ($schema as $field => $rules) {
 			$value = $data[$field] ?? null;
 
-			if (! empty($rules['required']) && empty($value)) {
+			if (!empty($rules['required']) && empty($value)) {
 				$errors->add('missing_field', "Field '{$field}' is required.");
 				continue;
 			}
 
-			if (! empty($rules['rule']) && ! $this->validate($value, $rules['rule'])) {
+			if (!empty($rules['rule']) && !$this->validate($value, $rules['rule'])) {
 				$errors->add('invalid_field', "Field '{$field}' is invalid.");
 				continue;
 			}

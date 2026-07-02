@@ -8,35 +8,38 @@ class Mail
 {
     public function init()
     {
+        
+        $smtp_use_option_name = Heart::PLUGIN_PREFIX . 'smtp_host';
+        $smtp_use = get_option($smtp_use_option_name);
+
+        if(!$smtp_use) {
+
+            return;
+        }
+
         add_action(
             'phpmailer_init',
             [$this, 'phpmailer_init']
-        );
+       );
 
         add_filter(
             'wp_mail_from',
             [$this, 'mail_from']
-        );
+       );
 
         add_filter(
             'wp_mail_from_name',
             [$this, 'mail_from_name']
-        );
+       );
 
         add_action(
             'wp_mail_failed',
             [$this, 'mail_failed']
-        );
+       );
     }
 
     public function phpmailer_init($phpmailer)
     {
-        $smtp_use = get_option(Heart::PLUGIN_PREFIX . 'smtp_use');
-
-        if (!$smtp_use) {
-            return;
-        }
-
         $smtp_host       = get_option(Heart::PLUGIN_PREFIX . 'smtp_host');
         $smtp_port       = get_option(Heart::PLUGIN_PREFIX . 'smtp_port');
         $smtp_smtpsecure = get_option(Heart::PLUGIN_PREFIX . 'smtp_secure');
